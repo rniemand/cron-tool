@@ -37,7 +37,7 @@ namespace CronTools.Common.Providers
 
       _config = new CronToolConfig();
       var section = _configuration.GetSection(CronToolConfig.Key);
-      
+
       if (section.Exists())
         section.Bind(_config);
 

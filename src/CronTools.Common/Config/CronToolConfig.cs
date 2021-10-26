@@ -14,20 +14,27 @@ namespace CronTools.Common.Config
     [JsonProperty("DirectorySeparator"), JsonPropertyName("DirectorySeparator")]
     public string DirectorySeparator { get; set; }
 
+    [JsonProperty("JobConfigDir"), JsonPropertyName("JobConfigDir")]
+    public string JobConfigDir { get; set; }
+
     public CronToolConfig()
     {
       // TODO: [TESTS] (CronToolConfig.CronToolConfig) Add tests
-      RootDir = "./";
+      RootDir = "./config";
       DirectorySeparator = "\\";
+      JobConfigDir = "{root}jobs";
     }
 
     public CronToolConfig NormalizePaths(string rootDir)
     {
       // TODO: [TESTS] (CronToolConfig.NormalizePaths) Add tests
+      RootDir = RootDir
+        .Replace("./", rootDir.AppendIfMissing(DirectorySeparator))
+        .AppendIfMissing(DirectorySeparator);
 
-      var a=rootDir.AppendIfMissing(DirectorySeparator);
-
-
+      JobConfigDir = JobConfigDir
+        .Replace("{root}", RootDir)
+        .AppendIfMissing(DirectorySeparator);
 
       return this;
     }
