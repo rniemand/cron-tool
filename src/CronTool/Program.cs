@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Factories;
+using Rn.NetCore.Common.Helpers;
 using Rn.NetCore.Common.Logging;
 using Rn.NetCore.Common.Metrics;
 using Rn.NetCore.Common.Metrics.Interfaces;
@@ -47,6 +48,9 @@ namespace CronTool
         .AddSingleton<IFileAbstraction, FileAbstraction>()
         .AddSingleton<IEnvironmentAbstraction, EnvironmentAbstraction>()
         .AddSingleton<IPathAbstraction, PathAbstraction>()
+
+        // Helpers
+        .AddSingleton<IJsonHelper, JsonHelper>()
 
         // Utils
         .AddSingleton<IMetricServiceUtils, MetricServiceUtils>()
