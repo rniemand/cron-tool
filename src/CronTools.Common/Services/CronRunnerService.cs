@@ -65,6 +65,10 @@ namespace CronTools.Common.Services
       foreach (var job in args)
       {
         var config = ResolveJobConfig(job);
+        if(config is null) continue;
+
+
+
 
         Console.WriteLine(job);
 
@@ -107,6 +111,13 @@ namespace CronTools.Common.Services
       // Read contents of the config file
       var rawJson = _file.ReadAllText(jobFilePath);
       var jobConfig = _jsonHelper.DeserializeObject<JobConfig>(rawJson);
+
+      // Handle disabled jobs
+      if (!jobConfig.Enabled)
+      {
+        _logger.Warning("Requested job {name} is disabled", jobConfig.Name);
+        return null;
+      }
 
       _logger.Info("Loaded config for {name} ({path})",
         jobConfig.Name,
