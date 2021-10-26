@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using CronTools.Common.Config;
+using CronTools.Common.Providers;
 using Rn.NetCore.Common.Services;
 
 namespace CronTools.Common.Services
@@ -11,10 +13,15 @@ namespace CronTools.Common.Services
 
   public class CronRunnerService :BaseService<CronRunnerService>, ICronRunnerService
   {
-    public CronRunnerService(IServiceProvider serviceProvider)
+    private readonly CronToolConfig _config;
+
+    public CronRunnerService(
+      IServiceProvider serviceProvider,
+      IConfigProvider configProvider)
       : base(serviceProvider)
     {
       // TODO: [TESTS] (CronRunnerService) Add tests
+      _config = configProvider.GetConfig();
     }
 
     public async Task RunCrons(string[] args)

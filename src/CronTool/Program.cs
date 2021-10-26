@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using CronTools.Common.Providers;
 using CronTools.Common.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,9 +42,14 @@ namespace CronTool
 
         // Abstractions
         .AddSingleton<IDateTimeAbstraction, DateTimeAbstraction>()
+        .AddSingleton<IDirectoryAbstraction, DirectoryAbstraction>()
+        .AddSingleton<IFileAbstraction, FileAbstraction>()
 
         // Utils
         .AddSingleton<IMetricServiceUtils, MetricServiceUtils>()
+
+        // Providers
+        .AddSingleton<IConfigProvider, ConfigProvider>()
 
         // Services
         .AddSingleton<ICronRunnerService, CronRunnerService>()
