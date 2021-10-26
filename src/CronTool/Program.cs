@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using CronTools.Common.JobActions;
 using CronTools.Common.Providers;
 using CronTools.Common.Services;
 using Microsoft.Extensions.Configuration;
@@ -51,6 +52,9 @@ namespace CronTool
 
         // Helpers
         .AddSingleton<IJsonHelper, JsonHelper>()
+
+        // Job Actions
+        .AddSingleton<IJobAction, DeleteFolderAction>()
 
         // Utils
         .AddSingleton<IMetricServiceUtils, MetricServiceUtils>()

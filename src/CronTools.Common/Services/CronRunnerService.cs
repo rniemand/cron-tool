@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using CronTools.Common.Config;
+using CronTools.Common.JobActions;
 using CronTools.Common.Models;
 using CronTools.Common.Providers;
+using Microsoft.Extensions.DependencyInjection;
 using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Extensions;
 using Rn.NetCore.Common.Factories;
@@ -26,6 +29,7 @@ namespace CronTools.Common.Services
     private readonly IDirectoryInfoFactory _directoryInfoFactory;
     private readonly IFileAbstraction _file;
     private readonly IJsonHelper _jsonHelper;
+    private readonly List<IJobAction> _jobActions;
     private readonly CronToolConfig _config;
 
     private readonly Dictionary<string, string> _jobFiles;
@@ -46,8 +50,9 @@ namespace CronTools.Common.Services
       _directoryInfoFactory = directoryInfoFactory;
       _file = file;
       _jsonHelper = jsonHelper;
-      _config = configProvider.GetConfig();
 
+      _config = configProvider.GetConfig();
+      _jobActions = serviceProvider.GetServices<IJobAction>().ToList();
       _jobFiles = new Dictionary<string, string>();
 
       RefreshJobs();
@@ -67,6 +72,25 @@ namespace CronTools.Common.Services
         var config = ResolveJobConfig(job);
         if(config is null) continue;
 
+        var coreJobInfo = GenerateCoreJobInfo(config);
+
+        foreach (var step in config.Steps)
+        {
+          var resolvedAction = _jobActions.FirstOrDefault(x => x.Action == step.Action);
+          if (resolvedAction is null)
+          {
+            _logger.Error("Unable to resolve action {name} for job {job}",
+              step.Action.ToString("G"),
+              config.Name
+            );
+
+            throw new Exception("Unable to continue");
+          }
+
+          await resolvedAction.ExecuteAsync(new RunningStepContext(coreJobInfo, step));
+
+          Console.WriteLine("");
+        }
 
 
 
@@ -79,6 +103,15 @@ namespace CronTools.Common.Services
       
 
       Console.WriteLine("");
+    }
+
+    private CoreJobInfo GenerateCoreJobInfo(JobConfig jobConfig)
+    {
+      // TODO: [TESTS] (CronRunnerService.GenerateCoreJobInfo) Add tests
+      return new CoreJobInfo
+      {
+        Name = jobConfig.Name
+      };
     }
 
     private JobConfig ResolveJobConfig(string jobName)
