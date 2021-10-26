@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using Rn.NetCore.Common.Abstractions;
+using Rn.NetCore.Common.Factories;
 using Rn.NetCore.Common.Logging;
 using Rn.NetCore.Common.Metrics;
 using Rn.NetCore.Common.Metrics.Interfaces;
@@ -52,6 +53,9 @@ namespace CronTool
 
         // Providers
         .AddSingleton<IConfigProvider, ConfigProvider>()
+
+        // Factories
+        .AddSingleton<IDirectoryInfoFactory, DirectoryInfoFactory>()
 
         // Services
         .AddSingleton<ICronRunnerService, CronRunnerService>()

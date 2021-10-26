@@ -8,8 +8,4 @@
     <PackageReference Include="Rn.NetCore.Common" Version="5.0.1.149" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
-
 </Project>
