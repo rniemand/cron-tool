@@ -1,5 +1,6 @@
 ﻿using CronTools.Common.Config;
 using Microsoft.Extensions.Configuration;
+using Rn.NetCore.Common.Abstractions;
 
 namespace CronTools.Common.Providers
 {
@@ -11,12 +12,20 @@ namespace CronTools.Common.Providers
   public class ConfigProvider : IConfigProvider
   {
     private readonly IConfiguration _configuration;
+    private readonly IEnvironmentAbstraction _environment;
+    private readonly IPathAbstraction _path;
+
     private CronToolConfig _config;
 
-    public ConfigProvider(IConfiguration configuration)
+    public ConfigProvider(
+      IConfiguration configuration,
+      IEnvironmentAbstraction environment,
+      IPathAbstraction path)
     {
       // TODO: [TESTS] (ConfigProvider.ConfigProvider) Add tests
       _configuration = configuration;
+      _environment = environment;
+      _path = path;
       _config = null;
     }
 
@@ -32,6 +41,7 @@ namespace CronTools.Common.Providers
       if (section.Exists())
         section.Bind(_config);
 
+      _config = _config.NormalizePaths(_environment.CurrentDirectory);
       return _config;
     }
   }

@@ -44,6 +44,8 @@ namespace CronTool
         .AddSingleton<IDateTimeAbstraction, DateTimeAbstraction>()
         .AddSingleton<IDirectoryAbstraction, DirectoryAbstraction>()
         .AddSingleton<IFileAbstraction, FileAbstraction>()
+        .AddSingleton<IEnvironmentAbstraction, EnvironmentAbstraction>()
+        .AddSingleton<IPathAbstraction, PathAbstraction>()
 
         // Utils
         .AddSingleton<IMetricServiceUtils, MetricServiceUtils>()
