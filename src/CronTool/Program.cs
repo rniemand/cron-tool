@@ -1,10 +1,15 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
+using CronTools.Common.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
+using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Logging;
+using Rn.NetCore.Common.Metrics;
+using Rn.NetCore.Common.Metrics.Interfaces;
 
 namespace CronTool
 {
@@ -12,15 +17,13 @@ namespace CronTool
   {
     private static IServiceProvider _serviceProvider;
 
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
       ConfigureDI();
 
-      _serviceProvider
-        .GetRequiredService<ILoggerAdapter<Program>>()
-        .Debug("Hello World");
-
-      Console.WriteLine("Hello World!");
+      await _serviceProvider
+        .GetRequiredService<ICronRunnerService>()
+        .RunCrons(args);
     }
 
     private static void ConfigureDI()
@@ -35,7 +38,17 @@ namespace CronTool
       services
         // Configuration
         .AddSingleton<IConfiguration>(config)
-        
+
+        // Abstractions
+        .AddSingleton<IDateTimeAbstraction, DateTimeAbstraction>()
+
+        // Utils
+        .AddSingleton<IMetricServiceUtils, MetricServiceUtils>()
+
+        // Services
+        .AddSingleton<ICronRunnerService, CronRunnerService>()
+        .AddSingleton<IMetricService, MetricService>()
+
         // Logging
         .AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>))
         .AddLogging(loggingBuilder =>
