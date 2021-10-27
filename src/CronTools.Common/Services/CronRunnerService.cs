@@ -73,9 +73,13 @@ namespace CronTools.Common.Services
         if(config is null) continue;
 
         var coreJobInfo = GenerateCoreJobInfo(config);
+        var continueRunningSteps = true;
 
         foreach (var step in config.Steps)
         {
+          if (!continueRunningSteps)
+            continue;
+
           var resolvedAction = _jobActions.FirstOrDefault(x => x.Action == step.Action);
           if (resolvedAction is null)
           {
@@ -87,9 +91,12 @@ namespace CronTools.Common.Services
             throw new Exception("Unable to continue");
           }
 
-          await resolvedAction.ExecuteAsync(new RunningStepContext(coreJobInfo, step));
+          var outcome = await resolvedAction.ExecuteAsync(new RunningStepContext(coreJobInfo, step));
+          if (outcome.Succeeded)
+            continue;
 
-          Console.WriteLine("");
+          _logger.Error("Step failed, stopping job");
+          continueRunningSteps = false;
         }
 
 
@@ -105,7 +112,7 @@ namespace CronTools.Common.Services
       Console.WriteLine("");
     }
 
-    private CoreJobInfo GenerateCoreJobInfo(JobConfig jobConfig)
+    private static CoreJobInfo GenerateCoreJobInfo(JobConfig jobConfig)
     {
       // TODO: [TESTS] (CronRunnerService.GenerateCoreJobInfo) Add tests
       return new CoreJobInfo
