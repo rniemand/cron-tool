@@ -3,6 +3,7 @@
   public enum JobStepAction
   {
     Unknown,
-    DeleteFolder
+    DeleteFolder,
+    ZipFolder
   }
 }

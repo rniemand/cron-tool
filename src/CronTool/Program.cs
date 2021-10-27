@@ -55,6 +55,7 @@ namespace CronTool
 
         // Job Actions
         .AddSingleton<IJobAction, DeleteFolderAction>()
+        .AddSingleton<IJobAction, ZipFolderAction>()
 
         // Utils
         .AddSingleton<IMetricServiceUtils, MetricServiceUtils>()

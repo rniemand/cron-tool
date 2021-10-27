@@ -98,16 +98,7 @@ namespace CronTools.Common.Services
           _logger.Error("Step failed, stopping job");
           continueRunningSteps = false;
         }
-
-
-
-        Console.WriteLine(job);
-
       }
-
-
-
-      
 
       Console.WriteLine("");
     }
