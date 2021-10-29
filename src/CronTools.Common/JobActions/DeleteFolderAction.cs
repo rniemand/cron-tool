@@ -13,7 +13,7 @@ namespace CronTools.Common.JobActions
   {
     public JobStepAction Action { get; }
     public string Name { get; }
-    public List<JobActionArg> Args { get; }
+    public Dictionary<string, JobActionArg> Args { get; }
 
     private readonly ILoggerAdapter<DeleteFolderAction> _logger;
     private readonly IDirectoryAbstraction _directory;
@@ -35,10 +35,10 @@ namespace CronTools.Common.JobActions
       Action = JobStepAction.DeleteFolder;
       Name = JobStepAction.DeleteFolder.ToString("G");
 
-      Args = new List<JobActionArg>
+      Args = new Dictionary<string, JobActionArg>
       {
-        new("Path", ArgType.DirectoryPath, true),
-        new("Recurse", ArgType.Boolean)
+        { "Path", new("Directory", ArgType.Directory, true) },
+        { "Recurse", new("Recurse", ArgType.Bool) }
       };
     }
 

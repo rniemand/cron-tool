@@ -9,7 +9,7 @@ namespace CronTools.Common.JobActions
   {
     JobStepAction Action { get; }
     string Name { get; }
-    List<JobActionArg> Args { get; }
+    Dictionary<string, JobActionArg> Args { get; }
 
     Task<JobStepOutcome> ExecuteAsync(RunningStepContext context);
   }

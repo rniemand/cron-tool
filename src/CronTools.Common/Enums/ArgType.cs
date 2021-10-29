@@ -3,8 +3,8 @@
   public enum ArgType
   {
     String,
-    Boolean,
-    DirectoryPath,
+    Bool,
+    Directory,
     FilePath
   }
 }

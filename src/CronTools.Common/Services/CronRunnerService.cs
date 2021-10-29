@@ -116,31 +116,30 @@ namespace CronTools.Common.Services
       if (!CheckRequiredStepArgs(action, context))
         return false;
 
-
       return true;
     }
 
     private bool CheckRequiredStepArgs(IJobAction action, RunningStepContext context)
     {
       // TODO: [TESTS] (CronRunnerService.CheckRequiredStepArgs) Add tests
-      var requiredArgs = action.Args
-        .Where(x => x.Required)
+      var required = action.Args
+        .Where(x => x.Value.Required)
         .ToList();
 
-      if (requiredArgs.Count == 0)
+      if (required.Count == 0)
         return true;
 
-      foreach (var requiredArg in requiredArgs)
+      foreach (var (_, value) in required)
       {
-        if(context.HasArgument(requiredArg.SafeName))
+        if(context.HasArgument(value.SafeName))
           continue;
 
         Logger.Warning(
           "Job '{name}' is missing required argument '{arg}' " +
           "(type: {argType}) for step '{stepNumber}':'{stepType}'!",
           context.JobInfo.Name,
-          requiredArg.Name,
-          requiredArg.Type.ToString("G"),
+          value.Name,
+          value.Type.ToString("G"),
           context.StepNumber,
           action.Name
         );

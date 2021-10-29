@@ -12,7 +12,7 @@ namespace CronTools.Common.JobActions
   {
     public JobStepAction Action { get; }
     public string Name { get; }
-    public List<JobActionArg> Args { get; }
+    public Dictionary<string, JobActionArg> Args { get; }
 
     private readonly ILoggerAdapter<ZipFolderAction> _logger;
     private readonly IFileAbstraction _file;
@@ -28,13 +28,13 @@ namespace CronTools.Common.JobActions
       Action = JobStepAction.ZipFolder;
       Name = JobStepAction.ZipFolder.ToString("G");
 
-      Args = new List<JobActionArg>
+      Args = new Dictionary<string, JobActionArg>
       {
-        new("SourceDir", ArgType.DirectoryPath, true),
-        new("ZipFile", ArgType.FilePath),
-        new("Quick", ArgType.Boolean),
-        new("IncludeBase", ArgType.Boolean),
-        new("DeleteTarget", ArgType.Boolean)
+        { "Src", new("SourceDir", ArgType.Directory, true) },
+        { "Zip", new("TargetZip", ArgType.FilePath, true) },
+        { "Quick", new("Quick", ArgType.Bool) },
+        { "AddBase", new("IncludeBaseDirectory", ArgType.Bool) },
+        { "DeleteZip", new("DeleteTargetZipIfExists", ArgType.Bool) }
       };
     }
 
