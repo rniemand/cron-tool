@@ -41,25 +41,19 @@ namespace CronTools.Common.JobActions
     public async Task<JobStepOutcome> ExecuteAsync(RunningStepContext context)
     {
       // TODO: [TESTS] (ZipFolderAction.ExecuteAsync) Add tests
-
-
-      var sourceDir = context.GetStringArg("SourceDir");
-      var zipFile = context.GetStringArg("ZipFile");
-      var quick = context.GetBoolArg("Quick", false);
-      var includeBase = context.GetBoolArg("IncludeBase", true);
-      var deleteTarget = context.GetBoolArg("DeleteTarget", true);
+      var sourceDir = context.ResolveDirectoryArg(Args["Src"]);
+      var zipFile = context.ResolveFileArg(Args["Zip"]);
+      var quick = context.ResolveBoolArg(Args["Quick"]);
+      var includeBase = context.ResolveBoolArg(Args["AddBase"]);
+      var deleteTarget = context.ResolveBoolArg(Args["DeleteZip"]);
 
       // Handle when the target zip file exists
       if (_file.Exists(zipFile))
       {
         if (!deleteTarget)
-        {
-          _logger.Warning("ZIP file already exists: {path}", zipFile);
-          return new JobStepOutcome(true);
-        }
+          return HandleDeleteZipDisabled(zipFile);
 
-        _logger.Info("Removing existing zip file: {path}", zipFile);
-        _file.Delete(zipFile);
+        DeleteExistingZipFile(zipFile);
       }
 
       // ZIP that shit
@@ -70,6 +64,20 @@ namespace CronTools.Common.JobActions
       );
       
       return new JobStepOutcome(true);
+    }
+
+    private JobStepOutcome HandleDeleteZipDisabled(string zipFile)
+    {
+      // TODO: [TESTS] (ZipFolderAction.HandleDeleteZipDisabled) Add tests
+      _logger.Warning("ZIP file already exists: {path}", zipFile);
+      return new JobStepOutcome(true);
+    }
+
+    private void DeleteExistingZipFile(string zipFile)
+    {
+      // TODO: [TESTS] (ZipFolderAction.DeleteExistingZipFile) Add tests
+      _logger.Info("Removing existing zip file: {path}", zipFile);
+      _file.Delete(zipFile);
     }
   }
 }

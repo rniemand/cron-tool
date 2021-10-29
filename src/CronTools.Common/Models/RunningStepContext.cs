@@ -110,6 +110,20 @@ namespace CronTools.Common.Models
       return rawArg.ToString();
     }
 
+    public string ResolveFileArg(JobActionArg arg)
+    {
+      // TODO: [TESTS] (RunningStepContext.ResolveFileArg) Add tests
+      if (!HasArgument(arg.SafeName))
+        return string.Empty;
+
+      var rawArg = NormalizedArgs[arg.SafeName];
+
+      if (rawArg is string s)
+        return s;
+
+      return rawArg.ToString();
+    }
+
     public bool ResolveBoolArg(JobActionArg arg)
     {
       // TODO: [TESTS] (RunningStepContext.ResolveBoolArg) Add tests
