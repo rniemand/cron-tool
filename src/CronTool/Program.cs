@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using CronTools.Common.Formatters;
 using CronTools.Common.JobActions;
 using CronTools.Common.Providers;
 using CronTools.Common.Services;
@@ -56,6 +57,9 @@ namespace CronTool
         // Job Actions
         .AddSingleton<IJobAction, DeleteFolderAction>()
         .AddSingleton<IJobAction, ZipFolderAction>()
+
+        // Arg Formatters
+        .AddSingleton<IJobActionArgFormatter, DateTimeFormatter>()
 
         // Utils
         .AddSingleton<IMetricServiceUtils, MetricServiceUtils>()

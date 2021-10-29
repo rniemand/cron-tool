@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CronTools.Common.Config;
+using CronTools.Common.Formatters;
 using CronTools.Common.JobActions;
 using CronTools.Common.Models;
 using CronTools.Common.Providers;
@@ -30,6 +31,7 @@ namespace CronTools.Common.Services
     private readonly IFileAbstraction _file;
     private readonly IJsonHelper _jsonHelper;
     private readonly List<IJobAction> _jobActions;
+    private readonly List<IJobActionArgFormatter> _argFormatters;
     private readonly CronToolConfig _config;
 
     private readonly Dictionary<string, string> _jobFiles;
@@ -53,6 +55,7 @@ namespace CronTools.Common.Services
 
       _config = configProvider.GetConfig();
       _jobActions = serviceProvider.GetServices<IJobAction>().ToList();
+      _argFormatters = serviceProvider.GetServices<IJobActionArgFormatter>().ToList();
       _jobFiles = new Dictionary<string, string>();
 
       RefreshJobs();
@@ -94,7 +97,9 @@ namespace CronTools.Common.Services
             throw new Exception("Unable to continue");
           }
 
-          var stepContext = new RunningStepContext(coreJobInfo, step, stepNumber++);
+          var stepContext = new RunningStepContext(coreJobInfo, step, stepNumber++)
+            .WithFormatters(_argFormatters);
+
           if (!ValidateStepArgs(resolvedAction, stepContext))
             continue;
 
@@ -106,8 +111,6 @@ namespace CronTools.Common.Services
           continueRunningSteps = false;
         }
       }
-
-      Console.WriteLine("");
     }
 
     private bool ValidateStepArgs(IJobAction action, RunningStepContext context)

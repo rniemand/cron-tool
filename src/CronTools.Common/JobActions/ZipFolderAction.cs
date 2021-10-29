@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO.Compression;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
@@ -16,14 +17,20 @@ namespace CronTools.Common.JobActions
 
     private readonly ILoggerAdapter<ZipFolderAction> _logger;
     private readonly IFileAbstraction _file;
+    private readonly IPathAbstraction _path;
+    private readonly IDirectoryAbstraction _directory;
 
     public ZipFolderAction(
       IFileAbstraction file,
-      ILoggerAdapter<ZipFolderAction> logger)
+      ILoggerAdapter<ZipFolderAction> logger,
+      IPathAbstraction path,
+      IDirectoryAbstraction directory)
     {
       // TODO: [TESTS] (ZipFolderAction) Add tests
       _file = file;
       _logger = logger;
+      _path = path;
+      _directory = directory;
 
       Action = JobStepAction.ZipFolder;
       Name = JobStepAction.ZipFolder.ToString("G");
@@ -56,14 +63,35 @@ namespace CronTools.Common.JobActions
         DeleteExistingZipFile(zipFile);
       }
 
-      // ZIP that shit
-      ZipFile.CreateFromDirectory(sourceDir,
-        zipFile,
-        quick ? CompressionLevel.Fastest : CompressionLevel.Optimal,
-        includeBase
-      );
-      
+      // Ensure that the output directory exists
+      var targetDirectory = _path.GetDirectoryName(zipFile);
+      if (!EnsureDirectoryExists(targetDirectory))
+        return new JobStepOutcome(false);
+
+      // Zip the folder and return
+      await Task.CompletedTask;
+      var compressionLevel = quick ? CompressionLevel.Fastest : CompressionLevel.Optimal;
+
+      ZipFile.CreateFromDirectory(sourceDir, zipFile, compressionLevel, includeBase);
       return new JobStepOutcome(true);
+    }
+
+    private bool EnsureDirectoryExists(string path)
+    {
+      // TODO: [TESTS] (ZipFolderAction.EnsureDirectoryExists) Add tests
+      if (_directory.Exists(path))
+        return true;
+
+      try
+      {
+        _directory.CreateDirectory(path);
+        return _directory.Exists(path);
+      }
+      catch (Exception ex)
+      {
+        _logger.LogUnexpectedException(ex);
+        return false;
+      }
     }
 
     private JobStepOutcome HandleDeleteZipDisabled(string zipFile)
