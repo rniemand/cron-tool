@@ -28,5 +28,23 @@ namespace CronTools.Common.Models
       Type = type;
       Required = required;
     }
+
+    public static JobActionArg Directory(string name, bool required = false)
+    {
+      // TODO: [TESTS] (JobActionArg.Directory) Add tests
+      return new JobActionArg(name, ArgType.Directory, required);
+    }
+
+    public static JobActionArg Bool(string name, bool required = false)
+    {
+      // TODO: [TESTS] (JobActionArg.Bool) Add tests
+      return new JobActionArg(name, ArgType.Bool, required);
+    }
+
+    public static JobActionArg File(string name, bool required = false)
+    {
+      // TODO: [TESTS] (JobActionArg.File) Add tests
+      return new JobActionArg(name, ArgType.File, required);
+    }
   }
 }

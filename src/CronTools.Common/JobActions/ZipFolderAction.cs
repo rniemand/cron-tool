@@ -30,11 +30,11 @@ namespace CronTools.Common.JobActions
 
       Args = new Dictionary<string, JobActionArg>
       {
-        { "Src", new("SourceDir", ArgType.Directory, true) },
-        { "Zip", new("TargetZip", ArgType.FilePath, true) },
-        { "Quick", new("Quick", ArgType.Bool) },
-        { "AddBase", new("IncludeBaseDirectory", ArgType.Bool) },
-        { "DeleteZip", new("DeleteTargetZipIfExists", ArgType.Bool) }
+        { "Src", JobActionArg.Directory("SourceDir", true) },
+        { "Zip", JobActionArg.File("TargetZip", true) },
+        { "Quick", JobActionArg.Bool("Quick") },
+        { "AddBase", JobActionArg.Bool("IncludeBaseDirectory") },
+        { "DeleteZip", JobActionArg.Bool("DeleteTargetZipIfExists") }
       };
     }
 

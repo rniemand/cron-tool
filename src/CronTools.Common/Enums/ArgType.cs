@@ -5,6 +5,6 @@
     String,
     Bool,
     Directory,
-    FilePath
+    File
   }
 }

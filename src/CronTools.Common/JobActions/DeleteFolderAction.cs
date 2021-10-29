@@ -34,11 +34,11 @@ namespace CronTools.Common.JobActions
 
       Action = JobStepAction.DeleteFolder;
       Name = JobStepAction.DeleteFolder.ToString("G");
-
+      
       Args = new Dictionary<string, JobActionArg>
       {
-        { "Path", new("Directory", ArgType.Directory, true) },
-        { "Recurse", new("Recurse", ArgType.Bool) }
+        { "Path", JobActionArg.Directory("Directory", true) },
+        { "Recurse", JobActionArg.Bool("Recurse") }
       };
     }
 
