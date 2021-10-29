@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CronTools.Common.Enums;
 using CronTools.Common.Models;
 
@@ -8,6 +9,7 @@ namespace CronTools.Common.JobActions
   {
     JobStepAction Action { get; }
     string Name { get; }
+    List<JobActionArg> Args { get; }
 
     Task<JobStepOutcome> ExecuteAsync(RunningStepContext context);
   }

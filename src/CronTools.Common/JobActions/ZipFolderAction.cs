@@ -1,4 +1,5 @@
-﻿using System.IO.Compression;
+﻿using System.Collections.Generic;
+using System.IO.Compression;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
 using CronTools.Common.Models;
@@ -11,6 +12,7 @@ namespace CronTools.Common.JobActions
   {
     public JobStepAction Action { get; }
     public string Name { get; }
+    public List<JobActionArg> Args { get; }
 
     private readonly ILoggerAdapter<ZipFolderAction> _logger;
     private readonly IFileAbstraction _file;
@@ -25,11 +27,21 @@ namespace CronTools.Common.JobActions
 
       Action = JobStepAction.ZipFolder;
       Name = JobStepAction.ZipFolder.ToString("G");
+
+      Args = new List<JobActionArg>
+      {
+        new("SourceDir", ArgType.DirectoryPath, true),
+        new("ZipFile", ArgType.FilePath),
+        new("Quick", ArgType.Boolean),
+        new("IncludeBase", ArgType.Boolean),
+        new("DeleteTarget", ArgType.Boolean)
+      };
     }
 
     public async Task<JobStepOutcome> ExecuteAsync(RunningStepContext context)
     {
       // TODO: [TESTS] (ZipFolderAction.ExecuteAsync) Add tests
+
 
       var sourceDir = context.GetStringArg("SourceDir");
       var zipFile = context.GetStringArg("ZipFile");
@@ -50,7 +62,7 @@ namespace CronTools.Common.JobActions
         _file.Delete(zipFile);
       }
 
-      // ZIP that shiz
+      // ZIP that shit
       ZipFile.CreateFromDirectory(sourceDir,
         zipFile,
         quick ? CompressionLevel.Fastest : CompressionLevel.Optimal,

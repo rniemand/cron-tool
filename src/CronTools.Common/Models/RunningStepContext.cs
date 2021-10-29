@@ -77,5 +77,16 @@ namespace CronTools.Common.Models
 
       return rawArg.ToString();
     }
+
+    public bool HasRequiredArgs(List<string> args)
+    {
+      // TODO: [TESTS] (RunningStepContext.HasRequiredArgs) Add tests
+      if (args.Count == 0)
+      {
+        return true;
+      }
+
+      return args.All(HasArgument);
+    }
   }
 }

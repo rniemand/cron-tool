@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CronTools.Common.Enums;
 using CronTools.Common.Models;
 using Rn.NetCore.Common.Abstractions;
@@ -12,6 +13,7 @@ namespace CronTools.Common.JobActions
   {
     public JobStepAction Action { get; }
     public string Name { get; }
+    public List<JobActionArg> Args { get; }
 
     private readonly ILoggerAdapter<DeleteFolderAction> _logger;
     private readonly IDirectoryAbstraction _directory;
@@ -32,6 +34,12 @@ namespace CronTools.Common.JobActions
 
       Action = JobStepAction.DeleteFolder;
       Name = JobStepAction.DeleteFolder.ToString("G");
+
+      Args = new List<JobActionArg>
+      {
+        new("Path", ArgType.DirectoryPath, true),
+        new("Recurse", ArgType.Boolean)
+      };
     }
 
     public async Task<JobStepOutcome> ExecuteAsync(RunningStepContext context)
@@ -41,7 +49,9 @@ namespace CronTools.Common.JobActions
 
       // Nothing to do
       if (!_directory.Exists(path))
+      {
         return new JobStepOutcome(true);
+      }
 
       await Task.CompletedTask;
       var recurse = context.GetBoolArg("Recurse", false);
