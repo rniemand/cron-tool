@@ -8,14 +8,15 @@ namespace CronTools.Common.Models
   {
     public CoreJobInfo JobInfo { get; set; }
     public JobStepConfig Config { get; set; }
-
     public Dictionary<string, object> NormalizedArgs { get; }
+    public int StepNumber { get; set; }
 
-    public RunningStepContext(CoreJobInfo job, JobStepConfig config)
+    public RunningStepContext(CoreJobInfo job, JobStepConfig config, int stepNumber)
     {
       // TODO: [TESTS] (RunningStepContext.RunningStepContext) Add tests
       JobInfo = job;
       Config = config;
+      StepNumber = stepNumber;
 
       NormalizedArgs = new Dictionary<string, object>();
 

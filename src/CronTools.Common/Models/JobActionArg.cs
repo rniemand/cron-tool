@@ -6,6 +6,7 @@ namespace CronTools.Common.Models
   public class JobActionArg
   {
     public string Name { get; set; }
+    public string SafeName { get; set; }
     public bool Required { get; set; }
     public ArgType Type { get; set; }
 
@@ -13,6 +14,7 @@ namespace CronTools.Common.Models
     {
       // TODO: [TESTS] (JobActionArg) Add tests
       Name = string.Empty;
+      SafeName = string.Empty;
       Required = false;
       Type = ArgType.String;
     }
@@ -21,7 +23,8 @@ namespace CronTools.Common.Models
       : this()
     {
       // TODO: [TESTS] (JobActionArg) Add tests
-      Name = name.LowerTrim();
+      Name = name;
+      SafeName = name.LowerTrim();
       Type = type;
       Required = required;
     }

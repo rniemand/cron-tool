@@ -74,13 +74,16 @@ namespace CronTools.Common.Services
 
         var coreJobInfo = GenerateCoreJobInfo(config);
         var continueRunningSteps = true;
+        var stepNumber = 1;
 
         foreach (var step in config.Steps)
         {
           if (!continueRunningSteps)
             continue;
 
-          var resolvedAction = _jobActions.FirstOrDefault(x => x.Action == step.Action);
+          var resolvedAction = _jobActions
+            .FirstOrDefault(x => x.Action == step.Action);
+          
           if (resolvedAction is null)
           {
             _logger.Error("Unable to resolve action {name} for job {job}",
@@ -91,7 +94,11 @@ namespace CronTools.Common.Services
             throw new Exception("Unable to continue");
           }
 
-          var outcome = await resolvedAction.ExecuteAsync(new RunningStepContext(coreJobInfo, step));
+          var stepContext = new RunningStepContext(coreJobInfo, step, stepNumber++);
+          if (!ValidateStepArgs(resolvedAction, stepContext))
+            continue;
+
+          var outcome = await resolvedAction.ExecuteAsync(stepContext);
           if (outcome.Succeeded)
             continue;
 
@@ -101,6 +108,47 @@ namespace CronTools.Common.Services
       }
 
       Console.WriteLine("");
+    }
+
+    private bool ValidateStepArgs(IJobAction action, RunningStepContext context)
+    {
+      // TODO: [TESTS] (CronRunnerService.ValidateStepArgs) Add tests
+      if (!CheckRequiredStepArgs(action, context))
+        return false;
+
+
+      return true;
+    }
+
+    private bool CheckRequiredStepArgs(IJobAction action, RunningStepContext context)
+    {
+      // TODO: [TESTS] (CronRunnerService.CheckRequiredStepArgs) Add tests
+      var requiredArgs = action.Args
+        .Where(x => x.Required)
+        .ToList();
+
+      if (requiredArgs.Count == 0)
+        return true;
+
+      foreach (var requiredArg in requiredArgs)
+      {
+        if(context.HasArgument(requiredArg.SafeName))
+          continue;
+
+        Logger.Warning(
+          "Job '{name}' is missing required argument '{arg}' " +
+          "(type: {argType}) for step '{stepNumber}':'{stepType}'!",
+          context.JobInfo.Name,
+          requiredArg.Name,
+          requiredArg.Type.ToString("G"),
+          context.StepNumber,
+          action.Name
+        );
+
+        return false;
+      }
+
+      return true;
     }
 
     private static CoreJobInfo GenerateCoreJobInfo(JobConfig jobConfig)
