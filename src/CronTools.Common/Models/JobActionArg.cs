@@ -9,6 +9,7 @@ namespace CronTools.Common.Models
     public string SafeName { get; set; }
     public bool Required { get; set; }
     public ArgType Type { get; set; }
+    public object Default { get; set; }
 
     public JobActionArg()
     {
@@ -17,9 +18,10 @@ namespace CronTools.Common.Models
       SafeName = string.Empty;
       Required = false;
       Type = ArgType.String;
+      Default = default;
     }
 
-    public JobActionArg(string name, ArgType type, bool required = false)
+    public JobActionArg(string name, ArgType type, bool required, object fallback)
       : this()
     {
       // TODO: [TESTS] (JobActionArg) Add tests
@@ -27,24 +29,25 @@ namespace CronTools.Common.Models
       SafeName = name.LowerTrim();
       Type = type;
       Required = required;
+      Default = fallback;
     }
 
-    public static JobActionArg Directory(string name, bool required = false)
+    public static JobActionArg Directory(string name, bool required, string fallback = "")
     {
       // TODO: [TESTS] (JobActionArg.Directory) Add tests
-      return new JobActionArg(name, ArgType.Directory, required);
+      return new JobActionArg(name, ArgType.Directory, required, fallback);
     }
 
-    public static JobActionArg Bool(string name, bool required = false)
+    public static JobActionArg Bool(string name, bool required, bool fallback = false)
     {
       // TODO: [TESTS] (JobActionArg.Bool) Add tests
-      return new JobActionArg(name, ArgType.Bool, required);
+      return new JobActionArg(name, ArgType.Bool, required, fallback);
     }
 
-    public static JobActionArg File(string name, bool required = false)
+    public static JobActionArg File(string name, bool required, string fallback = "")
     {
       // TODO: [TESTS] (JobActionArg.File) Add tests
-      return new JobActionArg(name, ArgType.File, required);
+      return new JobActionArg(name, ArgType.File, required, fallback);
     }
   }
 }

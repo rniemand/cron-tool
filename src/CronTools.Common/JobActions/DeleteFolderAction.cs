@@ -5,7 +5,6 @@ using CronTools.Common.Models;
 using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Factories;
 using Rn.NetCore.Common.Logging;
-using Rn.NetCore.Common.Wrappers;
 
 namespace CronTools.Common.JobActions
 {
@@ -34,18 +33,18 @@ namespace CronTools.Common.JobActions
 
       Action = JobStepAction.DeleteFolder;
       Name = JobStepAction.DeleteFolder.ToString("G");
-      
+
       Args = new Dictionary<string, JobActionArg>
       {
         { "Path", JobActionArg.Directory("Directory", true) },
-        { "Recurse", JobActionArg.Bool("Recurse") }
+        { "Recurse", JobActionArg.Bool("Recurse", false) }
       };
     }
 
     public async Task<JobStepOutcome> ExecuteAsync(RunningStepContext context)
     {
       // TODO: [TESTS] (DeleteFolderAction.ExecuteAsync) Add tests
-      var path = context.GetStringArg("Path");
+      var path = context.ResolveDirectoryArg(Args["Path"]);
 
       // Nothing to do
       if (!_directory.Exists(path))
@@ -54,7 +53,7 @@ namespace CronTools.Common.JobActions
       }
 
       await Task.CompletedTask;
-      var recurse = context.GetBoolArg("Recurse", false);
+      var recurse = context.ResolveBoolArg(Args["Recurse"]);
 
       _logger.Info("Deleting: {path} (recurse: {recurse})",
         path,

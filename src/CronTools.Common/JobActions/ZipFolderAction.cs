@@ -32,9 +32,9 @@ namespace CronTools.Common.JobActions
       {
         { "Src", JobActionArg.Directory("SourceDir", true) },
         { "Zip", JobActionArg.File("TargetZip", true) },
-        { "Quick", JobActionArg.Bool("Quick") },
-        { "AddBase", JobActionArg.Bool("IncludeBaseDirectory") },
-        { "DeleteZip", JobActionArg.Bool("DeleteTargetZipIfExists") }
+        { "Quick", JobActionArg.Bool("Quick", false) },
+        { "AddBase", JobActionArg.Bool("IncludeBaseDirectory", false, true) },
+        { "DeleteZip", JobActionArg.Bool("DeleteTargetZipIfExists", false) }
       };
     }
 

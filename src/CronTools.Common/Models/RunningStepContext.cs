@@ -43,11 +43,11 @@ namespace CronTools.Common.Models
 
       var rawArg = NormalizedArgs[key.LowerTrim()];
       if (rawArg is bool)
-        return (bool) rawArg;
+        return (bool)rawArg;
 
       if (rawArg is string)
       {
-        if (bool.TryParse((string) rawArg, out var parsed))
+        if (bool.TryParse((string)rawArg, out var parsed))
         {
           return parsed;
         }
@@ -70,7 +70,7 @@ namespace CronTools.Common.Models
         return string.Empty;
 
       var rawArg = NormalizedArgs[key.LowerTrim()];
-      
+
       if (rawArg is string)
       {
         return (string)rawArg;
@@ -88,6 +88,54 @@ namespace CronTools.Common.Models
       }
 
       return args.All(HasArgument);
+    }
+
+    public bool HasArgument(JobActionArg arg)
+    {
+      // TODO: [TESTS] (RunningStepContext.HasArgument) Add tests
+      return HasArgument(arg.SafeName);
+    }
+
+    public string ResolveDirectoryArg(JobActionArg arg)
+    {
+      // TODO: [TESTS] (RunningStepContext.ResolveDirectoryArg) Add tests
+      if (!HasArgument(arg.SafeName))
+        return string.Empty;
+
+      var rawArg = NormalizedArgs[arg.SafeName];
+
+      if (rawArg is string s)
+        return s;
+
+      return rawArg.ToString();
+    }
+
+    public bool ResolveBoolArg(JobActionArg arg)
+    {
+      // TODO: [TESTS] (RunningStepContext.ResolveBoolArg) Add tests
+      if (!HasArgument(arg))
+        return (bool)arg.Default;
+
+      var rawArg = NormalizedArgs[arg.SafeName];
+      if (rawArg is bool b)
+        return b;
+
+      if (rawArg is string)
+      {
+        if (bool.TryParse((string)rawArg, out var parsed))
+        {
+          return parsed;
+        }
+
+        return (bool)arg.Default;
+      }
+
+      if (rawArg is int)
+      {
+        return (int)rawArg == 1;
+      }
+
+      return (bool)arg.Default;
     }
   }
 }
