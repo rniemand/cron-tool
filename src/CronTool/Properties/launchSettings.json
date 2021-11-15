@@ -2,7 +2,7 @@
   "profiles": {
     "CronTool": {
       "commandName": "Project",
-      "commandLineArgs": "BackupSatisfactory"
+      "commandLineArgs": "DevJob"
     }
   }
 }
