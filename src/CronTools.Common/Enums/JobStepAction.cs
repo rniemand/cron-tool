@@ -4,6 +4,7 @@
   {
     Unknown,
     DeleteFolder,
+    CopyFile,
     ZipFolder
   }
 }
