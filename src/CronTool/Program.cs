@@ -58,6 +58,7 @@ namespace CronTool
         .AddSingleton<IJobAction, DeleteFolderAction>()
         .AddSingleton<IJobAction, ZipFolderAction>()
         .AddSingleton<IJobAction, CopyFileAction>()
+        .AddSingleton<IJobAction, DeleteFileAction>()
 
         // Arg Formatters
         .AddSingleton<IJobActionArgFormatter, DateTimeFormatter>()

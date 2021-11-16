@@ -5,6 +5,7 @@
     Unknown,
     DeleteFolder,
     CopyFile,
+    DeleteFile,
     ZipFolder
   }
 }
