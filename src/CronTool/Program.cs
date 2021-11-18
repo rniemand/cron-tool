@@ -13,8 +13,7 @@ using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Factories;
 using Rn.NetCore.Common.Helpers;
 using Rn.NetCore.Common.Logging;
-using Rn.NetCore.Common.Metrics;
-using Rn.NetCore.Common.Metrics.Interfaces;
+using Rn.NetCore.Metrics;
 
 namespace CronTool
 {

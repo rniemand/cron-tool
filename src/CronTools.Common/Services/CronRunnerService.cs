@@ -14,7 +14,6 @@ using Rn.NetCore.Common.Extensions;
 using Rn.NetCore.Common.Factories;
 using Rn.NetCore.Common.Helpers;
 using Rn.NetCore.Common.Logging;
-using Rn.NetCore.Common.Services;
 
 namespace CronTools.Common.Services
 {
@@ -23,7 +22,7 @@ namespace CronTools.Common.Services
     Task RunCrons(string[] args);
   }
 
-  public class CronRunnerService :BaseService<CronRunnerService>, ICronRunnerService
+  public class CronRunnerService : ICronRunnerService
   {
     private readonly ILoggerAdapter<CronRunnerService> _logger;
     private readonly IDirectoryAbstraction _directory;
@@ -44,7 +43,6 @@ namespace CronTools.Common.Services
       IDirectoryInfoFactory directoryInfoFactory,
       IFileAbstraction file,
       IJsonHelper jsonHelper)
-      : base(serviceProvider)
     {
       // TODO: [TESTS] (CronRunnerService) Add tests
       _logger = logger;
@@ -137,7 +135,7 @@ namespace CronTools.Common.Services
         if(context.HasArgument(value.SafeName))
           continue;
 
-        Logger.Warning(
+        _logger.Warning(
           "Job '{name}' is missing required argument '{arg}' " +
           "(type: {argType}) for step '{stepNumber}':'{stepType}'!",
           context.JobInfo.Name,
