@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CronTool": {
+      "commandName": "Project",
+      "commandLineArgs": "DevJob"
+    }
+  }
+}
