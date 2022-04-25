@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CronTools.Common", "CronToo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{AE056D23-5424-438C-9C28-BBF386847766}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CronTools.Common.T1.Tests", "CronTools.Common.T1.Tests\CronTools.Common.T1.Tests.csproj", "{1A824AB6-0333-4B0A-806C-3FEAB1413FB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CronTools.Common.T1.Tests", "CronTools.Common.T1.Tests\CronTools.Common.T1.Tests.csproj", "{1A824AB6-0333-4B0A-806C-3FEAB1413FB9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D7D109EA-035B-4F46-8592-ABD36A08904F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,7 +37,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{68E6FC44-31E3-4FBF-89A9-06C600C42258} = {AE056D23-5424-438C-9C28-BBF386847766}
-		{1A824AB6-0333-4B0A-806C-3FEAB1413FB9} = {AE056D23-5424-438C-9C28-BBF386847766}
+		{1A824AB6-0333-4B0A-806C-3FEAB1413FB9} = {D7D109EA-035B-4F46-8592-ABD36A08904F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4275456A-B200-4760-904F-62213A4EF88A}
