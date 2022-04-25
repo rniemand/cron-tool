@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-
     <IsPackable>false</IsPackable>
+	  <ProjectGuid>B012FFA7-CB52-4764-AAFB-5CC37C2AF9FA</ProjectGuid>
   </PropertyGroup>
 
   <ItemGroup>
