@@ -1,10 +1,9 @@
-﻿namespace CronTools.Common.Enums
+﻿namespace CronTools.Common.Enums;
+
+public enum ArgType
 {
-  public enum ArgType
-  {
-    String,
-    Bool,
-    Directory,
-    File
-  }
+  String,
+  Bool,
+  Directory,
+  File
 }

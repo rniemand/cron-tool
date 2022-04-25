@@ -2,41 +2,40 @@
 using Newtonsoft.Json;
 using Rn.NetCore.Common.Extensions;
 
-namespace CronTools.Common.Config
+namespace CronTools.Common.Config;
+
+public class CronToolConfig
 {
-  public class CronToolConfig
+  public const string Key = "CronTool";
+
+  [JsonProperty("RootDir"), JsonPropertyName("RootDir")]
+  public string RootDir { get; set; }
+
+  [JsonProperty("DirectorySeparator"), JsonPropertyName("DirectorySeparator")]
+  public string DirectorySeparator { get; set; }
+
+  [JsonProperty("JobConfigDir"), JsonPropertyName("JobConfigDir")]
+  public string JobConfigDir { get; set; }
+
+  public CronToolConfig()
   {
-    public const string Key = "CronTool";
+    // TODO: [TESTS] (CronToolConfig.CronToolConfig) Add tests
+    RootDir = "./config";
+    DirectorySeparator = "\\";
+    JobConfigDir = "{root}jobs";
+  }
 
-    [JsonProperty("RootDir"), JsonPropertyName("RootDir")]
-    public string RootDir { get; set; }
+  public CronToolConfig NormalizePaths(string rootDir)
+  {
+    // TODO: [TESTS] (CronToolConfig.NormalizePaths) Add tests
+    RootDir = RootDir
+      .Replace("./", rootDir.AppendIfMissing(DirectorySeparator))
+      .AppendIfMissing(DirectorySeparator);
 
-    [JsonProperty("DirectorySeparator"), JsonPropertyName("DirectorySeparator")]
-    public string DirectorySeparator { get; set; }
+    JobConfigDir = JobConfigDir
+      .Replace("{root}", RootDir)
+      .AppendIfMissing(DirectorySeparator);
 
-    [JsonProperty("JobConfigDir"), JsonPropertyName("JobConfigDir")]
-    public string JobConfigDir { get; set; }
-
-    public CronToolConfig()
-    {
-      // TODO: [TESTS] (CronToolConfig.CronToolConfig) Add tests
-      RootDir = "./config";
-      DirectorySeparator = "\\";
-      JobConfigDir = "{root}jobs";
-    }
-
-    public CronToolConfig NormalizePaths(string rootDir)
-    {
-      // TODO: [TESTS] (CronToolConfig.NormalizePaths) Add tests
-      RootDir = RootDir
-        .Replace("./", rootDir.AppendIfMissing(DirectorySeparator))
-        .AppendIfMissing(DirectorySeparator);
-
-      JobConfigDir = JobConfigDir
-        .Replace("{root}", RootDir)
-        .AppendIfMissing(DirectorySeparator);
-
-      return this;
-    }
+    return this;
   }
 }
