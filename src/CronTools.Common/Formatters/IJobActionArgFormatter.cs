@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using CronTools.Common.Enums;
 
-namespace CronTools.Common.Formatters
-{
-  public interface IJobActionArgFormatter
-  {
-    List<ArgType> SupportedTypes { get; }
+namespace CronTools.Common.Formatters;
 
-    string Format(string input);
-  }
+public interface IJobActionArgFormatter
+{
+  List<ArgType> SupportedTypes { get; }
+
+  string Format(string input);
 }

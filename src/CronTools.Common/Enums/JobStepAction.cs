@@ -1,11 +1,10 @@
-﻿namespace CronTools.Common.Enums
+﻿namespace CronTools.Common.Enums;
+
+public enum JobStepAction
 {
-  public enum JobStepAction
-  {
-    Unknown,
-    DeleteFolder,
-    CopyFile,
-    DeleteFile,
-    ZipFolder
-  }
+  Unknown,
+  DeleteFolder,
+  CopyFile,
+  DeleteFile,
+  ZipFolder
 }
