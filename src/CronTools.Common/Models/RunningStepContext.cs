@@ -90,9 +90,9 @@ namespace CronTools.Common.Models
       if (rawArg is bool b)
         return b;
 
-      if (rawArg is string)
+      if (rawArg is string strRawAre)
       {
-        if (bool.TryParse((string)rawArg, out var parsed))
+        if (bool.TryParse(strRawAre, out var parsed))
         {
           return parsed;
         }
