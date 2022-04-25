@@ -55,7 +55,7 @@ namespace CronTools.Common.JobActions
       await Task.CompletedTask;
       var recurse = context.ResolveBoolArg(Args["Recurse"]);
 
-      _logger.Info("Deleting: {path} (recurse: {recurse})",
+      _logger.LogInformation("Deleting: {path} (recurse: {recurse})",
         path,
         recurse ? "yes" : "no"
       );
@@ -66,7 +66,7 @@ namespace CronTools.Common.JobActions
         return new JobStepOutcome(true);
       }
 
-      _logger.Error("Need to complete me");
+      _logger.LogError("Need to complete me");
       return new JobStepOutcome(true);
     }
 

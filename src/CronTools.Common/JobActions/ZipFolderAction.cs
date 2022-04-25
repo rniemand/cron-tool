@@ -97,14 +97,14 @@ namespace CronTools.Common.JobActions
     private JobStepOutcome HandleDeleteZipDisabled(string zipFile)
     {
       // TODO: [TESTS] (ZipFolderAction.HandleDeleteZipDisabled) Add tests
-      _logger.Warning("ZIP file already exists: {path}", zipFile);
+      _logger.LogWarning("ZIP file already exists: {path}", zipFile);
       return new JobStepOutcome(true);
     }
 
     private void DeleteExistingZipFile(string zipFile)
     {
       // TODO: [TESTS] (ZipFolderAction.DeleteExistingZipFile) Add tests
-      _logger.Info("Removing existing zip file: {path}", zipFile);
+      _logger.LogInformation("Removing existing zip file: {path}", zipFile);
       _file.Delete(zipFile);
     }
   }

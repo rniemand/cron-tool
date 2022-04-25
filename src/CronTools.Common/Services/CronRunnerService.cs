@@ -64,7 +64,7 @@ namespace CronTools.Common.Services
       // TODO: [TESTS] (CronRunnerService.RunCrons) Add tests
       if (args.Length == 0)
       {
-        _logger.Warning("No jobs to run");
+        _logger.LogWarning("No jobs to run");
         return;
       }
 
@@ -87,7 +87,7 @@ namespace CronTools.Common.Services
           
           if (resolvedAction is null)
           {
-            _logger.Error("Unable to resolve action {name} for job {job}",
+            _logger.LogError("Unable to resolve action {name} for job {job}",
               step.Action.ToString("G"),
               config.Name
             );
@@ -105,7 +105,7 @@ namespace CronTools.Common.Services
           if (outcome.Succeeded)
             continue;
 
-          _logger.Error("Step failed, stopping job");
+          _logger.LogError("Step failed, stopping job");
           continueRunningSteps = false;
         }
       }
@@ -135,7 +135,7 @@ namespace CronTools.Common.Services
         if(context.HasArgument(value.SafeName))
           continue;
 
-        _logger.Warning(
+        _logger.LogWarning(
           "Job '{name}' is missing required argument '{arg}' " +
           "(type: {argType}) for step '{stepNumber}':'{stepType}'!",
           context.JobInfo.Name,
@@ -170,7 +170,7 @@ namespace CronTools.Common.Services
       var jobKey = jobName.LowerTrim();
       if (!_jobFiles.ContainsKey(jobKey))
       {
-        _logger.Warning("Requested job {key} was not found in {directory}",
+        _logger.LogWarning("Requested job {key} was not found in {directory}",
           jobKey,
           _config.JobConfigDir
         );
@@ -182,7 +182,7 @@ namespace CronTools.Common.Services
       var jobFilePath = _jobFiles[jobKey];
       if (!_file.Exists(jobFilePath))
       {
-        _logger.Warning("Job file {path} no longer exists", jobFilePath);
+        _logger.LogWarning("Job file {path} no longer exists", jobFilePath);
         _jobFiles.Remove(jobKey);
         return null;
       }
@@ -194,11 +194,11 @@ namespace CronTools.Common.Services
       // Handle disabled jobs
       if (!jobConfig.Enabled)
       {
-        _logger.Warning("Requested job {name} is disabled", jobConfig.Name);
+        _logger.LogWarning("Requested job {name} is disabled", jobConfig.Name);
         return null;
       }
 
-      _logger.Info("Loaded config for {name} ({path})",
+      _logger.LogInformation("Loaded config for {name} ({path})",
         jobConfig.Name,
         jobFilePath
       );
@@ -224,7 +224,7 @@ namespace CronTools.Common.Services
       // TODO: [TESTS] (CronRunnerService.RefreshJobs) Add tests
       EnsureDirectoriesExist();
 
-      _logger.Info("Refreshing jobs");
+      _logger.LogInformation("Refreshing jobs");
       _jobFiles.Clear();
 
       var directoryInfo = _directoryInfoFactory.GetDirectoryInfo(_config.JobConfigDir);
@@ -233,7 +233,7 @@ namespace CronTools.Common.Services
       if (fileInfos.Length == 0)
         return;
 
-      _logger.Info("Discovered {count} job(s) in {directory}",
+      _logger.LogInformation("Discovered {count} job(s) in {directory}",
         fileInfos.Length,
         _config.JobConfigDir
       );
