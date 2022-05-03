@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31825.309
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CronTool", "CronTool\CronTool.csproj", "{63D0A1CB-C258-470C-BEA7-9257DCD4F47C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CronTool", "CronTool\CronTool.csproj", "{24DC64E1-DAAE-452C-8B0E-2384A7F3856C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CronTools.Common", "CronTools.Common\CronTools.Common.csproj", "{68E6FC44-31E3-4FBF-89A9-06C600C42258}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CronTools.Common", "CronTools.Common\CronTools.Common.csproj", "{9E82EE7F-0C5F-4690-902A-C3C71C640FDF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{AE056D23-5424-438C-9C28-BBF386847766}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CronTools.Common.T1.Tests", "CronTools.Common.T1.Tests\CronTools.Common.T1.Tests.csproj", "{1A824AB6-0333-4B0A-806C-3FEAB1413FB9}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D7D109EA-035B-4F46-8592-ABD36A08904F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CronTools.Common.T1.Tests", "..\test\CronTools.Common.T1.Tests\CronTools.Common.T1.Tests.csproj", "{B012FFA7-CB52-4764-AAFB-5CC37C2AF9FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,25 +19,25 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{63D0A1CB-C258-470C-BEA7-9257DCD4F47C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{63D0A1CB-C258-470C-BEA7-9257DCD4F47C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{63D0A1CB-C258-470C-BEA7-9257DCD4F47C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{63D0A1CB-C258-470C-BEA7-9257DCD4F47C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{68E6FC44-31E3-4FBF-89A9-06C600C42258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68E6FC44-31E3-4FBF-89A9-06C600C42258}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68E6FC44-31E3-4FBF-89A9-06C600C42258}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68E6FC44-31E3-4FBF-89A9-06C600C42258}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1A824AB6-0333-4B0A-806C-3FEAB1413FB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1A824AB6-0333-4B0A-806C-3FEAB1413FB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1A824AB6-0333-4B0A-806C-3FEAB1413FB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1A824AB6-0333-4B0A-806C-3FEAB1413FB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24DC64E1-DAAE-452C-8B0E-2384A7F3856C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24DC64E1-DAAE-452C-8B0E-2384A7F3856C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24DC64E1-DAAE-452C-8B0E-2384A7F3856C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24DC64E1-DAAE-452C-8B0E-2384A7F3856C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E82EE7F-0C5F-4690-902A-C3C71C640FDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E82EE7F-0C5F-4690-902A-C3C71C640FDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E82EE7F-0C5F-4690-902A-C3C71C640FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E82EE7F-0C5F-4690-902A-C3C71C640FDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B012FFA7-CB52-4764-AAFB-5CC37C2AF9FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B012FFA7-CB52-4764-AAFB-5CC37C2AF9FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B012FFA7-CB52-4764-AAFB-5CC37C2AF9FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B012FFA7-CB52-4764-AAFB-5CC37C2AF9FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{68E6FC44-31E3-4FBF-89A9-06C600C42258} = {AE056D23-5424-438C-9C28-BBF386847766}
-		{1A824AB6-0333-4B0A-806C-3FEAB1413FB9} = {D7D109EA-035B-4F46-8592-ABD36A08904F}
+		{9E82EE7F-0C5F-4690-902A-C3C71C640FDF} = {AE056D23-5424-438C-9C28-BBF386847766}
+		{B012FFA7-CB52-4764-AAFB-5CC37C2AF9FA} = {D7D109EA-035B-4F46-8592-ABD36A08904F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4275456A-B200-4760-904F-62213A4EF88A}

@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CronTools.Common\CronTools.Common.csproj" />
+    <ProjectReference Include="..\..\src\CronTools.Common\CronTools.Common.csproj" />
   </ItemGroup>
 
 </Project>
