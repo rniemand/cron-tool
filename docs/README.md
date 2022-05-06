@@ -1,6 +1,6 @@
 [Home](/README.md) / Docs
 
-# Documentation
+# CronTool
 Starter documentation for `cron-tool`.
 
 More to come...
