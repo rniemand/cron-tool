@@ -4,6 +4,7 @@ using CronTools.Common.JobActions;
 using CronTools.Common.Providers;
 using CronTools.Common.Resolvers;
 using CronTools.Common.Services;
+using CronTools.Common.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Factories;
@@ -57,6 +58,9 @@ public static class ServiceCollectionExtensions
 
       // Factories
       .AddSingleton<IJobFactory, JobFactory>()
+
+      // Utils
+      .AddSingleton<IJobUtils, JobUtils>()
 
       // Logging
       .AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));

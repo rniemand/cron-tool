@@ -1,11 +1,10 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using CronTools.Common.Factories;
-using CronTools.Common.JobActions;
 using CronTools.Common.Models;
 using CronTools.Common.Providers;
 using CronTools.Common.Resolvers;
+using CronTools.Common.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Rn.NetCore.Common.Logging;
 
@@ -22,6 +21,7 @@ public class CronRunnerService : ICronRunnerService
   private readonly IJobConfigProvider _jobConfigProvider;
   private readonly IJobActionResolver _actionResolver;
   private readonly IJobFactory _jobFactory;
+  private readonly IJobUtils _jobUtils;
 
   public CronRunnerService(IServiceProvider serviceProvider)
   {
@@ -30,6 +30,7 @@ public class CronRunnerService : ICronRunnerService
     _jobConfigProvider = serviceProvider.GetRequiredService<IJobConfigProvider>();
     _actionResolver = serviceProvider.GetRequiredService<IJobActionResolver>();
     _jobFactory = serviceProvider.GetRequiredService<IJobFactory>();
+    _jobUtils = serviceProvider.GetRequiredService<IJobUtils>();
   }
 
   public async Task RunAsync(string[] args)
@@ -60,8 +61,7 @@ public class CronRunnerService : ICronRunnerService
           throw new Exception("Unable to continue");
 
         var stepContext = _jobFactory.CreateRunningStepContext(coreJobInfo, step, stepNumber++);
-
-        if (!ValidateStepArgs(resolvedAction, stepContext))
+        if (!_jobUtils.ValidateStepArgs(resolvedAction, stepContext))
           continue;
 
         var outcome = await resolvedAction.ExecuteAsync(stepContext);
@@ -72,45 +72,5 @@ public class CronRunnerService : ICronRunnerService
         continueRunningSteps = false;
       }
     }
-  }
-
-  private bool ValidateStepArgs(IJobAction action, RunningStepContext context)
-  {
-    // TODO: [TESTS] (CronRunnerService.ValidateStepArgs) Add tests
-    if (!CheckRequiredStepArgs(action, context))
-      return false;
-
-    return true;
-  }
-
-  private bool CheckRequiredStepArgs(IJobAction action, RunningStepContext context)
-  {
-    // TODO: [TESTS] (CronRunnerService.CheckRequiredStepArgs) Add tests
-    var required = action.Args
-      .Where(x => x.Value.Required)
-      .ToList();
-
-    if (required.Count == 0)
-      return true;
-
-    foreach (var (_, value) in required)
-    {
-      if (context.HasArgument(value.SafeName))
-        continue;
-
-      _logger.LogWarning(
-        "Job '{name}' is missing required argument '{arg}' " +
-        "(type: {argType}) for step '{stepNumber}':'{stepType}'!",
-        context.JobInfo.Name,
-        value.Name,
-        value.Type.ToString("G"),
-        context.StepNumber,
-        action.Name
-      );
-
-      return false;
-    }
-
-    return true;
   }
 }
