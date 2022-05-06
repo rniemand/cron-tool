@@ -1,10 +1,22 @@
-# cron-tool
-Customizable `JSON` based script runner geared towards to automating various tasks I manually preform.
+Home
 
-- [Configuration](/docs/models/CronToolConfig.md) - coverts the basics of configuring the application
-- [Job actions](/docs/job-actions/README.md) - list of all available job actions that can be preformed
-- [String formatters](/docs/string-formatters/README.md) - information about the various string formatters supported by `cron-tool`
-- [Models](/docs/models/README.md) - documentation covering the various models used by `cron-tool`
+# CronTool
+Starter documentation for `cron-tool`, you can visit the various sections below to find out more about this application.
+
+- [Models](/docs/models/README.md) - information about the various models used in the application
+- [Job Actions](/docs/job-actions/README.md) - documentation around the supported action types
+- [String formatters](/docs/string-formatters/README.md) - information about the various argument string formatters
+- [Enums](/docs/enums/README.md) - list of all user exposed `enums` used by `cron-tool`
+- [Examples](/docs/examples/README.md) - collection of example jobs - something to get you started
+
+## Basic Usage
+While the `cron-tool` is in development you can use it by building the `CronTool.csproj` file and running it like below.
+
+```shell
+CronTool.exe <JobFileNameWithoutExtension>
+```
+
+This will launch the `cron-tool` and execute the given project file.
 
 <!--(Rn.BuildScriptHelper){
 	"version": "1.0.106",
