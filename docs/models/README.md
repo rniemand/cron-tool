@@ -4,3 +4,4 @@
 Documentation for the various models used by the **cron-tool**.
 
 - [CronToolConfig](/docs/models/CronToolConfig.md)
+- [JobConfig](/docs/models/JobConfig.md)
