@@ -69,7 +69,7 @@ public class ZipFolderAction : IJobAction
     // Zip the folder and return
     await Task.CompletedTask;
     var compressionLevel = quick ? CompressionLevel.Fastest : CompressionLevel.Optimal;
-      
+
     ZipFile.CreateFromDirectory(sourceDir, zipFile, compressionLevel, includeBase);
     return new JobStepOutcome(true);
   }
