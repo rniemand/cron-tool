@@ -1,4 +1,3 @@
-using System;
 using CronTools.Common.Factories;
 using CronTools.Common.Formatters;
 using CronTools.Common.JobActions;
