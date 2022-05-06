@@ -9,14 +9,20 @@ Starter documentation for `cron-tool`, you can visit the various sections below 
 - [Enums](/docs/enums/README.md) - list of all user exposed `enums` used by `cron-tool`
 - [Examples](/docs/examples/README.md) - collection of example jobs - something to get you started
 
-## Basic Usage
-While the `cron-tool` is in development you can use it by building the `CronTool.csproj` file and running it like below.
+## Installation & Usage
+You can install `cron-tool` by running the following command:
 
-```shell
-CronTool.exe <JobFileNameWithoutExtension>
-```
+    dotnet tool install --global Rn.CronTool --no-cache
 
-This will launch the `cron-tool` and execute the given project file.
+You can update the tool using:
+
+    dotnet tool update --global Rn.CronTool --no-cache
+
+This will install the tool globally, you can invoke the tool like so:
+
+    cron-tool -r "c:\cron-tool-data" -j MyJobName
+
+This will look in the `c:\cron-tool-data` directory for a job called `MyJobName.json` and execute it.
 
 <!--(Rn.BuildScriptHelper){
 	"version": "1.0.106",
