@@ -31,6 +31,7 @@ public class CronRunnerService : ICronRunnerService
   private readonly IJsonHelper _jsonHelper;
   private readonly List<IJobAction> _jobActions;
   private readonly List<IJobActionArgFormatter> _argFormatters;
+  private readonly IJobConfigProvider _jobConfigProvider;
   private readonly CronToolConfig _config;
 
   private readonly Dictionary<string, string> _jobFiles;
@@ -42,7 +43,8 @@ public class CronRunnerService : ICronRunnerService
     IDirectoryAbstraction directory,
     IDirectoryInfoFactory directoryInfoFactory,
     IFileAbstraction file,
-    IJsonHelper jsonHelper)
+    IJsonHelper jsonHelper,
+    IJobConfigProvider jobConfigProvider)
   {
     // TODO: [TESTS] (CronRunnerService) Add tests
     _logger = logger;
@@ -50,6 +52,7 @@ public class CronRunnerService : ICronRunnerService
     _directoryInfoFactory = directoryInfoFactory;
     _file = file;
     _jsonHelper = jsonHelper;
+    _jobConfigProvider = jobConfigProvider;
 
     _config = configProvider.GetConfig();
     _jobActions = serviceProvider.GetServices<IJobAction>().ToList();

@@ -41,6 +41,7 @@ public static class ServiceCollectionExtensions
 
       // Providers
       .AddSingleton<IConfigProvider, ConfigProvider>()
+      .AddSingleton<IJobConfigProvider, JobConfigProvider>()
 
       // Factories
       .AddSingleton<IDirectoryInfoFactory, DirectoryInfoFactory>()
