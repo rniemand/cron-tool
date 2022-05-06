@@ -20,7 +20,6 @@ public class ConfigProvider : IConfigProvider
     IConfiguration configuration,
     IEnvironmentAbstraction environment)
   {
-    // TODO: [TESTS] (ConfigProvider.ConfigProvider) Add tests
     _configuration = configuration;
     _environment = environment;
     _config = null;
