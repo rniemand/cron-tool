@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace CronTools.Common.Models;
 
+// DOCS: docs\models\JobConfig.md
 public class JobStepConfig
 {
   [JsonProperty("enabled")]
