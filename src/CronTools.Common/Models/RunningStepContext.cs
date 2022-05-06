@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CronTools.Common.Enums;
-using CronTools.Common.Formatters.Interfaces;
+using CronTools.Common.Formatters;
 using Rn.NetCore.Common.Extensions;
 
 namespace CronTools.Common.Models;
