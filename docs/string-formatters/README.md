@@ -1,10 +1,8 @@
 [Home](/README.md) / [Docs](/docs/README.md) / String Formatters
 
 # String Formatters
-More to come...
+String formatters can be used to preform additional formatting to a value through the usage of an appropriate template placeholder.
 
-Formatters are able to target a supported type(s).
-
-They make use of the `IJobActionArgFormatter` interface.
+Template placeholders generally follow the `{<formatter>:<args>}` format and can be used with specific [ArgType](/docs/enums/ArgType.md).
 
 - [DateTimeFormatter](/docs/string-formatters/DateTimeFormatter.md)

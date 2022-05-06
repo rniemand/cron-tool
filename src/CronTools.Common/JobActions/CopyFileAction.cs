@@ -8,6 +8,7 @@ using Rn.NetCore.Common.Logging;
 
 namespace CronTools.Common.JobActions;
 
+// DOCS: docs\job-actions\CopyFile.md
 public class CopyFileAction : IJobAction
 {
   public JobStepAction Action { get; }
@@ -37,7 +38,7 @@ public class CopyFileAction : IJobAction
     Args = new Dictionary<string, JobActionArg>
     {
       { "Source", JobActionArg.File("Source", true) },
-      { "Destination", JobActionArg.File("Destination", true) },
+      { "Destination", JobActionArg.File("Target", true) },
       { "Overwrite", JobActionArg.Bool("Overwrite", false) }
     };
   }

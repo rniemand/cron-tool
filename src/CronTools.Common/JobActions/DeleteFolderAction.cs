@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
 using CronTools.Common.Models;
@@ -8,6 +8,7 @@ using Rn.NetCore.Common.Logging;
 
 namespace CronTools.Common.JobActions;
 
+// DOCS: docs\job-actions\DeleteFolder.md
 public class DeleteFolderAction : IJobAction
 {
   public JobStepAction Action { get; }
@@ -36,7 +37,7 @@ public class DeleteFolderAction : IJobAction
 
     Args = new Dictionary<string, JobActionArg>
     {
-      { "Path", JobActionArg.Directory("Directory", true) },
+      { "Path", JobActionArg.Directory("Path", true) },
       { "Recurse", JobActionArg.Bool("Recurse", false) }
     };
   }

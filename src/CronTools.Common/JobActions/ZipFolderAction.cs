@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO.Compression;
 using System.Threading.Tasks;
@@ -9,6 +9,7 @@ using Rn.NetCore.Common.Logging;
 
 namespace CronTools.Common.JobActions;
 
+// DOCS: docs\job-actions\ZipFolder.md
 public class ZipFolderAction : IJobAction
 {
   public JobStepAction Action { get; }
@@ -39,9 +40,9 @@ public class ZipFolderAction : IJobAction
     {
       { "Src", JobActionArg.Directory("SourceDir", true) },
       { "Zip", JobActionArg.File("TargetZip", true) },
-      { "Quick", JobActionArg.Bool("Quick", false) },
-      { "AddBase", JobActionArg.Bool("IncludeBaseDirectory", false, true) },
-      { "DeleteZip", JobActionArg.Bool("DeleteTargetZipIfExists", false) }
+      { "Quick", JobActionArg.Bool("QuickZip", false) },
+      { "AddBase", JobActionArg.Bool("IncludeBaseDir", false, true) },
+      { "DeleteZip", JobActionArg.Bool("DeleteIfExists", false) }
     };
   }
 
