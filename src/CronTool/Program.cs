@@ -14,13 +14,16 @@ internal class Program
 {
   private static IServiceProvider _serviceProvider;
 
-  static async Task Main(string[] args)
+  static void Main(string[] args)
   {
     ConfigureDI();
 
-    await _serviceProvider
+    _serviceProvider
       .GetRequiredService<ICronRunnerService>()
-      .RunAsync(args);
+      .RunAsync(args)
+      .ConfigureAwait(false)
+      .GetAwaiter()
+      .GetResult();
   }
 
   private static void ConfigureDI()

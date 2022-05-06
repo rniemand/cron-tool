@@ -25,7 +25,7 @@ public class DeleteFolderAction : IJobAction
   public DeleteFolderAction(IServiceProvider serviceProvider)
   {
     // TODO: [TESTS] (DeleteFolderAction) Add tests
-    _logger = serviceProvider.GetRequiredService<LoggerAdapter<DeleteFolderAction>>();
+    _logger = serviceProvider.GetRequiredService<ILoggerAdapter<DeleteFolderAction>>();
     _directory = serviceProvider.GetRequiredService<IDirectoryAbstraction>();
     _file = serviceProvider.GetRequiredService<IFileAbstraction>();
     _diFactory = serviceProvider.GetRequiredService<IDirectoryInfoFactory>();
