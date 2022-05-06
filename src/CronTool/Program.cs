@@ -20,7 +20,7 @@ internal class Program
 
     await _serviceProvider
       .GetRequiredService<ICronRunnerService>()
-      .RunCrons(args);
+      .RunAsync(args);
   }
 
   private static void ConfigureDI()

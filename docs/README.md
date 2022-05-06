@@ -8,6 +8,15 @@ Starter documentation for `cron-tool`, you can visit the various sections below 
 - [String formatters](/docs/string-formatters/README.md) - information about the various argument string formatters
 - [Enums](/docs/enums/README.md) - list of all user exposed `enums` used by `cron-tool`
 
+## Basic Usage
+While the `cron-tool` is in development you can use it by building the `CronTool.csproj` file and running it like below.
+
+```shell
+CronTool.exe <JobFileNameWithoutExtension>
+```
+
+This will launch the `cron-tool` and execute the given project file.
+
 <!--(Rn.BuildScriptHelper){
 	"version": "1.0.106",
 	"replace": false

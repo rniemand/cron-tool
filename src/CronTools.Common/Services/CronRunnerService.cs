@@ -19,7 +19,7 @@ namespace CronTools.Common.Services;
 
 public interface ICronRunnerService
 {
-  Task RunCrons(string[] args);
+  Task RunAsync(string[] args);
 }
 
 public class CronRunnerService : ICronRunnerService
@@ -59,9 +59,9 @@ public class CronRunnerService : ICronRunnerService
     RefreshJobs();
   }
 
-  public async Task RunCrons(string[] args)
+  public async Task RunAsync(string[] args)
   {
-    // TODO: [TESTS] (CronRunnerService.RunCrons) Add tests
+    // TODO: [TESTS] (CronRunnerService.RunAsync) Add tests
     if (args.Length == 0)
     {
       _logger.LogWarning("No jobs to run");
@@ -71,7 +71,7 @@ public class CronRunnerService : ICronRunnerService
     foreach (var job in args)
     {
       var config = ResolveJobConfig(job);
-      if(config is null) continue;
+      if (config is null) continue;
 
       var coreJobInfo = GenerateCoreJobInfo(config);
       var continueRunningSteps = true;
@@ -84,7 +84,7 @@ public class CronRunnerService : ICronRunnerService
 
         var resolvedAction = _jobActions
           .FirstOrDefault(x => x.Action == step.Action);
-          
+
         if (resolvedAction is null)
         {
           _logger.LogError("Unable to resolve action {name} for job {job}",
@@ -132,7 +132,7 @@ public class CronRunnerService : ICronRunnerService
 
     foreach (var (_, value) in required)
     {
-      if(context.HasArgument(value.SafeName))
+      if (context.HasArgument(value.SafeName))
         continue;
 
       _logger.LogWarning(
