@@ -43,7 +43,7 @@ public class JobUtils : IJobUtils
       _logger.LogWarning(
         "Job '{name}' is missing required argument '{arg}' " +
         "(type: {argType}) for step '{stepNumber}':'{stepType}'!",
-        context.JobInfo.Name,
+        context.JobName,
         value.Name,
         value.Type.ToString("G"),
         context.StepNumber,

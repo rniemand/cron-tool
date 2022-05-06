@@ -8,26 +8,22 @@ namespace CronTools.Common.Models;
 
 public class RunningStepContext
 {
-  public CoreJobInfo JobInfo { get; set; }
-  public JobStepConfig Config { get; set; }
+  public string JobName { get; set; }
+  public JobStepConfig JobStep { get; set; }
   public Dictionary<string, object> NormalizedArgs { get; }
   public int StepNumber { get; set; }
   public List<IJobActionArgFormatter> Formatters { get; set; }
 
-  public RunningStepContext(CoreJobInfo job, JobStepConfig config, int stepNumber)
+  public RunningStepContext(JobStepConfig jobStep, int stepNumber)
   {
     // TODO: [TESTS] (RunningStepContext.RunningStepContext) Add tests
-    JobInfo = job;
-    Config = config;
+    JobName = jobStep.JobName;
+    JobStep = jobStep;
     StepNumber = stepNumber;
     Formatters = new List<IJobActionArgFormatter>();
 
     NormalizedArgs = new Dictionary<string, object>();
-
-    if (config?.Args == null)
-      return;
-
-    foreach (var (key, value) in config.Args)
+    foreach (var (key, value) in jobStep.Args)
     {
       NormalizedArgs[key.LowerTrim()] = value;
     }

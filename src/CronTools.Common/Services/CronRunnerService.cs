@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using CronTools.Common.Factories;
-using CronTools.Common.Models;
 using CronTools.Common.Providers;
 using CronTools.Common.Resolvers;
 using CronTools.Common.Utils;
@@ -42,16 +41,16 @@ public class CronRunnerService : ICronRunnerService
       return;
     }
 
-    foreach (var job in args)
+    foreach (var jobName in args)
     {
-      var config = _jobConfigProvider.Resolve(job);
-      if (config is null) continue;
+      var jobConfig = _jobConfigProvider.Resolve(jobName);
+      if (jobConfig is null)
+        continue;
 
-      var coreJobInfo = new CoreJobInfo(config.Name);
       var continueRunningSteps = true;
       var stepNumber = 1;
 
-      foreach (var step in config.Steps)
+      foreach (var step in jobConfig.Steps)
       {
         if (!continueRunningSteps)
           continue;
@@ -60,7 +59,7 @@ public class CronRunnerService : ICronRunnerService
         if (resolvedAction is null)
           throw new Exception("Unable to continue");
 
-        var stepContext = _jobFactory.CreateRunningStepContext(coreJobInfo, step, stepNumber++);
+        var stepContext = _jobFactory.CreateRunningStepContext(step, stepNumber++);
         if (!_jobUtils.ValidateStepArgs(resolvedAction, stepContext))
           continue;
 
