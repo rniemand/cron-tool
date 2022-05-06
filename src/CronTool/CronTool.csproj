@@ -5,10 +5,31 @@
     <TargetFramework>net6.0</TargetFramework>
 	  <ProjectGuid>24DC64E1-DAAE-452C-8B0E-2384A7F3856C</ProjectGuid>
 	  <CodeAnalysisRuleSet>..\.sonarlint\cron-toolcsharp.ruleset</CodeAnalysisRuleSet>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>cron-tool</ToolCommandName>
+    <PackageOutputPath>./../../nupkg</PackageOutputPath>
+    <Company>Richard Niemand</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Authors>Richard Niemand</Authors>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Description>Simple tool for automating tasks</Description>
+    <PackageProjectUrl>https://github.com/rniemand/cron-tool</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/rniemand/cron-tool</RepositoryUrl>
+    <AssemblyName>Rn.CronTool</AssemblyName>
+    <Version>1.0.2</Version>
+    <PackageTags>cron</PackageTags>
   </PropertyGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <Content Include="..\.sonarlint\cron-tool\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>-->
+
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +39,7 @@
     <PackageReference Include="NLog.Extensions.Logging" Version="1.7.4" />
     <PackageReference Include="Rn.NetCore.Common" Version="6.0.0.112" />
     <PackageReference Include="Rn.NetCore.Metrics" Version="6.0.0.104" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta3.22114.1" />
   </ItemGroup>
 
   <ItemGroup>
