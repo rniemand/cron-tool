@@ -3,6 +3,17 @@
 # DeleteFile
 Provided by the `DeleteFileAction` class.
 
+```json
+{
+  "enabled": true,
+  "name": "Delete temp file",
+  "action": "DeleteFile",
+  "args": {
+    "Path": "..."
+  }
+}
+```
+
 | Property | Type | Required | Default | Notes |
 | --- | --- | --- | --- | --- |
-| `Path` | Path | required | - | The path of the file you wish to delete |
+| `Path` | File | required | - | The path of the file you wish to delete |

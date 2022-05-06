@@ -25,7 +25,6 @@ public class DateTimeFormatter : IJobActionArgFormatter
   {
     // TODO: [TESTS] (DateTimeFormatter.Format) Add tests
     // https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
-
     const string regex = @"{date:([^}]+)}";
     if (!input.MatchesRegex(regex))
       return input;

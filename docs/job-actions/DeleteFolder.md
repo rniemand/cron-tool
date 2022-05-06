@@ -3,7 +3,19 @@
 # DeleteFolder
 Provided by the `DeleteFolderAction` class.
 
+```json
+{
+  "enabled": true,
+  "name": "Delete old directory",
+  "action": "DeleteFolder",
+  "args": {
+    "Directory": "...",
+    "Recurse": true
+  }
+}
+```
+
 | Property | Type | Required | Default | Notes |
 | --- | --- | --- | --- | --- |
-| `Path` | Path | required | - | The path of the folder you wish to delete |
-| `Recurse` | bool | optional | `false` | Recurse down deletion mode |
+| `Directory` | Directory | required | - | The path of the folder you wish to delete |
+| `Recurse` | Bool | optional | `false` | Recurse down deletion mode |

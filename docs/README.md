@@ -3,8 +3,9 @@
 # CronTool
 Starter documentation for `cron-tool`, you can visit the various sections below to find out more about this application.
 
-- [models](/docs/models/README.md) - information about the various models used in the application
+- [Models](/docs/models/README.md) - information about the various models used in the application
 - [Job Actions](/docs/job-actions/README.md) - documentation around the supported action types
+- [String formatters](/docs/string-formatters/README.md) - information about the various argument string formatters
 
 <!--(Rn.BuildScriptHelper){
 	"version": "1.0.106",

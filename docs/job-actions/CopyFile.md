@@ -3,8 +3,21 @@
 # CopyFile
 Provided by the `CopyFileAction` class.
 
+```json
+{
+  "enabled": true,
+  "name": "Backup my important file",
+  "action": "CopyFile",
+  "args": {
+    "Source": "...",
+    "Destination": "...",
+    "Overwrite": true
+  }
+}
+```
+
 | Property | Type | Required | Default | Notes |
 | --- | --- | --- | --- | --- |
-| `Source` | Path | required | - | Path to the source file |
-| `Destination` | Path | required | - | Path to copy the source file to |
-| `Overwrite` | bool | optional | `false` | Overwrite target file (if exists) |
+| `Source` | File | required | - | Path to the source file |
+| `Destination` | File | required | - | Path to copy the source file to |
+| `Overwrite` | Bool | optional | `false` | Overwrite target file (if exists) |
