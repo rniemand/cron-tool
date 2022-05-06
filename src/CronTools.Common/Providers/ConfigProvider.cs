@@ -1,4 +1,4 @@
-﻿using CronTools.Common.Config;
+using CronTools.Common.Config;
 using Microsoft.Extensions.Configuration;
 using Rn.NetCore.Common.Abstractions;
 
@@ -13,19 +13,16 @@ public class ConfigProvider : IConfigProvider
 {
   private readonly IConfiguration _configuration;
   private readonly IEnvironmentAbstraction _environment;
-  private readonly IPathAbstraction _path;
 
   private CronToolConfig _config;
 
   public ConfigProvider(
     IConfiguration configuration,
-    IEnvironmentAbstraction environment,
-    IPathAbstraction path)
+    IEnvironmentAbstraction environment)
   {
     // TODO: [TESTS] (ConfigProvider.ConfigProvider) Add tests
     _configuration = configuration;
     _environment = environment;
-    _path = path;
     _config = null;
   }
 

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CronTools.Common.Config;
-using CronTools.Common.Formatters;
+using CronTools.Common.Formatters.Interfaces;
 using CronTools.Common.JobActions;
 using CronTools.Common.Models;
 using CronTools.Common.Providers;
