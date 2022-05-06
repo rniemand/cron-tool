@@ -1,7 +1,7 @@
 [Home](/README.md) / [Docs](/docs/README.md) / [Examples](/docs/examples/README.md) / BackupNasLandingPage
 
 # BackupNasLandingPage
-Holder.
+The example below will backup the `\\192.168.0.60\appdata\nas-landing-page` directory and all of it's content to a zip file with a dynamic name `\\192.168.0.60\Backups\nas-landing-page\nas-landing-page-{date:yyyyMMdd}.zip`.
 
 ```json
 {
@@ -12,7 +12,7 @@ Holder.
       "action": "ZipFolder",
       "args": {
         "SourceDir": "\\\\192.168.0.60\\appdata\\nas-landing-page",
-        "TargetZip": "\\\\192.168.0.60\\Backups\\nas-landing-page\\nas-landing-page-{date:yyyyMMdd-HHmm}.zip",
+        "TargetZip": "\\\\192.168.0.60\\Backups\\nas-landing-page\\nas-landing-page-{date:yyyyMMdd}.zip",
         "QuickZip": false,
         "IncludeBaseDir": true,
         "DeleteIfExists": true
@@ -21,3 +21,7 @@ Holder.
   ]
 }
 ```
+
+Once run this should produce a `ZIP` file with a name similar to the follwing:
+
+    \\192.168.0.60\Backups\nas-landing-page\nas-landing-page-20220506.zip
