@@ -38,7 +38,7 @@ public class CopyFileAction : IJobAction
     Args = new Dictionary<string, JobActionArg>
     {
       { "Source", JobActionArg.File("Source", true) },
-      { "Destination", JobActionArg.File("Destination", true) },
+      { "Destination", JobActionArg.File("Target", true) },
       { "Overwrite", JobActionArg.Bool("Overwrite", false) }
     };
   }

@@ -40,9 +40,9 @@ public class ZipFolderAction : IJobAction
     {
       { "Src", JobActionArg.Directory("SourceDir", true) },
       { "Zip", JobActionArg.File("TargetZip", true) },
-      { "Quick", JobActionArg.Bool("Quick", false) },
-      { "AddBase", JobActionArg.Bool("IncludeBaseDirectory", false, true) },
-      { "DeleteZip", JobActionArg.Bool("DeleteTargetZipIfExists", false) }
+      { "Quick", JobActionArg.Bool("QuickZip", false) },
+      { "AddBase", JobActionArg.Bool("IncludeBaseDir", false, true) },
+      { "DeleteZip", JobActionArg.Bool("DeleteIfExists", false) }
     };
   }
 

@@ -10,14 +10,16 @@ Provided by the `CopyFileAction` class.
   "action": "CopyFile",
   "args": {
     "Source": "...",
-    "Destination": "...",
+    "Target": "...",
     "Overwrite": true
   }
 }
 ```
 
+Below is a breakdown of each argument, please refer to the [ArgType](/docs/enums/ArgType.md) documentation for a list of all supported argument types.
+
 | Property | Type | Required | Default | Notes |
 | --- | --- | --- | --- | --- |
 | `Source` | File | required | - | Path to the source file |
-| `Destination` | File | required | - | Path to copy the source file to |
+| `Target` | File | required | - | Path to copy the source file to |
 | `Overwrite` | Bool | optional | `false` | Overwrite target file (if exists) |

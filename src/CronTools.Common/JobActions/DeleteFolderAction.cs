@@ -37,7 +37,7 @@ public class DeleteFolderAction : IJobAction
 
     Args = new Dictionary<string, JobActionArg>
     {
-      { "Path", JobActionArg.Directory("Directory", true) },
+      { "Path", JobActionArg.Directory("Path", true) },
       { "Recurse", JobActionArg.Bool("Recurse", false) }
     };
   }
