@@ -73,6 +73,8 @@ public class CronRunnerService : ICronRunnerService
 
     foreach (var job in args)
     {
+      var jobConfig = _jobConfigProvider.Resolve(job);
+
       var config = ResolveJobConfig(job);
       if (config is null) continue;
 
