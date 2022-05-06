@@ -1,8 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
 	  <ProjectGuid>9E82EE7F-0C5F-4690-902A-C3C71C640FDF</ProjectGuid>
+	  <Nullable>annotations</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

@@ -14,7 +14,7 @@ namespace CronTools.Common.Providers;
 
 public interface IJobConfigProvider
 {
-  JobConfig Resolve(string jobName);
+  JobConfig? Resolve(string jobName);
 }
 
 public class JobConfigProvider : IJobConfigProvider
@@ -40,7 +40,7 @@ public class JobConfigProvider : IJobConfigProvider
   }
 
 
-  public JobConfig Resolve(string jobName)
+  public JobConfig? Resolve(string jobName)
   {
     // TODO: [JobConfigProvider.Resolve] (TESTS) Add tests
     if (string.IsNullOrWhiteSpace(jobName))
@@ -71,6 +71,10 @@ public class JobConfigProvider : IJobConfigProvider
       _logger.LogWarning("Requested job {name} is disabled", jobConfig.Name);
       return null;
     }
+
+    // Ensure that all job steps reflect the job name
+    foreach (var jobStep in jobConfig.Steps)
+      jobStep.JobName = jobConfig.Name;
 
     _logger.LogInformation("Loaded config for {name} ({path})",
       jobConfig.Name,

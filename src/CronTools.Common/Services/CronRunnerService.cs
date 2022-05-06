@@ -6,6 +6,7 @@ using CronTools.Common.Formatters;
 using CronTools.Common.JobActions;
 using CronTools.Common.Models;
 using CronTools.Common.Providers;
+using CronTools.Common.Resolvers;
 using Microsoft.Extensions.DependencyInjection;
 using Rn.NetCore.Common.Logging;
 
@@ -19,20 +20,21 @@ public interface ICronRunnerService
 public class CronRunnerService : ICronRunnerService
 {
   private readonly ILoggerAdapter<CronRunnerService> _logger;
-  private readonly List<IJobAction> _jobActions;
   private readonly List<IJobActionArgFormatter> _argFormatters;
   private readonly IJobConfigProvider _jobConfigProvider;
+  private readonly IJobActionResolver _actionResolver;
 
   public CronRunnerService(
     ILoggerAdapter<CronRunnerService> logger,
     IServiceProvider serviceProvider,
-    IJobConfigProvider jobConfigProvider)
+    IJobConfigProvider jobConfigProvider,
+    IJobActionResolver actionResolver)
   {
     // TODO: [TESTS] (CronRunnerService) Add tests
     _logger = logger;
     _jobConfigProvider = jobConfigProvider;
-
-    _jobActions = serviceProvider.GetServices<IJobAction>().ToList();
+    _actionResolver = actionResolver;
+    
     _argFormatters = serviceProvider.GetServices<IJobActionArgFormatter>().ToList();
   }
 
@@ -50,7 +52,7 @@ public class CronRunnerService : ICronRunnerService
       var config = _jobConfigProvider.Resolve(job);
       if (config is null) continue;
 
-      var coreJobInfo = GenerateCoreJobInfo(config);
+      var coreJobInfo = new CoreJobInfo(config.Name);
       var continueRunningSteps = true;
       var stepNumber = 1;
 
@@ -59,18 +61,9 @@ public class CronRunnerService : ICronRunnerService
         if (!continueRunningSteps)
           continue;
 
-        var resolvedAction = _jobActions
-          .FirstOrDefault(x => x.Action == step.Action);
-
+        var resolvedAction = _actionResolver.Resolve(step);
         if (resolvedAction is null)
-        {
-          _logger.LogError("Unable to resolve action {name} for job {job}",
-            step.Action.ToString("G"),
-            config.Name
-          );
-
           throw new Exception("Unable to continue");
-        }
 
         var stepContext = new RunningStepContext(coreJobInfo, step, stepNumber++)
           .WithFormatters(_argFormatters);
@@ -126,14 +119,5 @@ public class CronRunnerService : ICronRunnerService
     }
 
     return true;
-  }
-
-  private static CoreJobInfo GenerateCoreJobInfo(JobConfig jobConfig)
-  {
-    // TODO: [TESTS] (CronRunnerService.GenerateCoreJobInfo) Add tests
-    return new CoreJobInfo
-    {
-      Name = jobConfig.Name
-    };
   }
 }

@@ -1,6 +1,7 @@
 using CronTools.Common.Formatters;
 using CronTools.Common.JobActions;
 using CronTools.Common.Providers;
+using CronTools.Common.Resolvers;
 using CronTools.Common.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Rn.NetCore.Common.Abstractions;
@@ -49,6 +50,9 @@ public static class ServiceCollectionExtensions
       // Services
       .AddSingleton<ICronRunnerService, CronRunnerService>()
       .AddSingleton<IMetricService, MetricService>()
+
+      // Resolvers
+      .AddSingleton<IJobActionResolver, JobActionResolver>()
 
       // Logging
       .AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));

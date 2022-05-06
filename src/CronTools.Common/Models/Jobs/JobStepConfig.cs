@@ -13,6 +13,9 @@ public class JobStepConfig
   [JsonProperty("name")]
   public string Name { get; set; } = string.Empty;
 
+  [JsonIgnore]
+  public string JobName { get; set; } = string.Empty;
+
   [JsonProperty("action")]
   public JobStepAction Action { get; set; } = JobStepAction.Unknown;
 
