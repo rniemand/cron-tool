@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using CronTools.Common.Extensions;
 using CronTools.Common.Services;
@@ -45,13 +43,15 @@ internal class Program
     _serviceProvider = services.BuildServiceProvider();
   }
 
-  private static async Task Bob(string jobName, string rootDir)
+  private static async Task RunTool(string jobName, string rootDir)
   {
+    GenerateAppSettings(rootDir);
+
     ConfigureDI();
 
     await _serviceProvider
       .GetRequiredService<ICronRunnerService>()
-      .RunAsync(new string[] {jobName});
+      .RunAsync(new[] {jobName});
   }
 
   private static RootCommand BuildCommand()
@@ -72,9 +72,32 @@ internal class Program
     rootCommand.Description = "Rn.CronTool";
 
     rootCommand.SetHandler(
-      async (string name, string dir) => await Bob(name, dir),
+      async (string name, string dir) => await RunTool(name, dir),
       jobName, rootDir);
 
     return rootCommand;
+  }
+
+  private static void GenerateAppSettings(string rootDir)
+  {
+    var template = @"{
+        ""Logging"": {
+          ""LogLevel"": {
+            ""Default"": ""Debug"",
+            ""Microsoft"": ""Warning"",
+            ""Microsoft.Hosting.Lifetime"": ""Information""
+          }
+        },
+        ""CronTool"": {
+          ""rootDir"": ""{rootDir}"",
+          ""dirSeparator"": ""\\"",
+          ""jobsDirectory"": ""{root}jobs""
+        } 
+      }"
+      .Replace("{rootDir}", rootDir.Replace("\\", "\\\\"));
+
+    var targetFile = Path.Join(Environment.CurrentDirectory, "appsettings.json");
+    if (File.Exists(targetFile)) File.Delete(targetFile);
+    File.WriteAllText(targetFile, template);
   }
 }
