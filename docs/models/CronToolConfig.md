@@ -3,12 +3,20 @@
 # CronToolConfig
 Main application configuration.
 
-## Root level configuration
-Found at `{ "CronTool": {...} }`.
+```json
+{
+  "CronTool": {
+    "rootDir": "\\\\192.168.0.60\\appdata\\cron-tool",
+    "dirSeparator": "\\",
+    "jobsDirectory": "{root}jobs"
+  } 
+}
+```
 
-| Property | Type | Required | Default | Notes |
+Below is a brekdown of each configuration value.
+
+| Path | Type | Required | Default | Notes |
 | --- | --- | --- | --- | --- |
-| `RootDir` | Path | optional | `./config` | Root directory ro use when resolving application configuration |
-| `DirectorySeparator` | string | optional | `\` | Path seperation char to use when building file & directory pathing |
-| `JobConfigDir` | Path | `{root}jobs` | optional | Path to directory containing your job files |
-
+| `rootDir` | Path | optional | `./config` | Root directory ro use when resolving application configuration. `./` will be replaced with the application base directory. |
+| `dirSeparator` | string | optional | `\` | Path seperation char to use when building file & directory pathing. |
+| `jobsDirectory` | Path | optional | `{root}jobs` | Path to directory containing your job files. You can use `{root}` in this path if so desired. |

@@ -4,28 +4,29 @@ using Rn.NetCore.Common.Extensions;
 
 namespace CronTools.Common.Config;
 
+// DOCS: docs\models\CronToolConfig.md
 public class CronToolConfig
 {
   public const string Key = "CronTool";
 
-  [JsonProperty("RootDir"), JsonPropertyName("RootDir")]
-  public string RootDir { get; set; } = "./config";
+  [JsonProperty("rootDir")]
+  public string RootDirectory { get; set; } = "./config";
 
-  [JsonProperty("DirectorySeparator"), JsonPropertyName("DirectorySeparator")]
+  [JsonProperty("dirSeparator")]
   public string DirectorySeparator { get; set; } = "\\";
 
-  [JsonProperty("JobConfigDir"), JsonPropertyName("JobConfigDir")]
-  public string JobConfigDir { get; set; } = "{root}jobs";
+  [JsonProperty("jobsDirectory")]
+  public string JobsDirectory { get; set; } = "{root}jobs";
   
   public CronToolConfig NormalizePaths(string rootDir)
   {
     // TODO: [TESTS] (CronToolConfig.NormalizePaths) Add tests
-    RootDir = RootDir
+    RootDirectory = RootDirectory
       .Replace("./", rootDir.AppendIfMissing(DirectorySeparator))
       .AppendIfMissing(DirectorySeparator);
 
-    JobConfigDir = JobConfigDir
-      .Replace("{root}", RootDir)
+    JobsDirectory = JobsDirectory
+      .Replace("{root}", RootDirectory)
       .AppendIfMissing(DirectorySeparator);
 
     return this;

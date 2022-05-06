@@ -172,7 +172,7 @@ public class CronRunnerService : ICronRunnerService
     {
       _logger.LogWarning("Requested job {key} was not found in {directory}",
         jobKey,
-        _config.JobConfigDir
+        _config.JobsDirectory
       );
 
       return null;
@@ -209,14 +209,14 @@ public class CronRunnerService : ICronRunnerService
   private void EnsureDirectoriesExist()
   {
     // TODO: [TESTS] (CronRunnerService.EnsureDirectoriesExist) Add tests
-    if (!_directory.Exists(_config.RootDir))
-      _directory.CreateDirectory(_config.RootDir);
+    if (!_directory.Exists(_config.RootDirectory))
+      _directory.CreateDirectory(_config.RootDirectory);
 
-    if (!_directory.Exists(_config.JobConfigDir))
-      _directory.CreateDirectory(_config.JobConfigDir);
+    if (!_directory.Exists(_config.JobsDirectory))
+      _directory.CreateDirectory(_config.JobsDirectory);
 
-    if (!_directory.Exists(_config.JobConfigDir))
-      throw new DirectoryNotFoundException($"Unable to find: {_config.JobConfigDir}");
+    if (!_directory.Exists(_config.JobsDirectory))
+      throw new DirectoryNotFoundException($"Unable to find: {_config.JobsDirectory}");
   }
 
   private void RefreshJobs()
@@ -227,7 +227,7 @@ public class CronRunnerService : ICronRunnerService
     _logger.LogInformation("Refreshing jobs");
     _jobFiles.Clear();
 
-    var directoryInfo = _directoryInfoFactory.GetDirectoryInfo(_config.JobConfigDir);
+    var directoryInfo = _directoryInfoFactory.GetDirectoryInfo(_config.JobsDirectory);
     var fileInfos = directoryInfo.GetFiles("*.json");
 
     if (fileInfos.Length == 0)
@@ -235,7 +235,7 @@ public class CronRunnerService : ICronRunnerService
 
     _logger.LogInformation("Discovered {count} job(s) in {directory}",
       fileInfos.Length,
-      _config.JobConfigDir
+      _config.JobsDirectory
     );
 
     foreach (var fileInfo in fileInfos)
