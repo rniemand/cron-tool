@@ -8,7 +8,7 @@ namespace CronTools.Common.Models;
 public class JobStepConfig
 {
   [JsonProperty("enabled")]
-  public bool Enabled { get; set; } = false;
+  public bool Enabled { get; set; } = true;
 
   [JsonProperty("name")]
   public string Name { get; set; } = string.Empty;
