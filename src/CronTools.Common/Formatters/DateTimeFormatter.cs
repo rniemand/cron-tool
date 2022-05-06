@@ -5,6 +5,7 @@ using Rn.NetCore.Common.Extensions;
 
 namespace CronTools.Common.Formatters;
 
+// DOCS: docs\string-formatters\DateTimeFormatter.md
 public class DateTimeFormatter : IJobActionArgFormatter
 {
   public List<ArgType> SupportedTypes { get; }
@@ -34,7 +35,6 @@ public class DateTimeFormatter : IJobActionArgFormatter
 
     return input.Replace(
       match.Groups[0].Value,
-      now.ToString(match.Groups[1].Value)
-    );
+      now.ToString(match.Groups[1].Value));
   }
 }
