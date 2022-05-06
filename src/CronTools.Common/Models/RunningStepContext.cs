@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using CronTools.Common.Enums;
 using CronTools.Common.Formatters;
@@ -27,7 +27,7 @@ public class RunningStepContext
     if (config?.Args == null)
       return;
 
-    foreach (var (key, value) in config?.Args)
+    foreach (var (key, value) in config.Args)
     {
       NormalizedArgs[key.LowerTrim()] = value;
     }
