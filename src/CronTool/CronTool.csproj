@@ -5,10 +5,29 @@
     <TargetFramework>net6.0</TargetFramework>
 	  <ProjectGuid>24DC64E1-DAAE-452C-8B0E-2384A7F3856C</ProjectGuid>
 	  <CodeAnalysisRuleSet>..\.sonarlint\cron-toolcsharp.ruleset</CodeAnalysisRuleSet>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>cron-tool</ToolCommandName>
+    <PackageOutputPath>./../../nupkg</PackageOutputPath>
+    <Company>Richard Niemand</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Authors>Richard Niemand</Authors>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Description>Simple tool for automating tasks</Description>
+    <PackageProjectUrl>https://github.com/rniemand/cron-tool</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/rniemand/cron-tool</RepositoryUrl>
+    <AssemblyName>Rn.CronTool</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Include="..\.sonarlint\cron-tool\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
