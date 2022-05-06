@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using CronTools.Common.Enums;
 using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Extensions;
@@ -24,7 +24,6 @@ public class DateTimeFormatter : IJobActionArgFormatter
   public string Format(string input)
   {
     // TODO: [TESTS] (DateTimeFormatter.Format) Add tests
-
     // https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
 
     const string regex = @"{date:([^}]+)}";
