@@ -8,6 +8,7 @@ using Rn.NetCore.Common.Logging;
 
 namespace CronTools.Common.JobActions;
 
+// DOCS: docs\job-actions\CopyFile.md
 public class CopyFileAction : IJobAction
 {
   public JobStepAction Action { get; }

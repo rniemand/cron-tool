@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
@@ -8,6 +8,7 @@ using Rn.NetCore.Common.Logging;
 
 namespace CronTools.Common.JobActions;
 
+// DOCS: docs\job-actions\DeleteFile.md
 public class DeleteFileAction : IJobAction
 {
   public JobStepAction Action { get; }
