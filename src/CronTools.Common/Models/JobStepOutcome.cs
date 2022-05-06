@@ -1,20 +1,14 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace CronTools.Common.Models;
 
 public class JobStepOutcome
 {
-  public bool Succeeded { get; set; }
-  public string Error { get; set; }
-  public List<string> Messages { get; set; }
+  public bool Succeeded { get; set; } = true;
+  public string Error { get; set; } = string.Empty;
+  public List<string> Messages { get; set; } = new();
 
-  public JobStepOutcome()
-  {
-    // TODO: [TESTS] (JobStepOutcome.JobStepOutcome) Add tests
-    Succeeded = true;
-    Error = string.Empty;
-    Messages = new List<string>();
-  }
+  public JobStepOutcome() { }
 
   public JobStepOutcome(bool succeeded)
     : this()
