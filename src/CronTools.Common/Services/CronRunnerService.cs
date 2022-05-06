@@ -1,8 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CronTools.Common.Formatters;
+using CronTools.Common.Factories;
 using CronTools.Common.JobActions;
 using CronTools.Common.Models;
 using CronTools.Common.Providers;
@@ -20,22 +19,17 @@ public interface ICronRunnerService
 public class CronRunnerService : ICronRunnerService
 {
   private readonly ILoggerAdapter<CronRunnerService> _logger;
-  private readonly List<IJobActionArgFormatter> _argFormatters;
   private readonly IJobConfigProvider _jobConfigProvider;
   private readonly IJobActionResolver _actionResolver;
+  private readonly IJobFactory _jobFactory;
 
-  public CronRunnerService(
-    ILoggerAdapter<CronRunnerService> logger,
-    IServiceProvider serviceProvider,
-    IJobConfigProvider jobConfigProvider,
-    IJobActionResolver actionResolver)
+  public CronRunnerService(IServiceProvider serviceProvider)
   {
     // TODO: [TESTS] (CronRunnerService) Add tests
-    _logger = logger;
-    _jobConfigProvider = jobConfigProvider;
-    _actionResolver = actionResolver;
-    
-    _argFormatters = serviceProvider.GetServices<IJobActionArgFormatter>().ToList();
+    _logger = serviceProvider.GetRequiredService<ILoggerAdapter<CronRunnerService>>();
+    _jobConfigProvider = serviceProvider.GetRequiredService<IJobConfigProvider>();
+    _actionResolver = serviceProvider.GetRequiredService<IJobActionResolver>();
+    _jobFactory = serviceProvider.GetRequiredService<IJobFactory>();
   }
 
   public async Task RunAsync(string[] args)
@@ -65,8 +59,7 @@ public class CronRunnerService : ICronRunnerService
         if (resolvedAction is null)
           throw new Exception("Unable to continue");
 
-        var stepContext = new RunningStepContext(coreJobInfo, step, stepNumber++)
-          .WithFormatters(_argFormatters);
+        var stepContext = _jobFactory.CreateRunningStepContext(coreJobInfo, step, stepNumber++);
 
         if (!ValidateStepArgs(resolvedAction, stepContext))
           continue;

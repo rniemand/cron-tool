@@ -1,3 +1,4 @@
+using CronTools.Common.Factories;
 using CronTools.Common.Formatters;
 using CronTools.Common.JobActions;
 using CronTools.Common.Providers;
@@ -53,6 +54,9 @@ public static class ServiceCollectionExtensions
 
       // Resolvers
       .AddSingleton<IJobActionResolver, JobActionResolver>()
+
+      // Factories
+      .AddSingleton<IJobFactory, JobFactory>()
 
       // Logging
       .AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
