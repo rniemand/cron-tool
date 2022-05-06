@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
 using CronTools.Common.Models;
+using Microsoft.Extensions.DependencyInjection;
 using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Factories;
 using Rn.NetCore.Common.Logging;
@@ -20,17 +22,13 @@ public class DeleteFolderAction : IJobAction
   private readonly IFileAbstraction _file;
   private readonly IDirectoryInfoFactory _diFactory;
 
-  public DeleteFolderAction(
-    ILoggerAdapter<DeleteFolderAction> logger,
-    IDirectoryAbstraction directoryAbstraction,
-    IFileAbstraction fileAbstraction,
-    IDirectoryInfoFactory diFactory)
+  public DeleteFolderAction(IServiceProvider serviceProvider)
   {
     // TODO: [TESTS] (DeleteFolderAction) Add tests
-    _logger = logger;
-    _directory = directoryAbstraction;
-    _file = fileAbstraction;
-    _diFactory = diFactory;
+    _logger = serviceProvider.GetRequiredService<LoggerAdapter<DeleteFolderAction>>();
+    _directory = serviceProvider.GetRequiredService<IDirectoryAbstraction>();
+    _file = serviceProvider.GetRequiredService<IFileAbstraction>();
+    _diFactory = serviceProvider.GetRequiredService<IDirectoryInfoFactory>();
 
     Action = JobStepAction.DeleteFolder;
     Name = JobStepAction.DeleteFolder.ToString("G");

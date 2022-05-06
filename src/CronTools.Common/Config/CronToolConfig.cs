@@ -1,5 +1,4 @@
-using System.Text.Json.Serialization;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
 using Rn.NetCore.Common.Extensions;
 
 namespace CronTools.Common.Config;
@@ -9,13 +8,13 @@ public class CronToolConfig
 {
   public const string Key = "CronTool";
 
-  [JsonProperty("rootDir")]
+  [ConfigurationKeyName("rootDir")]
   public string RootDirectory { get; set; } = "./config";
 
-  [JsonProperty("dirSeparator")]
+  [ConfigurationKeyName("dirSeparator")]
   public string DirectorySeparator { get; set; } = "\\";
 
-  [JsonProperty("jobsDirectory")]
+  [ConfigurationKeyName("jobsDirectory")]
   public string JobsDirectory { get; set; } = "{root}jobs";
   
   public CronToolConfig NormalizePaths(string rootDir)

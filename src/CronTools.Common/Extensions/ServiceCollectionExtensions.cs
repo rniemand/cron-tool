@@ -1,7 +1,10 @@
+using CronTools.Common.Factories;
 using CronTools.Common.Formatters;
 using CronTools.Common.JobActions;
 using CronTools.Common.Providers;
+using CronTools.Common.Resolvers;
 using CronTools.Common.Services;
+using CronTools.Common.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Factories;
@@ -41,6 +44,7 @@ public static class ServiceCollectionExtensions
 
       // Providers
       .AddSingleton<IConfigProvider, ConfigProvider>()
+      .AddSingleton<IJobConfigProvider, JobConfigProvider>()
 
       // Factories
       .AddSingleton<IDirectoryInfoFactory, DirectoryInfoFactory>()
@@ -48,6 +52,15 @@ public static class ServiceCollectionExtensions
       // Services
       .AddSingleton<ICronRunnerService, CronRunnerService>()
       .AddSingleton<IMetricService, MetricService>()
+
+      // Resolvers
+      .AddSingleton<IJobActionResolver, JobActionResolver>()
+
+      // Factories
+      .AddSingleton<IJobFactory, JobFactory>()
+
+      // Utils
+      .AddSingleton<IJobUtils, JobUtils>()
 
       // Logging
       .AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
