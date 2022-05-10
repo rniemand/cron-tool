@@ -43,7 +43,7 @@ public class WriteTextFileAction : IJobAction
     // TODO: [WriteTextFileAction.ExecuteAsync] (TESTS) Add tests
     var outcome = new JobStepOutcome();
 
-    var contents = stepContext.ResolveStringArg(Args["Contents"]);
+    var contents = argumentResolver.ResolveString(jobContext, stepContext, Args["Contents"]);
     
 
     Console.WriteLine();
