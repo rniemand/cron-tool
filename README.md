@@ -36,7 +36,7 @@ More to come...
 ## Configuration
 More to come...
 
-- [CronToolConfig](/docs/configuration/CronToolConfig.md)
+- [appsettings.json](/docs/configuration/appsettings.md)
 - [JobConfig](/docs/configuration/JobConfig.md)
 - [JobStepConfig](/docs/configuration/JobStepConfig.md)
 
