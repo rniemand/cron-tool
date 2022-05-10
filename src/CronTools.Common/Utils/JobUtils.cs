@@ -38,7 +38,7 @@ public class JobUtils : IJobUtils
 
     foreach (var (_, value) in required)
     {
-      if (context.NormalizedArgs.Any(x => x.Key.IgnoreCaseEquals(value.Name)))
+      if (context.Args.Any(x => x.Key.IgnoreCaseEquals(value.Name)))
         continue;
 
       _logger.LogWarning(

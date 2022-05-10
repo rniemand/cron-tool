@@ -28,16 +28,20 @@ public class JobArgumentResolver : IJobArgumentResolver
   public bool HasArgument(RunningStepContext stepContext, string argName)
   {
     // TODO: [JobArgumentResolver.HasArgument] (TESTS) Add tests
-    return stepContext.NormalizedArgs.Count != 0 && stepContext.NormalizedArgs.ContainsKey(argName.LowerTrim());
+    // ReSharper disable once ConvertIfStatementToReturnStatement
+    if (stepContext.Args.Count == 0)
+      return false;
+
+    return stepContext.Args.Any(x => x.Key.IgnoreCaseEquals(argName));
   }
 
   public string ResolveString(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
   {
     // TODO: [JobArgumentResolver.ResolveString] (TESTS) Add tests
-    if (!HasArgument(stepContext, arg.SafeName))
+    if (!HasArgument(stepContext, arg.Name))
       return ExecuteStringFormatters((string)arg.Default, ArgType.String);
 
-    var rawArg = stepContext.NormalizedArgs[arg.SafeName];
+    var rawArg = stepContext.Args.First(x => x.Key.IgnoreCaseEquals(arg.Name)).Value;
 
     if (rawArg is string s)
       return ExecuteStringFormatters(s, ArgType.String);
@@ -48,10 +52,10 @@ public class JobArgumentResolver : IJobArgumentResolver
   public string ResolveDirectory(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
   {
     // TODO: [JobArgumentResolver.ResolveDirectory] (TESTS) Add tests
-    if (!HasArgument(stepContext, arg.SafeName))
+    if (!HasArgument(stepContext, arg.Name))
       return (string)arg.Default;
 
-    var rawArg = stepContext.NormalizedArgs[arg.SafeName];
+    var rawArg = stepContext.Args.First(x => x.Key.IgnoreCaseEquals(arg.Name)).Value;
 
     if (rawArg is string s)
       return s;
@@ -62,10 +66,10 @@ public class JobArgumentResolver : IJobArgumentResolver
   public string ResolveFile(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
   {
     // TODO: [JobArgumentResolver.ResolveFile] (TESTS) Add tests
-    if (!HasArgument(stepContext, arg.SafeName))
+    if (!HasArgument(stepContext, arg.Name))
       return ExecuteStringFormatters((string)arg.Default, ArgType.File);
 
-    var rawArg = stepContext.NormalizedArgs[arg.SafeName];
+    var rawArg = stepContext.Args.First(x => x.Key.IgnoreCaseEquals(arg.Name)).Value;
 
     if (rawArg is string s)
       return ExecuteStringFormatters(s, ArgType.File);
@@ -76,10 +80,10 @@ public class JobArgumentResolver : IJobArgumentResolver
   public bool ResolveBool(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
   {
     // TODO: [JobArgumentResolver.ResolveBool] (TESTS) Add tests
-    if (!HasArgument(stepContext, arg.SafeName))
+    if (!HasArgument(stepContext, arg.Name))
       return (bool)arg.Default;
 
-    var rawArg = stepContext.NormalizedArgs[arg.SafeName];
+    var rawArg = stepContext.Args.First(x => x.Key.IgnoreCaseEquals(arg.Name)).Value;
     if (rawArg is bool b)
       return b;
 
