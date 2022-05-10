@@ -36,10 +36,10 @@ public class DeleteFileAction : IJobAction
     };
   }
 
-  public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argumentResolver)
+  public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
   {
     var outcome = new JobStepOutcome();
-    var path = argumentResolver.ResolveFile(jobContext, stepContext, Args["Path"]);
+    var path = argResolver.ResolveFile(jobContext, stepContext, Args["Path"]);
 
     if (!_file.Exists(path))
       return outcome.WithSuccess();

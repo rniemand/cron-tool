@@ -12,5 +12,5 @@ public interface IJobAction
   string Name { get; }
   Dictionary<string, JobActionArg> Args { get; }
 
-  Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argumentResolver);
+  Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver);
 }

@@ -38,12 +38,12 @@ public class WriteTextFileAction : IJobAction
     };
   }
 
-  public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argumentResolver)
+  public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
   {
     // TODO: [WriteTextFileAction.ExecuteAsync] (TESTS) Add tests
     var outcome = new JobStepOutcome();
 
-    var contents = argumentResolver.ResolveString(jobContext, stepContext, Args["Contents"]);
+    var contents = argResolver.ResolveString(jobContext, stepContext, Args["Contents"]);
     
 
     Console.WriteLine();
