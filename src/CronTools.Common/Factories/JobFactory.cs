@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using CronTools.Common.Formatters;
 using CronTools.Common.Models;
 using CronTools.Common.Resolvers;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace CronTools.Common.Factories;
 
@@ -17,31 +12,22 @@ public interface IJobFactory
 
 public class JobFactory : IJobFactory
 {
-  private readonly List<IJobActionArgFormatter> _argFormatters;
   private readonly IJobArgumentResolver _jobArgumentResolver;
 
-  public JobFactory(IServiceProvider serviceProvider)
+  public JobFactory(IJobArgumentResolver jobArgumentResolver)
   {
-    _argFormatters = serviceProvider.GetServices<IJobActionArgFormatter>().ToList();
-    _jobArgumentResolver = serviceProvider.GetRequiredService<IJobArgumentResolver>();
+    _jobArgumentResolver = jobArgumentResolver;
   }
 
-  public RunningStepContext CreateRunningStepContext(JobStepConfig jobStep, int stepNumber)
-  {
+  public RunningStepContext CreateRunningStepContext(JobStepConfig jobStep, int stepNumber) =>
     // TODO: [JobFactory.CreateRunningStepContext] (TESTS) Add tests
-    return new RunningStepContext(jobStep, stepNumber)
-      .WithFormatters(_argFormatters);
-  }
+    new(jobStep, stepNumber);
 
-  public RunningJobContext CreateRunningJobContext(JobConfig job)
-  {
+  public RunningJobContext CreateRunningJobContext(JobConfig job) =>
     // TODO: [JobFactory.CreateRunningJobContext] (TESTS) Add tests
-    return new RunningJobContext(job);
-  }
+    new(job);
 
-  public IJobArgumentResolver GetJobArgumentResolver()
-  {
+  public IJobArgumentResolver GetJobArgumentResolver() =>
     // TODO: [JobFactory.GetJobArgumentResolver] (TESTS) Add tests
-    return _jobArgumentResolver;
-  }
+    _jobArgumentResolver;
 }

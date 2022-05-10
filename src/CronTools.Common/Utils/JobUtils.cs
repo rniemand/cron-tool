@@ -1,6 +1,7 @@
 using System.Linq;
 using CronTools.Common.JobActions;
 using CronTools.Common.Models;
+using Rn.NetCore.Common.Extensions;
 using Rn.NetCore.Common.Logging;
 
 namespace CronTools.Common.Utils;
@@ -37,7 +38,7 @@ public class JobUtils : IJobUtils
 
     foreach (var (_, value) in required)
     {
-      if (context.HasArgument(value.SafeName))
+      if (context.NormalizedArgs.Any(x => x.Key.IgnoreCaseEquals(value.Name)))
         continue;
 
       _logger.LogWarning(
