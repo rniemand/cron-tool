@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
 using CronTools.Common.Models;
-using Microsoft.Extensions.DependencyInjection;
 using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Logging;
 
@@ -21,13 +20,17 @@ public class CopyFileAction : IJobAction
   private readonly IDirectoryAbstraction _directory;
   private readonly IPathAbstraction _path;
 
-  public CopyFileAction(IServiceProvider serviceProvider)
+  public CopyFileAction(
+    ILoggerAdapter<CopyFileAction> logger,
+    IFileAbstraction file,
+    IDirectoryAbstraction directory,
+    IPathAbstraction path)
   {
     // TODO: [CopyFileAction] (TESTS) Add tests
-    _logger = serviceProvider.GetRequiredService<ILoggerAdapter<CopyFileAction>>();
-    _file = serviceProvider.GetRequiredService<IFileAbstraction>();
-    _directory = serviceProvider.GetRequiredService<IDirectoryAbstraction>();
-    _path = serviceProvider.GetRequiredService<IPathAbstraction>();
+    _logger = logger;
+    _file = file;
+    _directory = directory;
+    _path = path;
     
     Action = JobStepAction.CopyFile;
     Name = JobStepAction.CopyFile.ToString("G");

@@ -4,7 +4,6 @@ using System.IO.Compression;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
 using CronTools.Common.Models;
-using Microsoft.Extensions.DependencyInjection;
 using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Logging;
 
@@ -22,13 +21,17 @@ public class ZipFolderAction : IJobAction
   private readonly IPathAbstraction _path;
   private readonly IDirectoryAbstraction _directory;
 
-  public ZipFolderAction(IServiceProvider serviceProvider)
+  public ZipFolderAction(
+    ILoggerAdapter<ZipFolderAction> logger,
+    IFileAbstraction file,
+    IPathAbstraction path,
+    IDirectoryAbstraction directory)
   {
     // TODO: [TESTS] (ZipFolderAction) Add tests
-    _logger = serviceProvider.GetRequiredService<ILoggerAdapter<ZipFolderAction>>();
-    _file = serviceProvider.GetRequiredService<IFileAbstraction>();
-    _path = serviceProvider.GetRequiredService<IPathAbstraction>();
-    _directory = serviceProvider.GetRequiredService<IDirectoryAbstraction>();
+    _logger = logger;
+    _file = file;
+    _path = path;
+    _directory = directory;
 
     Action = JobStepAction.ZipFolder;
     Name = JobStepAction.ZipFolder.ToString("G");

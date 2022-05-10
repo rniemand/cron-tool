@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
 using CronTools.Common.Models;
-using Microsoft.Extensions.DependencyInjection;
 using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Logging;
 
@@ -19,11 +18,13 @@ public class WriteTextFileAction : IJobAction
   private readonly ILoggerAdapter<WriteTextFileAction> _logger;
   private readonly IFileAbstraction _file;
 
-  public WriteTextFileAction(IServiceProvider serviceProvider)
+  public WriteTextFileAction(
+    ILoggerAdapter<WriteTextFileAction> logger,
+    IFileAbstraction file)
   {
     // TODO: [WriteTextFileAction.WriteTextFileAction] (TESTS) Add tests
-    _logger = serviceProvider.GetRequiredService<ILoggerAdapter<WriteTextFileAction>>();
-    _file = serviceProvider.GetRequiredService<IFileAbstraction>();
+    _logger = logger;
+    _file = file;
 
     Action = JobStepAction.WriteTextFile;
     Name = JobStepAction.WriteTextFile.ToString("G");
