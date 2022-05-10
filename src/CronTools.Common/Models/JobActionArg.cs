@@ -35,4 +35,8 @@ public class JobActionArg
   public static JobActionArg File(string name, bool required, string fallback = "") =>
     // TODO: [TESTS] (JobActionArg.File) Add tests
     new(name, ArgType.File, required, fallback);
+
+  public static JobActionArg String(string name, bool required, string fallback = "") =>
+    // TODO: [JobActionArg.String] (TESTS) Add tests
+    new(name, ArgType.String, required, fallback);
 }
