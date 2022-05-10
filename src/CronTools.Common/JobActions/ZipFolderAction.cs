@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
 using CronTools.Common.Models;
+using CronTools.Common.Resolvers;
 using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Logging;
 
@@ -46,7 +47,7 @@ public class ZipFolderAction : IJobAction
     };
   }
 
-  public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext)
+  public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argumentResolver)
   {
     // TODO: [TESTS] (ZipFolderAction.ExecuteAsync) Add tests
     var sourceDir = stepContext.ResolveDirectoryArg(Args["Src"]);

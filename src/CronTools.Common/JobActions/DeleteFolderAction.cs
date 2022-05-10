@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
 using CronTools.Common.Models;
+using CronTools.Common.Resolvers;
 using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Factories;
 using Rn.NetCore.Common.Logging;
@@ -42,7 +43,7 @@ public class DeleteFolderAction : IJobAction
     };
   }
 
-  public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext)
+  public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argumentResolver)
   {
     // TODO: [TESTS] (DeleteFolderAction.ExecuteAsync) Add tests
     var path = stepContext.ResolveDirectoryArg(Args["Path"]);

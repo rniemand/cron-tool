@@ -53,6 +53,7 @@ public class CronRunnerService : ICronRunnerService
       var continueRunningSteps = true;
       var stepNumber = 1;
       var jobContext = _jobFactory.CreateRunningJobContext(jobConfig);
+      var argumentResolver = _jobFactory.GetJobArgumentResolver();
 
       foreach (var step in jobConfig.Steps)
       {
@@ -67,7 +68,7 @@ public class CronRunnerService : ICronRunnerService
         if (!_jobUtils.ValidateStepArgs(resolvedAction, stepContext))
           continue;
 
-        var outcome = await resolvedAction.ExecuteAsync(jobContext, stepContext);
+        var outcome = await resolvedAction.ExecuteAsync(jobContext, stepContext, argumentResolver);
         if (outcome.Succeeded)
           continue;
 

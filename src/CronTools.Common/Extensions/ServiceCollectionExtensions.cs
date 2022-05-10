@@ -56,6 +56,7 @@ public static class ServiceCollectionExtensions
 
       // Resolvers
       .AddSingleton<IJobActionResolver, JobActionResolver>()
+      .AddSingleton<IJobArgumentResolver, JobArgumentResolver>()
 
       // Factories
       .AddSingleton<IJobFactory, JobFactory>()
