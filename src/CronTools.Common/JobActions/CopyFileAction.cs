@@ -57,6 +57,9 @@ public class CopyFileAction : IJobAction
 
     // Ensure that the destination directory exists
     var destDir = _path.GetDirectoryName(destination);
+    if(string.IsNullOrWhiteSpace(destDir))
+      return outcome.WithError($"Unable to calculate directory from: {destination}");
+
     if (!EnsureDirectoryExists(destDir))
       return outcome.WithError($"Unable to create directory: {destDir}");
 

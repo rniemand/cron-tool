@@ -63,6 +63,9 @@ public class ZipFolderAction : IJobAction
 
     // Ensure that the output directory exists
     var targetDirectory = _path.GetDirectoryName(zipFile);
+    if(string.IsNullOrWhiteSpace(targetDirectory))
+      return new JobStepOutcome(false);
+
     if (!EnsureDirectoryExists(targetDirectory))
       return new JobStepOutcome(false);
 
