@@ -1,17 +1,6 @@
-[Home](/README.md) / [Models](/docs/models/README.md) / JobConfig
+[Home](/README.md) / [Config](/docs/configuration/README.md) / JobStepConfig
 
-# JobConfig
-Main cron-job configuration file.
-
-```json
-{
-  "enabled": true,
-  "name": "My awesome job",
-  "steps": []
-}
-```
-
-## Step
+# JobStepConfig
 Cron job step configuration, please refer to the [available actions page](/docs/job-actions/README.md) for a complete list of `JobActions` and their expected configuration.
 
 ```json
@@ -22,3 +11,8 @@ Cron job step configuration, please refer to the [available actions page](/docs/
   "args": {}
 }
 ```
+
+Details on each option is listed below.
+
+| Property | Type | Required | Default | Notes |
+| --- | --- | ---- | ---- | --- |

@@ -16,6 +16,9 @@ This will install the tool globally, you can invoke the tool like so:
 
 This will look in the `c:\cron-tool-data` directory for a job called `MyJobName.json` and execute it.
 
+# Development Section
+Collection of developer related documentation can be found below.
+
 ## Enums
 More to come...
 
@@ -30,11 +33,12 @@ More to come...
 - [DeleteFile](/docs/job-actions/DeleteFile.md)
 - [ZipFolder](/docs/job-actions/ZipFolder.md)
 
-## Models
+## Configuration
 More to come...
 
-- [CronToolConfig](/docs/models/CronToolConfig.md)
-- [JobConfig](/docs/models/JobConfig.md)
+- [CronToolConfig](/docs/configuration/CronToolConfig.md)
+- [JobConfig](/docs/configuration/JobConfig.md)
+- [JobStepConfig](/docs/configuration/JobStepConfig.md)
 
 ## String Formatters
 More to come...
