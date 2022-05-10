@@ -41,11 +41,25 @@ public class RunningStepContext
     // TODO: [TESTS] (RunningStepContext.HasArgument) Add tests
     return NormalizedArgs.Count != 0 && NormalizedArgs.ContainsKey(key.LowerTrim());
   }
-    
+
   public bool HasArgument(JobActionArg arg)
   {
     // TODO: [TESTS] (RunningStepContext.HasArgument) Add tests
     return HasArgument(arg.SafeName);
+  }
+
+  public string ResolveStringArg(JobActionArg arg)
+  {
+    // TODO: [RunningStepContext.ResolveStringArg] (TESTS) Add tests
+    if (!HasArgument(arg.SafeName))
+      return ExecuteStringFormatters((string)arg.Default, ArgType.String);
+
+    var rawArg = NormalizedArgs[arg.SafeName];
+
+    if (rawArg is string s)
+      return ExecuteStringFormatters(s, ArgType.String);
+
+    return ExecuteStringFormatters((string)arg.Default, ArgType.String);
   }
 
   public string ResolveDirectoryArg(JobActionArg arg)
@@ -66,14 +80,14 @@ public class RunningStepContext
   {
     // TODO: [TESTS] (RunningStepContext.ResolveFileArg) Add tests
     if (!HasArgument(arg.SafeName))
-      return ExecuteStringFormatters((string) arg.Default, ArgType.File);
-      
+      return ExecuteStringFormatters((string)arg.Default, ArgType.File);
+
     var rawArg = NormalizedArgs[arg.SafeName];
 
     if (rawArg is string s)
       return ExecuteStringFormatters(s, ArgType.File);
 
-    return ExecuteStringFormatters((string) arg.Default, ArgType.File);
+    return ExecuteStringFormatters((string)arg.Default, ArgType.File);
   }
 
   public bool ResolveBoolArg(JobActionArg arg)

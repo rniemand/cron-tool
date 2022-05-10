@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using CronTools.Common.Factories;
+using CronTools.Common.Models;
 using CronTools.Common.Providers;
 using CronTools.Common.Resolvers;
 using CronTools.Common.Utils;
@@ -49,6 +50,7 @@ public class CronRunnerService : ICronRunnerService
 
       var continueRunningSteps = true;
       var stepNumber = 1;
+      var jobContext = new RunningJobContext();
 
       foreach (var step in jobConfig.Steps)
       {
@@ -63,7 +65,7 @@ public class CronRunnerService : ICronRunnerService
         if (!_jobUtils.ValidateStepArgs(resolvedAction, stepContext))
           continue;
 
-        var outcome = await resolvedAction.ExecuteAsync(stepContext);
+        var outcome = await resolvedAction.ExecuteAsync(jobContext, stepContext);
         if (outcome.Succeeded)
           continue;
 

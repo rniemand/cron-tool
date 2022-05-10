@@ -22,4 +22,4 @@ Details on each option is listed below.
 | `variables` | `Dictionary<string, string>` | optional | `{}` | Dictionary of variables accessable to all steps in this job. |
 
 ## Variables
-More to come.
+Variables can be accessed by using the `${var:<name>}` syntax in any supported [Job Action](/docs/job-actions/README.md) property, these are case-sensitive.

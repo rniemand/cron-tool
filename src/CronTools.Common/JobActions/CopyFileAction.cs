@@ -40,18 +40,18 @@ public class CopyFileAction : IJobAction
     };
   }
 
-  public async Task<JobStepOutcome> ExecuteAsync(RunningStepContext context)
+  public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext)
   {
     // TODO: [TESTS] (CopyFileAction.ExecuteAsync) Add tests
     var outcome = new JobStepOutcome();
 
     // Handle source file missing
-    var source = context.ResolveFileArg(Args["Source"]);
+    var source = stepContext.ResolveFileArg(Args["Source"]);
     if (!_file.Exists(source))
       return outcome.WithError($"File {source} not found!");
 
     // Calculate destination folder
-    var destination = context.ResolveFileArg(Args["Destination"]);
+    var destination = stepContext.ResolveFileArg(Args["Destination"]);
     if (string.IsNullOrWhiteSpace(destination))
       return outcome.WithError("No destination provided");
 
@@ -64,7 +64,7 @@ public class CopyFileAction : IJobAction
       return outcome.WithError($"Unable to create directory: {destDir}");
 
     // Handle when the file exists
-    var overwrite = context.ResolveBoolArg(Args["Overwrite"]);
+    var overwrite = stepContext.ResolveBoolArg(Args["Overwrite"]);
     if (_file.Exists(destination))
     {
       if (!overwrite)

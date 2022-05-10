@@ -21,6 +21,7 @@ public class WriteTextFileAction : IJobAction
 
   public WriteTextFileAction(IServiceProvider serviceProvider)
   {
+    // TODO: [WriteTextFileAction.WriteTextFileAction] (TESTS) Add tests
     _logger = serviceProvider.GetRequiredService<ILoggerAdapter<WriteTextFileAction>>();
     _file = serviceProvider.GetRequiredService<IFileAbstraction>();
 
@@ -35,11 +36,15 @@ public class WriteTextFileAction : IJobAction
     };
   }
 
-  public async Task<JobStepOutcome> ExecuteAsync(RunningStepContext context)
+  public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext)
   {
     // TODO: [WriteTextFileAction.ExecuteAsync] (TESTS) Add tests
     var outcome = new JobStepOutcome();
 
+    var contents = stepContext.ResolveStringArg(Args["Contents"]);
+    
+
+    Console.WriteLine();
     return outcome;
   }
 }

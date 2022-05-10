@@ -43,14 +43,14 @@ public class ZipFolderAction : IJobAction
     };
   }
 
-  public async Task<JobStepOutcome> ExecuteAsync(RunningStepContext context)
+  public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext)
   {
     // TODO: [TESTS] (ZipFolderAction.ExecuteAsync) Add tests
-    var sourceDir = context.ResolveDirectoryArg(Args["Src"]);
-    var zipFile = context.ResolveFileArg(Args["Zip"]);
-    var quick = context.ResolveBoolArg(Args["Quick"]);
-    var includeBase = context.ResolveBoolArg(Args["AddBase"]);
-    var deleteTarget = context.ResolveBoolArg(Args["DeleteZip"]);
+    var sourceDir = stepContext.ResolveDirectoryArg(Args["Src"]);
+    var zipFile = stepContext.ResolveFileArg(Args["Zip"]);
+    var quick = stepContext.ResolveBoolArg(Args["Quick"]);
+    var includeBase = stepContext.ResolveBoolArg(Args["AddBase"]);
+    var deleteTarget = stepContext.ResolveBoolArg(Args["DeleteZip"]);
 
     // Handle when the target zip file exists
     if (_file.Exists(zipFile))

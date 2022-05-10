@@ -40,10 +40,10 @@ public class DeleteFolderAction : IJobAction
     };
   }
 
-  public async Task<JobStepOutcome> ExecuteAsync(RunningStepContext context)
+  public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext)
   {
     // TODO: [TESTS] (DeleteFolderAction.ExecuteAsync) Add tests
-    var path = context.ResolveDirectoryArg(Args["Path"]);
+    var path = stepContext.ResolveDirectoryArg(Args["Path"]);
 
     // Nothing to do
     if (!_directory.Exists(path))
@@ -52,12 +52,11 @@ public class DeleteFolderAction : IJobAction
     }
 
     await Task.CompletedTask;
-    var recurse = context.ResolveBoolArg(Args["Recurse"]);
+    var recurse = stepContext.ResolveBoolArg(Args["Recurse"]);
 
     _logger.LogInformation("Deleting: {path} (recurse: {recurse})",
       path,
-      recurse ? "yes" : "no"
-    );
+      recurse ? "yes" : "no");
 
     if (recurse)
     {
