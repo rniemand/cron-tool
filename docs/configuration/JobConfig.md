@@ -7,7 +7,8 @@ Main cron-job configuration file.
 {
   "enabled": true,
   "name": "My awesome job",
-  "steps": []
+  "steps": [],
+  "variables": {}
 }
 ```
 
@@ -17,4 +18,8 @@ Details on each option is listed below.
 | --- | --- | ---- | ---- | --- |
 | `enabled` | `bool` | required | `true` | Enables the current job. |
 | `name` | `string` | required | - | The name of the current job. |
-| `steps` | [JobStepConfig](/docs/models/JobStepConfig.md)[] | 
+| `steps` | [JobStepConfig](/docs/models/JobStepConfig.md)[] | required | `[]` | Array of [JobStepConfig](/docs/models/JobStepConfig.md) entries that make up this job. |
+| `variables` | `Dictionary<string, string>` | optional | `{}` | Dictionary of variables accessable to all steps in this job. |
+
+## Variables
+More to come.
