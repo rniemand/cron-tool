@@ -46,7 +46,7 @@ public class DeleteFolderAction : IJobAction
   public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argumentResolver)
   {
     // TODO: [TESTS] (DeleteFolderAction.ExecuteAsync) Add tests
-    var path = stepContext.ResolveDirectoryArg(Args["Path"]);
+    var path = argumentResolver.ResolveDirectory(jobContext, stepContext, Args["Path"]);
 
     // Nothing to do
     if (!_directory.Exists(path))

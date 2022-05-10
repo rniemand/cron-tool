@@ -48,20 +48,6 @@ public class RunningStepContext
     return HasArgument(arg.SafeName);
   }
   
-  public string ResolveDirectoryArg(JobActionArg arg)
-  {
-    // TODO: [TESTS] (RunningStepContext.ResolveDirectoryArg) Add tests
-    if (!HasArgument(arg.SafeName))
-      return (string)arg.Default;
-
-    var rawArg = NormalizedArgs[arg.SafeName];
-
-    if (rawArg is string s)
-      return s;
-
-    return (string)arg.Default;
-  }
-
   public string ResolveFileArg(JobActionArg arg)
   {
     // TODO: [TESTS] (RunningStepContext.ResolveFileArg) Add tests

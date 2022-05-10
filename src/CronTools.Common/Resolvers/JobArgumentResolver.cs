@@ -11,6 +11,7 @@ public interface IJobArgumentResolver
 {
   bool HasArgument(RunningStepContext stepContext, string argName);
   string ResolveString(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg);
+  string ResolveDirectory(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg);
 }
 
 public class JobArgumentResolver : IJobArgumentResolver
@@ -40,6 +41,20 @@ public class JobArgumentResolver : IJobArgumentResolver
       return ExecuteStringFormatters(s, ArgType.String);
 
     return ExecuteStringFormatters((string)arg.Default, ArgType.String);
+  }
+
+  public string ResolveDirectory(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
+  {
+    // TODO: [JobArgumentResolver.ResolveDirectory] (TESTS) Add tests
+    if (!HasArgument(stepContext, arg.SafeName))
+      return (string)arg.Default;
+
+    var rawArg = stepContext.NormalizedArgs[arg.SafeName];
+
+    if (rawArg is string s)
+      return s;
+
+    return (string)arg.Default;
   }
 
   private string ExecuteStringFormatters(string input, ArgType argType)

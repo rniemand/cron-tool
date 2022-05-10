@@ -50,7 +50,7 @@ public class ZipFolderAction : IJobAction
   public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argumentResolver)
   {
     // TODO: [TESTS] (ZipFolderAction.ExecuteAsync) Add tests
-    var sourceDir = stepContext.ResolveDirectoryArg(Args["Src"]);
+    var sourceDir = argumentResolver.ResolveDirectory(jobContext, stepContext, Args["Src"]);
     var zipFile = stepContext.ResolveFileArg(Args["Zip"]);
     var quick = stepContext.ResolveBoolArg(Args["Quick"]);
     var includeBase = stepContext.ResolveBoolArg(Args["AddBase"]);
