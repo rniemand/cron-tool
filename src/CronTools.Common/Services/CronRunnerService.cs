@@ -23,14 +23,18 @@ public class CronRunnerService : ICronRunnerService
   private readonly IJobFactory _jobFactory;
   private readonly IJobUtils _jobUtils;
 
-  public CronRunnerService(IServiceProvider serviceProvider)
+  public CronRunnerService(
+    ILoggerAdapter<CronRunnerService> logger,
+    IJobConfigProvider jobConfigProvider,
+    IJobActionResolver actionResolver,
+    IJobFactory jobFactory,
+    IJobUtils jobUtils)
   {
-    // TODO: [TESTS] (CronRunnerService) Add tests
-    _logger = serviceProvider.GetRequiredService<ILoggerAdapter<CronRunnerService>>();
-    _jobConfigProvider = serviceProvider.GetRequiredService<IJobConfigProvider>();
-    _actionResolver = serviceProvider.GetRequiredService<IJobActionResolver>();
-    _jobFactory = serviceProvider.GetRequiredService<IJobFactory>();
-    _jobUtils = serviceProvider.GetRequiredService<IJobUtils>();
+    _logger = logger;
+    _jobConfigProvider = jobConfigProvider;
+    _actionResolver = actionResolver;
+    _jobFactory = jobFactory;
+    _jobUtils = jobUtils;
   }
 
   public async Task RunAsync(string[] args)
@@ -50,7 +54,7 @@ public class CronRunnerService : ICronRunnerService
 
       var continueRunningSteps = true;
       var stepNumber = 1;
-      var jobContext = new RunningJobContext();
+      var jobContext = _jobFactory.CreateRunningJobContext(jobConfig);
 
       foreach (var step in jobConfig.Steps)
       {

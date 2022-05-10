@@ -10,6 +10,7 @@ namespace CronTools.Common.Factories;
 public interface IJobFactory
 {
   RunningStepContext CreateRunningStepContext(JobStepConfig jobStep, int stepNumber);
+  RunningJobContext CreateRunningJobContext(JobConfig job);
 }
 
 public class JobFactory : IJobFactory
@@ -26,5 +27,11 @@ public class JobFactory : IJobFactory
     // TODO: [JobFactory.CreateRunningStepContext] (TESTS) Add tests
     return new RunningStepContext(jobStep, stepNumber)
       .WithFormatters(_argFormatters);
+  }
+
+  public RunningJobContext CreateRunningJobContext(JobConfig job)
+  {
+    // TODO: [JobFactory.CreateRunningJobContext] (TESTS) Add tests
+    return new RunningJobContext();
   }
 }
