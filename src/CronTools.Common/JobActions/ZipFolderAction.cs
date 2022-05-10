@@ -52,9 +52,9 @@ public class ZipFolderAction : IJobAction
     // TODO: [TESTS] (ZipFolderAction.ExecuteAsync) Add tests
     var sourceDir = argumentResolver.ResolveDirectory(jobContext, stepContext, Args["Src"]);
     var zipFile = argumentResolver.ResolveFile(jobContext, stepContext, Args["Zip"]);
-    var quick = stepContext.ResolveBoolArg(Args["Quick"]);
-    var includeBase = stepContext.ResolveBoolArg(Args["AddBase"]);
-    var deleteTarget = stepContext.ResolveBoolArg(Args["DeleteZip"]);
+    var quick = argumentResolver.ResolveBool(jobContext, stepContext, Args["Quick"]);
+    var includeBase = argumentResolver.ResolveBool(jobContext, stepContext, Args["AddBase"]);
+    var deleteTarget = argumentResolver.ResolveBool(jobContext, stepContext, Args["DeleteZip"]);
 
     // Handle when the target zip file exists
     if (_file.Exists(zipFile))

@@ -13,6 +13,7 @@ public interface IJobArgumentResolver
   string ResolveString(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg);
   string ResolveDirectory(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg);
   string ResolveFile(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg);
+  bool ResolveBool(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg);
 }
 
 public class JobArgumentResolver : IJobArgumentResolver
@@ -70,6 +71,34 @@ public class JobArgumentResolver : IJobArgumentResolver
       return ExecuteStringFormatters(s, ArgType.File);
 
     return ExecuteStringFormatters((string)arg.Default, ArgType.File);
+  }
+
+  public bool ResolveBool(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
+  {
+    // TODO: [JobArgumentResolver.ResolveBool] (TESTS) Add tests
+    if (!HasArgument(stepContext, arg.SafeName))
+      return (bool)arg.Default;
+
+    var rawArg = stepContext.NormalizedArgs[arg.SafeName];
+    if (rawArg is bool b)
+      return b;
+
+    if (rawArg is string strRawAre)
+    {
+      if (bool.TryParse(strRawAre, out var parsed))
+      {
+        return parsed;
+      }
+
+      return (bool)arg.Default;
+    }
+
+    if (rawArg is int)
+    {
+      return (int)rawArg == 1;
+    }
+
+    return (bool)arg.Default;
   }
 
   private string ExecuteStringFormatters(string input, ArgType argType)

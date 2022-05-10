@@ -68,7 +68,7 @@ public class CopyFileAction : IJobAction
       return outcome.WithError($"Unable to create directory: {destDir}");
 
     // Handle when the file exists
-    var overwrite = stepContext.ResolveBoolArg(Args["Overwrite"]);
+    var overwrite = argumentResolver.ResolveBool(jobContext, stepContext, Args["Overwrite"]);
     if (_file.Exists(destination))
     {
       if (!overwrite)

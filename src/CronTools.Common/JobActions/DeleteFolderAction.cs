@@ -55,7 +55,7 @@ public class DeleteFolderAction : IJobAction
     }
 
     await Task.CompletedTask;
-    var recurse = stepContext.ResolveBoolArg(Args["Recurse"]);
+    var recurse = argumentResolver.ResolveBool(jobContext, stepContext, Args["Recurse"]);
 
     _logger.LogInformation("Deleting: {path} (recurse: {recurse})",
       path,
