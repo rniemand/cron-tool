@@ -1,4 +1,4 @@
-[Home](/README.md) / [Docs](/docs/README.md) / [Job Actions](/docs/job-actions/README.md) / ZipFolder
+[Home](/README.md) / [Job Actions](/docs/job-actions/README.md) / ZipFolder
 
 # ZipFolder
 Provided by the `ZipFolderAction` class.

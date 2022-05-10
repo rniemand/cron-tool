@@ -1,4 +1,4 @@
-[Home](/README.md) / [Docs](/docs/README.md) / [String Formatters](/docs/string-formatters/README.md) / DateTimeFormatter
+[Home](/README.md) / [String Formatters](/docs/string-formatters/README.md) / DateTimeFormatter
 
 # DateTimeFormatter
 Replaces matching tags with a formatted `DateTime` value, supported tags need to follow the below convention.

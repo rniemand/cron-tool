@@ -1,4 +1,4 @@
-[Home](/README.md) / [Docs](/docs/README.md) / String Formatters
+[Home](/README.md) / String Formatters
 
 # String Formatters
 String formatters can be used to preform additional formatting to a value through the usage of an appropriate template placeholder.

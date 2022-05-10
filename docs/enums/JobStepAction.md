@@ -1,4 +1,4 @@
-[Home](/README.md) / [Docs](/docs/README.md) / [Enums](/docs/enums/README.md) / JobStepAction
+[Home](/README.md) / [Enums](/docs/enums/README.md) / JobStepAction
 
 # JobStepAction
 Enumeration of the supported job types for a given [job action](/docs/job-actions/README.md).

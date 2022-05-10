@@ -1,4 +1,4 @@
-[Home](/README.md) / [Docs](/docs/README.md) / [Examples](/docs/examples/README.md) / BackupNasLandingPage
+[Home](/README.md) / [Examples](/docs/examples/README.md) / BackupNasLandingPage
 
 # BackupNasLandingPage
 The example below will backup the `\\192.168.0.60\appdata\nas-landing-page` directory and all of it's content to a zip file with a dynamic name `\\192.168.0.60\Backups\nas-landing-page\nas-landing-page-{date:yyyyMMdd}.zip`.

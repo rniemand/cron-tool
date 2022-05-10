@@ -1,4 +1,4 @@
-[Home](/README.md) / [Docs](/docs/README.md) / [Models](/docs/models/README.md) / JobConfig
+[Home](/README.md) / [Models](/docs/models/README.md) / JobConfig
 
 # JobConfig
 Main cron-job configuration file.

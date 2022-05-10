@@ -1,4 +1,4 @@
-[Home](/README.md) / [Docs](/docs/README.md) / Job Actions
+[Home](/README.md) / Job Actions
 
 # Job Actions
 Below is a complete list of all supported `JobAction` types.

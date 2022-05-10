@@ -1,4 +1,4 @@
-[Home](/README.md) / [Docs](/docs/README.md) / [Models](/docs/models/README.md) / CronToolConfig
+[Home](/README.md) / [Models](/docs/models/README.md) / CronToolConfig
 
 # CronToolConfig
 Main application configuration.
