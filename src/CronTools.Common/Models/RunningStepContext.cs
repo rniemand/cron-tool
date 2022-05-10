@@ -48,20 +48,6 @@ public class RunningStepContext
     return HasArgument(arg.SafeName);
   }
   
-  public string ResolveFileArg(JobActionArg arg)
-  {
-    // TODO: [TESTS] (RunningStepContext.ResolveFileArg) Add tests
-    if (!HasArgument(arg.SafeName))
-      return ExecuteStringFormatters((string)arg.Default, ArgType.File);
-
-    var rawArg = NormalizedArgs[arg.SafeName];
-
-    if (rawArg is string s)
-      return ExecuteStringFormatters(s, ArgType.File);
-
-    return ExecuteStringFormatters((string)arg.Default, ArgType.File);
-  }
-
   public bool ResolveBoolArg(JobActionArg arg)
   {
     // TODO: [TESTS] (RunningStepContext.ResolveBoolArg) Add tests

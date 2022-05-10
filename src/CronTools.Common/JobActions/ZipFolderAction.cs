@@ -51,7 +51,7 @@ public class ZipFolderAction : IJobAction
   {
     // TODO: [TESTS] (ZipFolderAction.ExecuteAsync) Add tests
     var sourceDir = argumentResolver.ResolveDirectory(jobContext, stepContext, Args["Src"]);
-    var zipFile = stepContext.ResolveFileArg(Args["Zip"]);
+    var zipFile = argumentResolver.ResolveFile(jobContext, stepContext, Args["Zip"]);
     var quick = stepContext.ResolveBoolArg(Args["Quick"]);
     var includeBase = stepContext.ResolveBoolArg(Args["AddBase"]);
     var deleteTarget = stepContext.ResolveBoolArg(Args["DeleteZip"]);

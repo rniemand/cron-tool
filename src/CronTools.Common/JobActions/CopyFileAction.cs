@@ -50,12 +50,12 @@ public class CopyFileAction : IJobAction
     var outcome = new JobStepOutcome();
 
     // Handle source file missing
-    var source = stepContext.ResolveFileArg(Args["Source"]);
+    var source = argumentResolver.ResolveFile(jobContext, stepContext, Args["Source"]);
     if (!_file.Exists(source))
       return outcome.WithError($"File {source} not found!");
 
     // Calculate destination folder
-    var destination = stepContext.ResolveFileArg(Args["Destination"]);
+    var destination = argumentResolver.ResolveFile(jobContext, stepContext, Args["Destination"]);
     if (string.IsNullOrWhiteSpace(destination))
       return outcome.WithError("No destination provided");
 
