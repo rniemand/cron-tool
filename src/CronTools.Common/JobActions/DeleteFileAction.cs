@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
 using CronTools.Common.Models;
-using Microsoft.Extensions.DependencyInjection;
+using CronTools.Common.Resolvers;
 using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Logging;
 
@@ -19,11 +19,13 @@ public class DeleteFileAction : IJobAction
   private readonly ILoggerAdapter<DeleteFileAction> _logger;
   private readonly IFileAbstraction _file;
 
-  public DeleteFileAction(IServiceProvider serviceProvider)
+  public DeleteFileAction(
+    ILoggerAdapter<DeleteFileAction> logger,
+    IFileAbstraction file)
   {
     // TODO: [TESTS] (DeleteFileAction.DeleteFileAction) Add tests
-    _logger = serviceProvider.GetRequiredService<ILoggerAdapter<DeleteFileAction>>();
-    _file = serviceProvider.GetRequiredService<IFileAbstraction>();
+    _logger = logger;
+    _file = file;
 
     Action = JobStepAction.DeleteFile;
     Name = JobStepAction.DeleteFile.ToString("G");
@@ -34,10 +36,10 @@ public class DeleteFileAction : IJobAction
     };
   }
 
-  public async Task<JobStepOutcome> ExecuteAsync(RunningStepContext context)
+  public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
   {
     var outcome = new JobStepOutcome();
-    var path = context.ResolveFileArg(Args["Path"]);
+    var path = argResolver.ResolveFile(jobContext, stepContext, Args["Path"]);
 
     if (!_file.Exists(path))
       return outcome.WithSuccess();

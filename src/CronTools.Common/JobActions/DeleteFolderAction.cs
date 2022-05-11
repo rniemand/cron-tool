@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
 using CronTools.Common.Models;
-using Microsoft.Extensions.DependencyInjection;
+using CronTools.Common.Resolvers;
 using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Factories;
 using Rn.NetCore.Common.Logging;
@@ -22,13 +21,17 @@ public class DeleteFolderAction : IJobAction
   private readonly IFileAbstraction _file;
   private readonly IDirectoryInfoFactory _diFactory;
 
-  public DeleteFolderAction(IServiceProvider serviceProvider)
+  public DeleteFolderAction(
+    ILoggerAdapter<DeleteFolderAction> logger,
+    IDirectoryAbstraction directory,
+    IFileAbstraction file,
+    IDirectoryInfoFactory diFactory)
   {
     // TODO: [TESTS] (DeleteFolderAction) Add tests
-    _logger = serviceProvider.GetRequiredService<ILoggerAdapter<DeleteFolderAction>>();
-    _directory = serviceProvider.GetRequiredService<IDirectoryAbstraction>();
-    _file = serviceProvider.GetRequiredService<IFileAbstraction>();
-    _diFactory = serviceProvider.GetRequiredService<IDirectoryInfoFactory>();
+    _logger = logger;
+    _directory = directory;
+    _file = file;
+    _diFactory = diFactory;
 
     Action = JobStepAction.DeleteFolder;
     Name = JobStepAction.DeleteFolder.ToString("G");
@@ -40,10 +43,10 @@ public class DeleteFolderAction : IJobAction
     };
   }
 
-  public async Task<JobStepOutcome> ExecuteAsync(RunningStepContext context)
+  public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
   {
     // TODO: [TESTS] (DeleteFolderAction.ExecuteAsync) Add tests
-    var path = context.ResolveDirectoryArg(Args["Path"]);
+    var path = argResolver.ResolveDirectory(jobContext, stepContext, Args["Path"]);
 
     // Nothing to do
     if (!_directory.Exists(path))
@@ -52,12 +55,11 @@ public class DeleteFolderAction : IJobAction
     }
 
     await Task.CompletedTask;
-    var recurse = context.ResolveBoolArg(Args["Recurse"]);
+    var recurse = argResolver.ResolveBool(jobContext, stepContext, Args["Recurse"]);
 
     _logger.LogInformation("Deleting: {path} (recurse: {recurse})",
       path,
-      recurse ? "yes" : "no"
-    );
+      recurse ? "yes" : "no");
 
     if (recurse)
     {

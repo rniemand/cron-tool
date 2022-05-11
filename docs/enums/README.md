@@ -1,4 +1,4 @@
-[Home](/README.md) / [Docs](/docs/README.md) / Enums
+[Home](/README.md) / Enums
 
 # Enums
 The following `enums` are used \ exposed to the end-user:

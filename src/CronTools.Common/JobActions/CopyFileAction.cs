@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
 using CronTools.Common.Models;
-using Microsoft.Extensions.DependencyInjection;
+using CronTools.Common.Resolvers;
 using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Logging;
 
@@ -21,13 +21,17 @@ public class CopyFileAction : IJobAction
   private readonly IDirectoryAbstraction _directory;
   private readonly IPathAbstraction _path;
 
-  public CopyFileAction(IServiceProvider serviceProvider)
+  public CopyFileAction(
+    ILoggerAdapter<CopyFileAction> logger,
+    IFileAbstraction file,
+    IDirectoryAbstraction directory,
+    IPathAbstraction path)
   {
     // TODO: [CopyFileAction] (TESTS) Add tests
-    _logger = serviceProvider.GetRequiredService<ILoggerAdapter<CopyFileAction>>();
-    _file = serviceProvider.GetRequiredService<IFileAbstraction>();
-    _directory = serviceProvider.GetRequiredService<IDirectoryAbstraction>();
-    _path = serviceProvider.GetRequiredService<IPathAbstraction>();
+    _logger = logger;
+    _file = file;
+    _directory = directory;
+    _path = path;
     
     Action = JobStepAction.CopyFile;
     Name = JobStepAction.CopyFile.ToString("G");
@@ -40,28 +44,31 @@ public class CopyFileAction : IJobAction
     };
   }
 
-  public async Task<JobStepOutcome> ExecuteAsync(RunningStepContext context)
+  public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
   {
     // TODO: [TESTS] (CopyFileAction.ExecuteAsync) Add tests
     var outcome = new JobStepOutcome();
 
     // Handle source file missing
-    var source = context.ResolveFileArg(Args["Source"]);
+    var source = argResolver.ResolveFile(jobContext, stepContext, Args["Source"]);
     if (!_file.Exists(source))
       return outcome.WithError($"File {source} not found!");
 
     // Calculate destination folder
-    var destination = context.ResolveFileArg(Args["Destination"]);
+    var destination = argResolver.ResolveFile(jobContext, stepContext, Args["Destination"]);
     if (string.IsNullOrWhiteSpace(destination))
       return outcome.WithError("No destination provided");
 
     // Ensure that the destination directory exists
     var destDir = _path.GetDirectoryName(destination);
+    if(string.IsNullOrWhiteSpace(destDir))
+      return outcome.WithError($"Unable to calculate directory from: {destination}");
+
     if (!EnsureDirectoryExists(destDir))
       return outcome.WithError($"Unable to create directory: {destDir}");
 
     // Handle when the file exists
-    var overwrite = context.ResolveBoolArg(Args["Overwrite"]);
+    var overwrite = argResolver.ResolveBool(jobContext, stepContext, Args["Overwrite"]);
     if (_file.Exists(destination))
     {
       if (!overwrite)

@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
 using CronTools.Common.Models;
+using CronTools.Common.Resolvers;
 
 namespace CronTools.Common.JobActions;
 
@@ -11,5 +12,5 @@ public interface IJobAction
   string Name { get; }
   Dictionary<string, JobActionArg> Args { get; }
 
-  Task<JobStepOutcome> ExecuteAsync(RunningStepContext context);
+  Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver);
 }

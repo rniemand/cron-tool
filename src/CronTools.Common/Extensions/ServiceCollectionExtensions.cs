@@ -1,5 +1,6 @@
 using CronTools.Common.Factories;
 using CronTools.Common.Formatters;
+using CronTools.Common.Helpers;
 using CronTools.Common.JobActions;
 using CronTools.Common.Providers;
 using CronTools.Common.Resolvers;
@@ -35,6 +36,7 @@ public static class ServiceCollectionExtensions
       .AddSingleton<IJobAction, ZipFolderAction>()
       .AddSingleton<IJobAction, CopyFileAction>()
       .AddSingleton<IJobAction, DeleteFileAction>()
+      .AddSingleton<IJobAction, WriteTextFileAction>()
 
       // Arg Formatters
       .AddSingleton<IJobActionArgFormatter, DateTimeFormatter>()
@@ -46,6 +48,9 @@ public static class ServiceCollectionExtensions
       .AddSingleton<IConfigProvider, ConfigProvider>()
       .AddSingleton<IJobConfigProvider, JobConfigProvider>()
 
+      // Helpers
+      .AddSingleton<IJobActionArgHelper, JobActionArgHelper>()
+
       // Factories
       .AddSingleton<IDirectoryInfoFactory, DirectoryInfoFactory>()
 
@@ -55,6 +60,7 @@ public static class ServiceCollectionExtensions
 
       // Resolvers
       .AddSingleton<IJobActionResolver, JobActionResolver>()
+      .AddSingleton<IJobArgumentResolver, JobArgumentResolver>()
 
       // Factories
       .AddSingleton<IJobFactory, JobFactory>()

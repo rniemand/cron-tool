@@ -1,13 +1,5 @@
-Home
-
-# CronTool
+# CronTool (cron-tool)
 Starter documentation for `cron-tool`, you can visit the various sections below to find out more about this application.
-
-- [Models](/docs/models/README.md) - information about the various models used in the application
-- [Job Actions](/docs/job-actions/README.md) - documentation around the supported action types
-- [String formatters](/docs/string-formatters/README.md) - information about the various argument string formatters
-- [Enums](/docs/enums/README.md) - list of all user exposed `enums` used by `cron-tool`
-- [Examples](/docs/examples/README.md) - collection of example jobs - something to get you started
 
 ## Installation & Usage
 You can install `cron-tool` by running the following command:
@@ -23,6 +15,42 @@ This will install the tool globally, you can invoke the tool like so:
     cron-tool -r "c:\cron-tool-data" -j MyJobName
 
 This will look in the `c:\cron-tool-data` directory for a job called `MyJobName.json` and execute it.
+
+## Example Jobs
+More to come...
+
+- [Zipping the contents of a folder](/docs/examples/BackupNasLandingPage.md) - this example covers using the [ZipFolder](/docs/job-actions/ZipFolder.md) job action.
+- [Writing variable to a text file](/docs/examples/WriteVariableToTextFile.md) - this example showcases using `variables` and the [WriteTextFile](/docs/job-actions/WriteTextFile.md) job action.
+
+# Development Section
+Collection of developer related documentation can be found below.
+
+## Enums
+More to come...
+
+- [ArgType](/docs/enums/ArgType.md) - documents the type of arguments exposed by the various [job actions](/docs/job-actions/README.md).
+- [JobStepAction](/docs/enums/JobStepAction.md) - list of all supported [job actions](/docs/job-actions/README.md).
+
+## Job Actions
+More to come...
+
+- [CopyFile](/docs/job-actions/CopyFile.md)
+- [DeleteFolder](/docs/job-actions/DeleteFolder.md)
+- [DeleteFile](/docs/job-actions/DeleteFile.md)
+- [WriteTextFile](/docs/job-actions/WriteTextFile.md)
+- [ZipFolder](/docs/job-actions/ZipFolder.md)
+
+## Configuration
+More to come...
+
+- [appsettings.json](/docs/configuration/appsettings.md)
+- [JobConfig](/docs/configuration/JobConfig.md)
+- [JobStepConfig](/docs/configuration/JobStepConfig.md)
+
+## Formatters
+More to come...
+
+- [DateTimeFormatter](/docs/formatters/DateTimeFormatter.md)
 
 <!--(Rn.BuildScriptHelper){
 	"version": "1.0.106",

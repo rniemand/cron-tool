@@ -14,4 +14,7 @@ public class JobConfig
 
   [JsonProperty("steps")]
   public List<JobStepConfig> Steps { get; set; } = new();
+
+  [JsonProperty("variables")]
+  public Dictionary<string, string> Variables { get; set; } = new();
 }

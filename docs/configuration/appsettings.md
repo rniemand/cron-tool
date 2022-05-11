@@ -1,6 +1,6 @@
-[Home](/README.md) / [Docs](/docs/README.md) / [Models](/docs/models/README.md) / CronToolConfig
+[Home](/README.md) / [Config](/docs/configuration/README.md) / appsettings.json
 
-# CronToolConfig
+# appsettings.json
 Main application configuration.
 
 ```json

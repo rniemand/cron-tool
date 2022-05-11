@@ -1,12 +1,10 @@
 using CronTools.Common.Enums;
-using Rn.NetCore.Common.Extensions;
 
 namespace CronTools.Common.Models;
 
 public class JobActionArg
 {
   public string Name { get; set; } = string.Empty;
-  public string SafeName { get; set; } = string.Empty;
   public bool Required { get; set; }
   public ArgType Type { get; set; } = ArgType.String;
   public object Default { get; set; }
@@ -18,7 +16,6 @@ public class JobActionArg
   {
     // TODO: [TESTS] (JobActionArg) Add tests
     Name = name;
-    SafeName = name.LowerTrim();
     Type = type;
     Required = required;
     Default = fallback;
@@ -35,4 +32,8 @@ public class JobActionArg
   public static JobActionArg File(string name, bool required, string fallback = "") =>
     // TODO: [TESTS] (JobActionArg.File) Add tests
     new(name, ArgType.File, required, fallback);
+
+  public static JobActionArg String(string name, bool required, string fallback = "") =>
+    // TODO: [JobActionArg.String] (TESTS) Add tests
+    new(name, ArgType.String, required, fallback);
 }

@@ -4,7 +4,6 @@ using CronTools.Common.Factories;
 using CronTools.Common.Providers;
 using CronTools.Common.Resolvers;
 using CronTools.Common.Utils;
-using Microsoft.Extensions.DependencyInjection;
 using Rn.NetCore.Common.Logging;
 
 namespace CronTools.Common.Services;
@@ -22,14 +21,18 @@ public class CronRunnerService : ICronRunnerService
   private readonly IJobFactory _jobFactory;
   private readonly IJobUtils _jobUtils;
 
-  public CronRunnerService(IServiceProvider serviceProvider)
+  public CronRunnerService(
+    ILoggerAdapter<CronRunnerService> logger,
+    IJobConfigProvider jobConfigProvider,
+    IJobActionResolver actionResolver,
+    IJobFactory jobFactory,
+    IJobUtils jobUtils)
   {
-    // TODO: [TESTS] (CronRunnerService) Add tests
-    _logger = serviceProvider.GetRequiredService<ILoggerAdapter<CronRunnerService>>();
-    _jobConfigProvider = serviceProvider.GetRequiredService<IJobConfigProvider>();
-    _actionResolver = serviceProvider.GetRequiredService<IJobActionResolver>();
-    _jobFactory = serviceProvider.GetRequiredService<IJobFactory>();
-    _jobUtils = serviceProvider.GetRequiredService<IJobUtils>();
+    _logger = logger;
+    _jobConfigProvider = jobConfigProvider;
+    _actionResolver = actionResolver;
+    _jobFactory = jobFactory;
+    _jobUtils = jobUtils;
   }
 
   public async Task RunAsync(string[] args)
@@ -49,6 +52,8 @@ public class CronRunnerService : ICronRunnerService
 
       var continueRunningSteps = true;
       var stepNumber = 1;
+      var jobContext = _jobFactory.CreateRunningJobContext(jobConfig);
+      var argumentResolver = _jobFactory.GetJobArgumentResolver();
 
       foreach (var step in jobConfig.Steps)
       {
@@ -63,7 +68,7 @@ public class CronRunnerService : ICronRunnerService
         if (!_jobUtils.ValidateStepArgs(resolvedAction, stepContext))
           continue;
 
-        var outcome = await resolvedAction.ExecuteAsync(stepContext);
+        var outcome = await resolvedAction.ExecuteAsync(jobContext, stepContext, argumentResolver);
         if (outcome.Succeeded)
           continue;
 

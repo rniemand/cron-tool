@@ -1,4 +1,4 @@
-[Home](/README.md) / [Docs](/docs/README.md) / [Enums](/docs/enums/README.md) / ArgType
+[Home](/README.md) / [Enums](/docs/enums/README.md) / ArgType
 
 # ArgType
 Enumeration of the supported argument types for a given [job action](/docs/job-actions/README.md).
