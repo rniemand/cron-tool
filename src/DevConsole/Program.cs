@@ -3,4 +3,4 @@ using Microsoft.Extensions.DependencyInjection;
 
 var cronRunnerService = DIContainer.ServiceProvider.GetRequiredService<ICronRunnerService>();
 
-await cronRunnerService.RunAsync(new[] { "DevJob" });
+await cronRunnerService.RunAsync(new[] { "JobState" });
