@@ -8,5 +8,6 @@ public enum JobStepAction
   CopyFile = 3,
   DeleteFile = 4,
   ZipFolder = 5,
-  WriteTextFile = 6
+  WriteTextFile = 6,
+  DeleteFiles = 7
 }
