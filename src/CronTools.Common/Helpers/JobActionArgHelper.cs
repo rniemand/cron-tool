@@ -47,6 +47,7 @@ public class JobActionArgHelper : IJobActionArgHelper
       return input;
 
     input = HandleVariables(jobContext, input);
+    input = HandleState(jobContext, input);
     var formatters = _formatters
       .Where(x => x.SupportedTypes.Any(t => t == ArgType.String))
       .ToList();
@@ -70,6 +71,7 @@ public class JobActionArgHelper : IJobActionArgHelper
       return input;
 
     input = HandleVariables(jobContext, input);
+    input = HandleState(jobContext, input);
     var formatters = _formatters
       .Where(x => x.SupportedTypes.Any(t => t == ArgType.File))
       .ToList();
@@ -93,6 +95,7 @@ public class JobActionArgHelper : IJobActionArgHelper
       return input;
 
     input = HandleVariables(jobContext, input);
+    input = HandleState(jobContext, input);
     var formatters = _formatters
       .Where(x => x.SupportedTypes.Any(t => t == ArgType.Directory))
       .ToList();
@@ -116,7 +119,7 @@ public class JobActionArgHelper : IJobActionArgHelper
     return _formatters.Aggregate(value, (current, formatter) => formatter.Format(current));
   }
 
-  private string HandleVariables(RunningJobContext jobContext, string input)
+  private static string HandleVariables(RunningJobContext jobContext, string input)
   {
     // TODO: [JobActionArgHelper.HandleVariables] (TESTS) Add tests
 
@@ -132,6 +135,31 @@ public class JobActionArgHelper : IJobActionArgHelper
         continue;
 
       var resolved = jobContext.Variables
+        .First(x => x.Key.IgnoreCaseEquals(varKey))
+        .Value;
+
+      input = input.Replace(match.Groups[1].Value, resolved);
+    }
+
+    return input;
+  }
+
+  private static string HandleState(RunningJobContext jobContext, string input)
+  {
+    // TODO: [JobActionArgHelper.HandleState] (TESTS) Add tests
+
+    // (\${var:([^}]+)})
+    const string rxPattern = "(\\${state:([^}]+)})";
+    if (!input.MatchesRegex(rxPattern))
+      return input;
+
+    foreach (Match match in input.GetRegexMatches(rxPattern))
+    {
+      var varKey = match.Groups[2].Value;
+      if (!jobContext.State.Any(x => x.Key.IgnoreCaseEquals(varKey)))
+        continue;
+
+      var resolved = jobContext.State
         .First(x => x.Key.IgnoreCaseEquals(varKey))
         .Value;
 

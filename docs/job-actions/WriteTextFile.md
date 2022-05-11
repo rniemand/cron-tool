@@ -13,7 +13,8 @@ Provided by the `WriteTextFileAction` class.
   "args": {
     "Path": "...",
     "Contents": "File contents",
-    "Overwrite": true
+    "Overwrite": true,
+    "PublishAs": "sampleFile"
   }
 }
 ```
@@ -25,3 +26,4 @@ Below is a breakdown of each argument, please refer to the [ArgType](/docs/enums
 | `Path` | `Path` | required | - | Path to the text file. |
 | `Contents` | `string` | required | - | Content to write to the target file. |
 | `Overwrite` | `bool` | optional | `false` | How to handle an existing target file. |
+| `PublishAs` | `string` | optional | - | When set, and file was written the path to the file will be published to the job state for use in other steps. |

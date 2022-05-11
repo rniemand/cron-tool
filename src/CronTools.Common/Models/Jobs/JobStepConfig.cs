@@ -21,4 +21,10 @@ public class JobStepConfig
 
   [JsonProperty("args")]
   public Dictionary<string, object> Args { get; set; } = new();
+
+  [JsonProperty("id")]
+  public string StepId { get; set; } = string.Empty;
+
+  [JsonIgnore]
+  public int StepNumber { get; set; } = 0;
 }

@@ -33,7 +33,8 @@ public class WriteTextFileAction : IJobAction
     {
       { "Path", JobActionArg.File("Path", true) },
       { "Contents", JobActionArg.String("Contents", true) },
-      { "Overwrite", JobActionArg.Bool("Overwrite", false) }
+      { "Overwrite", JobActionArg.Bool("Overwrite", false) },
+      { "PublishAs", JobActionArg.String("PublishAs", false) }
     };
   }
 
@@ -47,9 +48,7 @@ public class WriteTextFileAction : IJobAction
     // If the file exists and we are not allowed to overwrite it, return
     if (_file.Exists(filePath) && !replace)
     {
-      _logger.LogWarning("File '{path}' already exists, 'Overwrite' is disabled.",
-        filePath);
-
+      _logger.LogWarning("File '{path}' already exists.", filePath);
       return outcome.WithError($"File '{filePath}' already exists");
     }
 
@@ -62,7 +61,11 @@ public class WriteTextFileAction : IJobAction
 
     // Write contents to the file and return
     var contents = argResolver.ResolveString(jobContext, stepContext, Args["Contents"]);
+    var publishAs = argResolver.ResolveString(jobContext, stepContext, Args["PublishAs"]);
     await _file.WriteAllTextAsync(filePath, contents);
+
+    if (!string.IsNullOrWhiteSpace(publishAs))
+      jobContext.PublishState(publishAs, filePath);
 
     return outcome.WithSuccess($"Contents written to: {filePath}");
   }

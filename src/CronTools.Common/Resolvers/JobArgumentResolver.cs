@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Linq;
 using CronTools.Common.Helpers;
 using CronTools.Common.Models;
+using Newtonsoft.Json.Linq;
 using Rn.NetCore.Common.Extensions;
 
 namespace CronTools.Common.Resolvers;
@@ -10,6 +12,7 @@ public interface IJobArgumentResolver
   string ResolveString(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg);
   string ResolveDirectory(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg);
   string ResolveFile(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg);
+  List<string> ResolveFiles(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg);
   bool ResolveBool(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg);
 }
 
@@ -63,6 +66,37 @@ public class JobArgumentResolver : IJobArgumentResolver
       return _actionArgHelper.ExecuteFileFormatters(jobContext, s);
 
     return _actionArgHelper.ExecuteFileFormatters(jobContext, (string)arg.Default);
+  }
+
+  public List<string> ResolveFiles(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
+  {
+    // TODO: [JobArgumentResolver.ResolveFiles] (TESTS) Add tests
+    var filePaths = new List<string>();
+
+    if (!HasArgument(stepContext, arg))
+      return filePaths;
+
+    var rawArg = stepContext.GetRawArg(arg);
+
+    if (rawArg is string s)
+    {
+      filePaths.Add(_actionArgHelper.ExecuteFileFormatters(jobContext, s));
+      return filePaths;
+    }
+
+    if (rawArg is not JArray jArray)
+      return filePaths;
+
+    // ReSharper disable once LoopCanBeConvertedToQuery
+    foreach (var item in jArray)
+    {
+      if(item.Type != JTokenType.String)
+        continue;
+
+      filePaths.Add(_actionArgHelper.ExecuteFileFormatters(jobContext, item.ToString()));
+    }
+
+    return filePaths;
   }
 
   public bool ResolveBool(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)

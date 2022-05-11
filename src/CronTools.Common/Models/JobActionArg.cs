@@ -33,6 +33,10 @@ public class JobActionArg
     // TODO: [TESTS] (JobActionArg.File) Add tests
     new(name, ArgType.File, required, fallback);
 
+  public static JobActionArg Files(string name, bool required) =>
+    // TODO: [JobActionArg.Files] (TESTS) Add tests
+    new(name, ArgType.Files, required, string.Empty);
+
   public static JobActionArg String(string name, bool required, string fallback = "") =>
     // TODO: [JobActionArg.String] (TESTS) Add tests
     new(name, ArgType.String, required, fallback);

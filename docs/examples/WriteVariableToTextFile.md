@@ -12,19 +12,19 @@ The complete job configuration is listed below:
 ```json
 {
   "name": "DevJob",
-	"variables": {
-		"SampleText": "This value came from a variable @ {date:yyyyMMdd}!"
-	},
+  "variables": {
+    "SampleText": "This value came from a variable @ {date:yyyyMMdd}!"
+  },
   "steps": [
     {
-			"name": "Write data to a text file",
-			"action": "WriteTextFile",
-			"args": {
-				"Path": "c:\\wrk\\test.txt",
-				"Contents": "Resolved variable: ${var:SampleText}",
-				"Overwrite": true
-			}
-		}
+      "name": "Write data to a text file",
+      "action": "WriteTextFile",
+      "args": {
+        "Path": "c:\\wrk\\test.txt",
+        "Contents": "Resolved variable: ${var:SampleText}",
+        "Overwrite": true
+      }
+    }
   ]
 }
 ```
