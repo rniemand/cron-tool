@@ -18,3 +18,4 @@ Below is a breakdown of each argument, please refer to the [ArgType](/docs/enums
 
 | Property | Type | Required | Default | Notes |
 | --- | --- | --- | --- | --- |
+| `Paths` | `File[]` | required | `[]` | Array of file(s) to delete. |
