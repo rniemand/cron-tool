@@ -1,3 +1,4 @@
+using CronTools.Common.Helpers;
 using CronTools.Common.Models;
 using CronTools.Common.Resolvers;
 
@@ -13,10 +14,14 @@ public interface IJobFactory
 public class JobFactory : IJobFactory
 {
   private readonly IJobArgumentResolver _jobArgumentResolver;
+  private readonly IJobActionArgHelper _jobActionArgHelper;
 
-  public JobFactory(IJobArgumentResolver jobArgumentResolver)
+  public JobFactory(
+    IJobArgumentResolver jobArgumentResolver,
+    IJobActionArgHelper jobActionArgHelper)
   {
     _jobArgumentResolver = jobArgumentResolver;
+    _jobActionArgHelper = jobActionArgHelper;
   }
 
   public RunningStepContext CreateRunningStepContext(JobStepConfig jobStep, int stepNumber) =>
@@ -25,7 +30,7 @@ public class JobFactory : IJobFactory
 
   public RunningJobContext CreateRunningJobContext(JobConfig job) =>
     // TODO: [JobFactory.CreateRunningJobContext] (TESTS) Add tests
-    new(job);
+    new(job, _jobActionArgHelper);
 
   public IJobArgumentResolver GetJobArgumentResolver() =>
     // TODO: [JobFactory.GetJobArgumentResolver] (TESTS) Add tests

@@ -41,10 +41,10 @@ More to come...
 - [JobConfig](/docs/configuration/JobConfig.md)
 - [JobStepConfig](/docs/configuration/JobStepConfig.md)
 
-## String Formatters
+## Formatters
 More to come...
 
-- [DateTimeFormatter](/docs/string-formatters/DateTimeFormatter.md)
+- [DateTimeFormatter](/docs/formatters/DateTimeFormatter.md)
 
 <!--(Rn.BuildScriptHelper){
 	"version": "1.0.106",

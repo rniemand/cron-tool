@@ -1,5 +1,6 @@
 using CronTools.Common.Factories;
 using CronTools.Common.Formatters;
+using CronTools.Common.Helpers;
 using CronTools.Common.JobActions;
 using CronTools.Common.Providers;
 using CronTools.Common.Resolvers;
@@ -46,6 +47,9 @@ public static class ServiceCollectionExtensions
       // Providers
       .AddSingleton<IConfigProvider, ConfigProvider>()
       .AddSingleton<IJobConfigProvider, JobConfigProvider>()
+
+      // Helpers
+      .AddSingleton<IJobActionArgHelper, JobActionArgHelper>()
 
       // Factories
       .AddSingleton<IDirectoryInfoFactory, DirectoryInfoFactory>()
