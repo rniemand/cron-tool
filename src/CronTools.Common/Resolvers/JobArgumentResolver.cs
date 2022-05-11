@@ -27,42 +27,42 @@ public class JobArgumentResolver : IJobArgumentResolver
   {
     // TODO: [JobArgumentResolver.ResolveString] (TESTS) Add tests
     if (!HasArgument(stepContext, arg))
-      return _actionArgHelper.ExecuteStringFormatters((string)arg.Default);
+      return _actionArgHelper.ExecuteStringFormatters(jobContext, (string)arg.Default);
 
     var rawArg = stepContext.GetRawArg(arg);
 
     if (rawArg is string s)
-      return _actionArgHelper.ExecuteStringFormatters(s);
+      return _actionArgHelper.ExecuteStringFormatters(jobContext, s);
 
-    return _actionArgHelper.ExecuteStringFormatters((string)arg.Default);
+    return _actionArgHelper.ExecuteStringFormatters(jobContext, (string)arg.Default);
   }
 
   public string ResolveDirectory(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
   {
     // TODO: [JobArgumentResolver.ResolveDirectory] (TESTS) Add tests
     if (!HasArgument(stepContext, arg))
-      return _actionArgHelper.ExecuteDirectoryFormatters((string)arg.Default);
+      return _actionArgHelper.ExecuteDirectoryFormatters(jobContext, (string)arg.Default);
 
     var rawArg = stepContext.GetRawArg(arg);
 
     if (rawArg is string s)
-      return _actionArgHelper.ExecuteDirectoryFormatters(s);
+      return _actionArgHelper.ExecuteDirectoryFormatters(jobContext, s);
 
-    return _actionArgHelper.ExecuteDirectoryFormatters((string)arg.Default);
+    return _actionArgHelper.ExecuteDirectoryFormatters(jobContext, (string)arg.Default);
   }
 
   public string ResolveFile(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
   {
     // TODO: [JobArgumentResolver.ResolveFile] (TESTS) Add tests
     if (!HasArgument(stepContext, arg))
-      return _actionArgHelper.ExecuteFileFormatters((string)arg.Default);
+      return _actionArgHelper.ExecuteFileFormatters(jobContext, (string)arg.Default);
 
     var rawArg = stepContext.GetRawArg(arg);
 
     if (rawArg is string s)
-      return _actionArgHelper.ExecuteFileFormatters(s);
+      return _actionArgHelper.ExecuteFileFormatters(jobContext, s);
 
-    return _actionArgHelper.ExecuteFileFormatters((string)arg.Default);
+    return _actionArgHelper.ExecuteFileFormatters(jobContext, (string)arg.Default);
   }
 
   public bool ResolveBool(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
