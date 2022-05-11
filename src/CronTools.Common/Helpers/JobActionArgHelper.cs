@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using CronTools.Common.Enums;
 using CronTools.Common.Formatters;
 
 namespace CronTools.Common.Helpers;
@@ -7,6 +8,7 @@ namespace CronTools.Common.Helpers;
 public interface IJobActionArgHelper
 {
   Dictionary<string, string> ProcessVariables(Dictionary<string, string> variables);
+  string ExecuteStringFormatters(string input, ArgType argType);
 }
 
 public class JobActionArgHelper : IJobActionArgHelper
@@ -29,6 +31,28 @@ public class JobActionArgHelper : IJobActionArgHelper
     }
 
     return processed;
+  }
+
+  public string ExecuteStringFormatters(string input, ArgType argType)
+  {
+    // TODO: [JobActionArgHelper.ExecuteStringFormatters] (TESTS) Add tests
+    if (string.IsNullOrWhiteSpace(input))
+      return input;
+
+    var formatters = _formatters
+      .Where(x => x.SupportedTypes.Any(t => t == argType))
+      .ToList();
+
+    if (formatters.Count == 0)
+      return input;
+
+    // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
+    foreach (var formatter in formatters)
+    {
+      input = formatter.Format(input);
+    }
+
+    return input;
   }
 
   private string ProcessArgValue(string value)

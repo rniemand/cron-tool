@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using System.Linq;
 using CronTools.Common.Enums;
-using CronTools.Common.Formatters;
+using CronTools.Common.Helpers;
 using CronTools.Common.Models;
 using Rn.NetCore.Common.Extensions;
 
@@ -18,11 +17,11 @@ public interface IJobArgumentResolver
 
 public class JobArgumentResolver : IJobArgumentResolver
 {
-  private readonly List<IJobActionArgFormatter> _formatters;
+  private readonly IJobActionArgHelper _actionArgHelper;
 
-  public JobArgumentResolver(IEnumerable<IJobActionArgFormatter> formatters)
+  public JobArgumentResolver(IJobActionArgHelper actionArgHelper)
   {
-    _formatters = formatters.ToList();
+    _actionArgHelper = actionArgHelper;
   }
 
   public bool HasArgument(RunningStepContext stepContext, string argName)
@@ -39,14 +38,14 @@ public class JobArgumentResolver : IJobArgumentResolver
   {
     // TODO: [JobArgumentResolver.ResolveString] (TESTS) Add tests
     if (!HasArgument(stepContext, arg.Name))
-      return ExecuteStringFormatters((string)arg.Default, ArgType.String);
+      return _actionArgHelper.ExecuteStringFormatters((string)arg.Default, ArgType.String);
 
     var rawArg = stepContext.Args.First(x => x.Key.IgnoreCaseEquals(arg.Name)).Value;
 
     if (rawArg is string s)
-      return ExecuteStringFormatters(s, ArgType.String);
+      return _actionArgHelper.ExecuteStringFormatters(s, ArgType.String);
 
-    return ExecuteStringFormatters((string)arg.Default, ArgType.String);
+    return _actionArgHelper.ExecuteStringFormatters((string)arg.Default, ArgType.String);
   }
 
   public string ResolveDirectory(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
@@ -67,14 +66,14 @@ public class JobArgumentResolver : IJobArgumentResolver
   {
     // TODO: [JobArgumentResolver.ResolveFile] (TESTS) Add tests
     if (!HasArgument(stepContext, arg.Name))
-      return ExecuteStringFormatters((string)arg.Default, ArgType.File);
+      return _actionArgHelper.ExecuteStringFormatters((string)arg.Default, ArgType.File);
 
     var rawArg = stepContext.Args.First(x => x.Key.IgnoreCaseEquals(arg.Name)).Value;
 
     if (rawArg is string s)
-      return ExecuteStringFormatters(s, ArgType.File);
+      return _actionArgHelper.ExecuteStringFormatters(s, ArgType.File);
 
-    return ExecuteStringFormatters((string)arg.Default, ArgType.File);
+    return _actionArgHelper.ExecuteStringFormatters((string)arg.Default, ArgType.File);
   }
 
   public bool ResolveBool(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
@@ -103,27 +102,5 @@ public class JobArgumentResolver : IJobArgumentResolver
     }
 
     return (bool)arg.Default;
-  }
-
-  private string ExecuteStringFormatters(string input, ArgType argType)
-  {
-    // TODO: [JobArgumentResolver.ExecuteStringFormatters] (TESTS) Add tests
-    if (string.IsNullOrWhiteSpace(input))
-      return input;
-
-    var formatters = _formatters
-      .Where(x => x.SupportedTypes.Any(t => t == argType))
-      .ToList();
-
-    if (formatters.Count == 0)
-      return input;
-
-    // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
-    foreach (var formatter in formatters)
-    {
-      input = formatter.Format(input);
-    }
-
-    return input;
   }
 }
