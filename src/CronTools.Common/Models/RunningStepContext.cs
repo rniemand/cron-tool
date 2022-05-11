@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Rn.NetCore.Common.Extensions;
 
 namespace CronTools.Common.Models;
 
@@ -15,5 +17,11 @@ public class RunningStepContext
     JobName = jobStep.JobName;
     JobStep = jobStep;
     StepNumber = stepNumber;
+  }
+
+  public object GetRawArg(JobActionArg arg)
+  {
+    // TODO: [RunningStepContext.GetRawArg] (TESTS) Add tests
+    return Args.First(x => x.Key.IgnoreCaseEquals(arg.Name)).Value;
   }
 }

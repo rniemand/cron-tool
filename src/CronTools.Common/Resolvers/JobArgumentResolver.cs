@@ -1,5 +1,4 @@
 using System.Linq;
-using CronTools.Common.Enums;
 using CronTools.Common.Helpers;
 using CronTools.Common.Models;
 using Rn.NetCore.Common.Extensions;
@@ -8,7 +7,6 @@ namespace CronTools.Common.Resolvers;
 
 public interface IJobArgumentResolver
 {
-  bool HasArgument(RunningStepContext stepContext, string argName);
   string ResolveString(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg);
   string ResolveDirectory(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg);
   string ResolveFile(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg);
@@ -24,65 +22,56 @@ public class JobArgumentResolver : IJobArgumentResolver
     _actionArgHelper = actionArgHelper;
   }
 
-  public bool HasArgument(RunningStepContext stepContext, string argName)
-  {
-    // TODO: [JobArgumentResolver.HasArgument] (TESTS) Add tests
-    // ReSharper disable once ConvertIfStatementToReturnStatement
-    if (stepContext.Args.Count == 0)
-      return false;
-
-    return stepContext.Args.Any(x => x.Key.IgnoreCaseEquals(argName));
-  }
 
   public string ResolveString(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
   {
     // TODO: [JobArgumentResolver.ResolveString] (TESTS) Add tests
-    if (!HasArgument(stepContext, arg.Name))
-      return _actionArgHelper.ExecuteStringFormatters((string)arg.Default, ArgType.String);
+    if (!HasArgument(stepContext, arg))
+      return _actionArgHelper.ExecuteStringFormatters((string)arg.Default);
 
-    var rawArg = stepContext.Args.First(x => x.Key.IgnoreCaseEquals(arg.Name)).Value;
+    var rawArg = stepContext.GetRawArg(arg);
 
     if (rawArg is string s)
-      return _actionArgHelper.ExecuteStringFormatters(s, ArgType.String);
+      return _actionArgHelper.ExecuteStringFormatters(s);
 
-    return _actionArgHelper.ExecuteStringFormatters((string)arg.Default, ArgType.String);
+    return _actionArgHelper.ExecuteStringFormatters((string)arg.Default);
   }
 
   public string ResolveDirectory(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
   {
     // TODO: [JobArgumentResolver.ResolveDirectory] (TESTS) Add tests
-    if (!HasArgument(stepContext, arg.Name))
-      return (string)arg.Default;
+    if (!HasArgument(stepContext, arg))
+      return _actionArgHelper.ExecuteDirectoryFormatters((string)arg.Default);
 
-    var rawArg = stepContext.Args.First(x => x.Key.IgnoreCaseEquals(arg.Name)).Value;
+    var rawArg = stepContext.GetRawArg(arg);
 
     if (rawArg is string s)
-      return s;
+      return _actionArgHelper.ExecuteDirectoryFormatters(s);
 
-    return (string)arg.Default;
+    return _actionArgHelper.ExecuteDirectoryFormatters((string)arg.Default);
   }
 
   public string ResolveFile(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
   {
     // TODO: [JobArgumentResolver.ResolveFile] (TESTS) Add tests
-    if (!HasArgument(stepContext, arg.Name))
-      return _actionArgHelper.ExecuteStringFormatters((string)arg.Default, ArgType.File);
+    if (!HasArgument(stepContext, arg))
+      return _actionArgHelper.ExecuteFileFormatters((string)arg.Default);
 
-    var rawArg = stepContext.Args.First(x => x.Key.IgnoreCaseEquals(arg.Name)).Value;
+    var rawArg = stepContext.GetRawArg(arg);
 
     if (rawArg is string s)
-      return _actionArgHelper.ExecuteStringFormatters(s, ArgType.File);
+      return _actionArgHelper.ExecuteFileFormatters(s);
 
-    return _actionArgHelper.ExecuteStringFormatters((string)arg.Default, ArgType.File);
+    return _actionArgHelper.ExecuteFileFormatters((string)arg.Default);
   }
 
   public bool ResolveBool(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
   {
     // TODO: [JobArgumentResolver.ResolveBool] (TESTS) Add tests
-    if (!HasArgument(stepContext, arg.Name))
+    if (!HasArgument(stepContext, arg))
       return (bool)arg.Default;
 
-    var rawArg = stepContext.Args.First(x => x.Key.IgnoreCaseEquals(arg.Name)).Value;
+    var rawArg = stepContext.GetRawArg(arg);
     if (rawArg is bool b)
       return b;
 
@@ -102,5 +91,16 @@ public class JobArgumentResolver : IJobArgumentResolver
     }
 
     return (bool)arg.Default;
+  }
+
+
+  private static bool HasArgument(RunningStepContext stepContext, JobActionArg arg)
+  {
+    // TODO: [JobArgumentResolver.HasArgument] (TESTS) Add tests
+    // ReSharper disable once ConvertIfStatementToReturnStatement
+    if (stepContext.Args.Count == 0)
+      return false;
+
+    return stepContext.Args.Any(x => x.Key.IgnoreCaseEquals(arg.Name));
   }
 }

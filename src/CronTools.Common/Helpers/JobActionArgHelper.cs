@@ -8,7 +8,9 @@ namespace CronTools.Common.Helpers;
 public interface IJobActionArgHelper
 {
   Dictionary<string, string> ProcessVariables(Dictionary<string, string> variables);
-  string ExecuteStringFormatters(string input, ArgType argType);
+  string ExecuteStringFormatters(string input);
+  string ExecuteFileFormatters(string input);
+  string ExecuteDirectoryFormatters(string input);
 }
 
 public class JobActionArgHelper : IJobActionArgHelper
@@ -33,14 +35,58 @@ public class JobActionArgHelper : IJobActionArgHelper
     return processed;
   }
 
-  public string ExecuteStringFormatters(string input, ArgType argType)
+  public string ExecuteStringFormatters(string input)
   {
     // TODO: [JobActionArgHelper.ExecuteStringFormatters] (TESTS) Add tests
     if (string.IsNullOrWhiteSpace(input))
       return input;
 
     var formatters = _formatters
-      .Where(x => x.SupportedTypes.Any(t => t == argType))
+      .Where(x => x.SupportedTypes.Any(t => t == ArgType.String))
+      .ToList();
+
+    if (formatters.Count == 0)
+      return input;
+
+    // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
+    foreach (var formatter in formatters)
+    {
+      input = formatter.Format(input);
+    }
+
+    return input;
+  }
+
+  public string ExecuteFileFormatters(string input)
+  {
+    // TODO: [JobActionArgHelper.ExecuteFileFormatters] (TESTS) Add tests
+    if (string.IsNullOrWhiteSpace(input))
+      return input;
+
+    var formatters = _formatters
+      .Where(x => x.SupportedTypes.Any(t => t == ArgType.File))
+      .ToList();
+
+    if (formatters.Count == 0)
+      return input;
+
+    // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
+    foreach (var formatter in formatters)
+    {
+      input = formatter.Format(input);
+    }
+
+    return input;
+  }
+
+  public string ExecuteDirectoryFormatters(string input)
+  {
+    // TODO: [JobActionArgHelper.ExecuteDirectoryFormatters] (TESTS) Add tests
+    if (string.IsNullOrWhiteSpace(input))
+      return input;
+
+    var formatters = _formatters
+      .Where(x => x.SupportedTypes.Any(t => t == ArgType.Directory))
       .ToList();
 
     if (formatters.Count == 0)
