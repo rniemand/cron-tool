@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
@@ -42,11 +41,29 @@ public class WriteTextFileAction : IJobAction
   {
     // TODO: [WriteTextFileAction.ExecuteAsync] (TESTS) Add tests
     var outcome = new JobStepOutcome();
+    var filePath = argResolver.ResolveFile(jobContext, stepContext, Args["Path"]);
+    var replace = argResolver.ResolveBool(jobContext, stepContext, Args["Overwrite"]);
 
+    // If the file exists and we are not allowed to overwrite it, return
+    if (_file.Exists(filePath) && !replace)
+    {
+      _logger.LogWarning("File '{path}' already exists, 'Overwrite' is disabled.",
+        filePath);
+
+      return outcome.WithError($"File '{filePath}' already exists");
+    }
+
+    // Handle existing file - we are allowed to remove at this point
+    if (!_file.Exists(filePath))
+    {
+      _logger.LogInformation("Replacing file: {path}", filePath);
+      _file.Delete(filePath);
+    }
+
+    // Write contents to the file and return
     var contents = argResolver.ResolveString(jobContext, stepContext, Args["Contents"]);
-    
+    await _file.WriteAllTextAsync(filePath, contents);
 
-    Console.WriteLine();
-    return outcome;
+    return outcome.WithSuccess($"Contents written to: {filePath}");
   }
 }

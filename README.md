@@ -16,6 +16,12 @@ This will install the tool globally, you can invoke the tool like so:
 
 This will look in the `c:\cron-tool-data` directory for a job called `MyJobName.json` and execute it.
 
+## Example Jobs
+More to come...
+
+- [Zipping the contents of a folder](/docs/examples/BackupNasLandingPage.md) - this example covers using the [ZipFolder](/docs/job-actions/ZipFolder.md) job action.
+- [Writing variable to a text file](/docs/examples/WriteVariableToTextFile.md) - this example showcases using `variables` and the [WriteTextFile](/docs/job-actions/WriteTextFile.md) job action.
+
 # Development Section
 Collection of developer related documentation can be found below.
 

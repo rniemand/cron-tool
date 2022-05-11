@@ -1,6 +1,8 @@
 [Home](/README.md) / [Job Actions](/docs/job-actions/README.md) / WriteTextFile
 
 # WriteTextFile
+Writes the provided contents to a text file.
+
 Provided by the `WriteTextFileAction` class.
 
 ```json
@@ -16,7 +18,7 @@ Provided by the `WriteTextFileAction` class.
 }
 ```
 
-More to come...
+Below is a breakdown of each argument, please refer to the [ArgType](/docs/enums/ArgType.md) documentation for a list of all supported argument types.
 
 | Property | Type | Required | Default | Notes |
 | --- | --- | --- | --- | --- |
