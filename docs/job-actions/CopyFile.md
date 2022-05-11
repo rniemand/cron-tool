@@ -11,7 +11,8 @@ Provided by the `CopyFileAction` class.
   "args": {
     "Source": "...",
     "Target": "...",
-    "Overwrite": true
+    "Overwrite": true,
+    "PublishAs": "sampleFile"
   }
 }
 ```
@@ -23,3 +24,4 @@ Below is a breakdown of each argument, please refer to the [ArgType](/docs/enums
 | `Source` | File | required | - | Path to the source file |
 | `Target` | File | required | - | Path to copy the source file to |
 | `Overwrite` | Bool | optional | `false` | Overwrite target file (if exists) |
+| `PublishAs` | `string` | optional | - | When set, and file was copied, this is the name of the published file path. |

@@ -32,7 +32,7 @@ public class CopyFileAction : IJobAction
     _file = file;
     _directory = directory;
     _path = path;
-    
+
     Action = JobStepAction.CopyFile;
     Name = JobStepAction.CopyFile.ToString("G");
 
@@ -40,7 +40,8 @@ public class CopyFileAction : IJobAction
     {
       { "Source", JobActionArg.File("Source", true) },
       { "Destination", JobActionArg.File("Target", true) },
-      { "Overwrite", JobActionArg.Bool("Overwrite", false) }
+      { "Overwrite", JobActionArg.Bool("Overwrite", false) },
+      { "PublishAs", JobActionArg.String("PublishAs", false) }
     };
   }
 
@@ -61,7 +62,7 @@ public class CopyFileAction : IJobAction
 
     // Ensure that the destination directory exists
     var destDir = _path.GetDirectoryName(destination);
-    if(string.IsNullOrWhiteSpace(destDir))
+    if (string.IsNullOrWhiteSpace(destDir))
       return outcome.WithError($"Unable to calculate directory from: {destination}");
 
     if (!EnsureDirectoryExists(destDir))
@@ -81,6 +82,11 @@ public class CopyFileAction : IJobAction
     // Copy the file
     if (!CopyFile(source, destination))
       return outcome.WithError("Failed to copy file");
+
+    // Decide if we need to publish any state
+    var publishAs = argResolver.ResolveString(jobContext, stepContext, Args["PublishAs"]);
+    if (!string.IsNullOrWhiteSpace(publishAs))
+      jobContext.PublishState(publishAs, destination);
 
     await Task.CompletedTask;
     return outcome.WithSuccess();
