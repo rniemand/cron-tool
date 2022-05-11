@@ -8,7 +8,8 @@ Cron job step configuration, please refer to the [available actions page](/docs/
   "enabled": true,
   "name": "Step 1: Do something",
   "action": "CopyFile",
-  "args": {}
+  "args": {},
+  "id": ""
 }
 ```
 
@@ -16,3 +17,8 @@ Details on each option is listed below.
 
 | Property | Type | Required | Default | Notes |
 | --- | --- | ---- | ---- | --- |
+| `enabled` | `bool` | optional | `true` | Enables the current job step. |
+| `name` | `string` | required | - | Unique name for this job step. |
+| `action` | [JobStepAction](/docs/enums/JobStepAction.md) | required | `Unknown` | Desired [job step action](/docs/job-actions/README.md) you wish to execute. |
+| `args` | `Dictionary<string, object>` | optional | `{}` | Job step action specific arguments. |
+| `id` | `string` | optional | - | Unique ID used by the current job step to publish state (if supported by the selected step). If none is supplied it will be generated. |

@@ -49,7 +49,8 @@ public class JobConfigProvider : IJobConfigProvider
     // Check to see if we have discovered the requested job
     if (!JobExists(jobName))
     {
-      _logger.LogWarning("No job with name '{name}' found in: {path}", jobName, _config.JobsDirectory);
+      _logger.LogWarning("No job with name '{name}' found in: {path}",
+        jobName, _config.JobsDirectory);
       return null;
     }
 
@@ -72,9 +73,19 @@ public class JobConfigProvider : IJobConfigProvider
       return null;
     }
 
-    // Ensure that all job steps reflect the job name
+    // Process resolved job steps generating additional required configuration
+    var currentStepNumber = 1;
+
     foreach (var jobStep in jobConfig.Steps)
+    {
       jobStep.JobName = jobConfig.Name;
+      jobStep.StepNumber = currentStepNumber++;
+
+      if (!string.IsNullOrWhiteSpace(jobStep.StepId))
+        continue;
+
+      jobStep.StepId = "step_" + jobStep.StepNumber.ToString("D").PadLeft(2, '0');
+    }
 
     _logger.LogInformation("Loaded config for {name} ({path})",
       jobConfig.Name,
