@@ -9,7 +9,7 @@ Provided by the `DeleteFilesAction` class.
   "name": "Delete provided files",
   "action": "DeleteFiles",
   "args": {
-    "Path": "..."
+    "Paths": ["...", "..."]
   }
 }
 ```

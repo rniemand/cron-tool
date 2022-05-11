@@ -9,3 +9,4 @@ Enumeration of the supported argument types for a given [job action](/docs/job-a
 | `Bool` | 2 | Represents a boolean value (`true` or `false`) |
 | `Directory` | 3 | Represents a path to a directory |
 | `File` | 4 | Represents a path to a file |
+| `Files` | 5 | Represents an array of Paths |
