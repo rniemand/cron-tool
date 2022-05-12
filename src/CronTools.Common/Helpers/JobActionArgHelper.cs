@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -11,7 +10,7 @@ namespace CronTools.Common.Helpers;
 
 public interface IJobActionArgHelper
 {
-  Dictionary<string, string> ProcessVariables(Dictionary<string, string> variables);
+  Dictionary<string, object> ProcessVariables(Dictionary<string, object> variables);
   string ExecuteStringFormatters(RunningJobContext jobContext, string input);
   string ExecuteFileFormatters(RunningJobContext jobContext, string input);
   string ExecuteDirectoryFormatters(RunningJobContext jobContext, string input);
@@ -27,14 +26,21 @@ public class JobActionArgHelper : IJobActionArgHelper
   }
 
 
-  public Dictionary<string, string> ProcessVariables(Dictionary<string, string> variables)
+  public Dictionary<string, object> ProcessVariables(Dictionary<string, object> variables)
   {
     // TODO: [JobActionArgHelper.ProcessVariables] (TESTS) Add tests
-    var processed = new Dictionary<string, string>();
+    var processed = new Dictionary<string, object>();
 
     foreach (var (key, value) in variables)
     {
-      processed[key] = ProcessArgValue(value);
+      if (value is string stringValue)
+      {
+        processed[key] = ProcessArgValue(stringValue);
+      }
+      else
+      {
+        processed[key] = value;
+      }
     }
 
     return processed;
@@ -137,8 +143,8 @@ public class JobActionArgHelper : IJobActionArgHelper
       var resolved = jobContext.Variables
         .First(x => x.Key.IgnoreCaseEquals(varKey))
         .Value;
-
-      input = input.Replace(match.Groups[1].Value, resolved);
+      
+      input = input.Replace(match.Groups[1].Value, CastHelper.ObjectToString(resolved));
     }
 
     return input;
