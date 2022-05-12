@@ -64,14 +64,25 @@ public class CronRunnerService : ICronRunnerService
         if (resolvedAction is null)
           throw new Exception("Unable to continue");
 
+        // Ensure that the current job step arguments are valid
         var stepContext = _jobFactory.CreateRunningStepContext(step, stepNumber++);
-        if (!_jobUtils.ValidateStepArgs(resolvedAction, stepContext))
-          continue;
+        var stepArgsValid = _jobUtils.ValidateStepArgs(resolvedAction, stepContext);
+        if (!stepArgsValid)
+        {
+          if (!step.QuitOnFailure) continue;
+          _logger.LogError("Job '{job}' step '{step}' has invalid arguments, stopping", jobName, step.StepId);
+          break;
+        }
 
+        // Handle a successful step
         var outcome = await resolvedAction.ExecuteAsync(jobContext, stepContext, argumentResolver);
         if (outcome.Succeeded)
           continue;
 
+        if(!step.QuitOnFailure)
+          continue;
+
+        // Step failed, can't continue on error, log and stop
         _logger.LogError("Step failed, stopping job");
         continueRunningSteps = false;
       }

@@ -10,7 +10,8 @@ Cron job step configuration, please refer to the [available actions page](/docs/
   "action": "CopyFile",
   "args": {},
   "id": "myJob",
-  "condition": {}
+  "condition": {},
+  "quitOnFailure": true
 }
 ```
 
@@ -24,3 +25,4 @@ Details on each option is listed below.
 | `args` | `Dictionary<string, object>` | optional | `{}` | Job step action specific arguments. |
 | `id` | `string` | optional | - | Unique ID used by the current job step to publish state (if supported by the selected step). If none is supplied it will be generated. |
 | `condition` | [JobStepCondition](/docs/configuration/JobStepCondition.md) | optional | `null` | Optional condition required for this step to run. |
+| `quitOnFailure` | `bool` | optional | `true` | Indicates that the job needs to be stopped if this step fails. |
