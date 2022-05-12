@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -14,6 +15,7 @@ public interface IJobActionArgHelper
   string ExecuteStringFormatters(RunningJobContext jobContext, string input);
   string ExecuteFileFormatters(RunningJobContext jobContext, string input);
   string ExecuteDirectoryFormatters(RunningJobContext jobContext, string input);
+  string ProcessExpressionValue(RunningJobContext jobContext, string value);
 }
 
 public class JobActionArgHelper : IJobActionArgHelper
@@ -52,8 +54,7 @@ public class JobActionArgHelper : IJobActionArgHelper
     if (string.IsNullOrWhiteSpace(input))
       return input;
 
-    input = HandleVariables(jobContext, input);
-    input = HandleState(jobContext, input);
+    input = ProcessPlaceholders(jobContext, input);
     var formatters = _formatters
       .Where(x => x.SupportedTypes.Any(t => t == ArgType.String))
       .ToList();
@@ -76,8 +77,7 @@ public class JobActionArgHelper : IJobActionArgHelper
     if (string.IsNullOrWhiteSpace(input))
       return input;
 
-    input = HandleVariables(jobContext, input);
-    input = HandleState(jobContext, input);
+    input = ProcessPlaceholders(jobContext, input);
     var formatters = _formatters
       .Where(x => x.SupportedTypes.Any(t => t == ArgType.File))
       .ToList();
@@ -100,8 +100,7 @@ public class JobActionArgHelper : IJobActionArgHelper
     if (string.IsNullOrWhiteSpace(input))
       return input;
 
-    input = HandleVariables(jobContext, input);
-    input = HandleState(jobContext, input);
+    input = ProcessPlaceholders(jobContext, input);
     var formatters = _formatters
       .Where(x => x.SupportedTypes.Any(t => t == ArgType.Directory))
       .ToList();
@@ -118,11 +117,26 @@ public class JobActionArgHelper : IJobActionArgHelper
     return input;
   }
 
+  public string ProcessExpressionValue(RunningJobContext jobContext, string value)
+  {
+    // TODO: [JobActionArgHelper.ProcessExpressionValue] (TESTS) Add tests
+    return ProcessPlaceholders(jobContext, value);
+  }
+
 
   private string ProcessArgValue(string value)
   {
     // TODO: [JobActionArgHelper.ProcessArgValue] (TESTS) Add tests
     return _formatters.Aggregate(value, (current, formatter) => formatter.Format(current));
+  }
+
+  private static string ProcessPlaceholders(RunningJobContext jobContext, string input)
+  {
+    // TODO: [JobActionArgHelper.ProcessPlaceholders] (TESTS) Add tests
+    input = HandleVariables(jobContext, input);
+    input = HandleState(jobContext, input);
+
+    return input;
   }
 
   private static string HandleVariables(RunningJobContext jobContext, string input)

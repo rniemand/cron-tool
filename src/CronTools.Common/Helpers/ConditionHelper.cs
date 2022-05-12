@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using CronTools.Common.Enums;
 using CronTools.Common.Models;
 using Rn.NetCore.Common.Logging;
 
@@ -13,10 +14,14 @@ public interface IConditionHelper
 public class ConditionHelper : IConditionHelper
 {
   private readonly ILoggerAdapter<ConditionHelper> _logger;
+  private readonly IJobActionArgHelper _actionArgHelper;
 
-  public ConditionHelper(ILoggerAdapter<ConditionHelper> logger)
+  public ConditionHelper(
+    ILoggerAdapter<ConditionHelper> logger,
+    IJobActionArgHelper actionArgHelper)
   {
     _logger = logger;
+    _actionArgHelper = actionArgHelper;
   }
 
   public bool CanRunJobStep(RunningJobContext jobContext, RunningStepContext stepContext)
@@ -80,7 +85,24 @@ public class ConditionHelper : IConditionHelper
       return false;
     }
 
+    if (expression.Comparator == Comparator.Unknown)
+    {
+      _logger.LogError("Unable to resolve comparator from expression: {ex}", expression.RawExpression);
+      return false;
+    }
+
     var stateValue = jobContext.GetStateValue(expression.Property);
+    var compareValue = _actionArgHelper.ProcessExpressionValue(jobContext, expression.Value);
+
+
+    /*
+  Equals = 2,
+  LessThan = 3,
+  LessThanOrEqual = 4,
+  GreaterThan = 5,
+  GreaterThanOrEqual = 6,
+  DoesNotEqual = 7
+     */
 
 
 
