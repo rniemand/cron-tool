@@ -55,6 +55,7 @@ public static class ServiceCollectionExtensions
 
       // Factories
       .AddSingleton<IDirectoryInfoFactory, DirectoryInfoFactory>()
+      .AddSingleton<IFileInfoFactory, FileInfoFactory>()
 
       // Services
       .AddSingleton<ICronRunnerService, CronRunnerService>()
