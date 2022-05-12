@@ -31,6 +31,7 @@ public static class ServiceCollectionExtensions
       // Helpers
       .AddSingleton<IJsonHelper, JsonHelper>()
       .AddSingleton<IJobStepHelper, JobStepHelper>()
+      .AddSingleton<IConditionHelper, ConditionHelper>()
 
       // Job Actions
       .AddSingleton<IJobAction, DeleteFolderAction>()

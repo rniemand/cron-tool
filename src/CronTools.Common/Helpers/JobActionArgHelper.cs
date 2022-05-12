@@ -168,8 +168,8 @@ public class JobActionArgHelper : IJobActionArgHelper
       var resolved = jobContext.State
         .First(x => x.Key.IgnoreCaseEquals(varKey))
         .Value;
-
-      input = input.Replace(match.Groups[1].Value, resolved);
+      
+      input = input.Replace(match.Groups[1].Value, CastHelper.ObjectToString(resolved));
     }
 
     return input;

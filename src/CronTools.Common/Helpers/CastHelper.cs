@@ -9,14 +9,16 @@ public static class CastHelper
   {
     // TODO: [CastHelper.ObjectToString] (TESTS) Add tests
     if (value is long longValue)
-    {
       return longValue.ToString("D");
-    }
+
+    if (value is int intValue)
+      return intValue.ToString("D");
 
     if (value is string stringValue)
-    {
       return stringValue;
-    }
+
+    if (value is bool boolValue)
+      return boolValue ? "true" : "false";
 
     throw new Exception("Not supported");
   }
