@@ -47,11 +47,15 @@ public class GetFileSizeAction : IJobAction
 
     var path = argResolver.ResolveFile(jobContext, stepContext, Args["Path"]);
     if (!_file.Exists(path))
+    {
+      jobContext.PublishStepState(stepContext, "fileExists", false);
       return outcome.WithFailed();
+    }
 
     var fileInfo = _fileInfoFactory.GetFileInfo(path);
     jobContext.PublishStepState(stepContext, "fileSize", fileInfo.Length);
     jobContext.PublishStepState(stepContext, "filePath", path);
+    jobContext.PublishStepState(stepContext, "fileExists", true);
 
     await Task.CompletedTask;
     return outcome.WithSuccess();
