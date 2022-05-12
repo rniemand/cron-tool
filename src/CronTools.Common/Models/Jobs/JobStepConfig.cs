@@ -25,6 +25,9 @@ public class JobStepConfig
   [JsonProperty("id")]
   public string StepId { get; set; } = string.Empty;
 
+  [JsonProperty("condition")]
+  public JobStepCondition? Condition { get; set; } = null;
+
   [JsonIgnore]
   public int StepNumber { get; set; } = 0;
 }

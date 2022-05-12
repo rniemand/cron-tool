@@ -19,3 +19,15 @@ Details on each option is listed below.
 | --- | --- | ---- | ---- | --- |
 | `type` | [ConditionType](/docs/enums/ConditionType.md) | optional | `And` | The joining logic to use for the provided conditions. |
 | `expressions` | `string[]` | required | `[]` | Collection of expression(s) that need to be evaluated. |
+
+## Expected Format
+Each `expression` is expected to be in the "`<property> <op> <value>`" format: e.g. `backupFile.fileExists = true`. Currently the following comparators are supported:
+
+| Comparator | Symbol | Notes |
+| --- | --- | --- |
+| Equals | `=` | - |
+| LessThan | `<` | - |
+| LessThanOrEqual | `<=` | - |
+| GreaterThan | `>` | - |
+| GreaterThanOrEqual | `>=` | - |
+| DoesNotEqual | `!=` | - |
