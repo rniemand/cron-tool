@@ -40,4 +40,35 @@ public static class CastHelper
       _ => Comparator.Unknown
     };
   }
+
+  public static bool StringToBool(string input, bool fallback = false)
+  {
+    // TODO: [CastHelper.StringToBool] (TESTS) Add tests
+    if (string.IsNullOrWhiteSpace(input))
+      return fallback;
+
+    return input.ToLower().Trim() switch
+    {
+      "true" => true,
+      "t" => true,
+      "1" => true,
+      "yes" => true,
+      "on" => true,
+      "false" => false,
+      "f" => false,
+      "0" => false,
+      "no" => false,
+      "off" => false,
+      _ => fallback
+    };
+  }
+
+  public static long StringToLong(string input, long fallback = 0)
+  {
+    // TODO: [CastHelper.StringToLong] (TESTS) Add tests
+    if (string.IsNullOrWhiteSpace(input))
+      return fallback;
+
+    return long.TryParse(input, out var parsed) ? parsed : fallback;
+  }
 }

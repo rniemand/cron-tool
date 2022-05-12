@@ -21,7 +21,7 @@ public class RunningJobContext
     StepState = new Dictionary<string, Dictionary<string, object>>();
   }
 
-  public void PublishState(string key, string value)
+  public void PublishState(string key, object value)
   {
     // TODO: [RunningJobContext.PublishState] (TESTS) Add tests
     State[key] = value;
@@ -36,7 +36,7 @@ public class RunningJobContext
       StepState[stepId] = new Dictionary<string, object>();
 
     StepState[stepId][key] = value;
-    State[$"{stepId}.{key}"] = CastHelper.ObjectToString(value);
+    State[$"{stepId}.{key}"] = value;
   }
 
   public bool StateValueExists(string key)

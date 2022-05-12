@@ -91,15 +91,18 @@ public class ConditionHelper : IConditionHelper
       return false;
     }
 
-    var stateValue = jobContext.GetStateValue(expression.Property);
-    var compareValue = _actionArgHelper.ProcessExpressionValue(jobContext, expression.Value);
+    var sourceValue = jobContext.GetStateValue(expression.Property);
+    var targetValue = _actionArgHelper.ProcessExpressionValue(jobContext, expression.Value);
 
+    if (expression.Comparator == Comparator.Equals)
+      return CompareViaEquals(sourceValue, targetValue);
+
+    if (expression.Comparator == Comparator.GreaterThan)
+      return CompareViaGreaterThan(sourceValue, targetValue);
 
     /*
-  Equals = 2,
   LessThan = 3,
   LessThanOrEqual = 4,
-  GreaterThan = 5,
   GreaterThanOrEqual = 6,
   DoesNotEqual = 7
      */
@@ -108,5 +111,26 @@ public class ConditionHelper : IConditionHelper
 
     Console.WriteLine();
     return true;
+  }
+
+  private bool CompareViaEquals(object sourceValue, string targetValue)
+  {
+    // TODO: [ConditionHelper.CompareViaEquals] (TESTS) Add tests
+
+    if (sourceValue is bool boolValue)
+      return CastHelper.StringToBool(targetValue) == boolValue;
+
+    _logger.LogError("Add support for {type}", sourceValue.GetType().Name);
+    return false;
+  }
+
+  private bool CompareViaGreaterThan(object sourceValue, string targetValue)
+  {
+    // TODO: [ConditionHelper.CompareViaGreaterThan] (TESTS) Add tests
+    if (sourceValue is long longValue)
+      return longValue > CastHelper.StringToLong(targetValue);
+
+    _logger.LogError("Add support for {type}", sourceValue.GetType().Name);
+    return false;
   }
 }
