@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CronTools.Common.Config;
+using CronTools.Common.Helpers;
 using CronTools.Common.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Rn.NetCore.Common.Abstractions;
@@ -25,6 +26,7 @@ public class JobConfigProvider : IJobConfigProvider
   private readonly IFileAbstraction _file;
   private readonly IPathAbstraction _path;
   private readonly IJsonHelper _jsonHelper;
+  private readonly IJobStepHelper _jobStepHelper;
   private readonly List<string> _jobNames;
 
   public JobConfigProvider(IServiceProvider serviceProvider)
@@ -34,11 +36,11 @@ public class JobConfigProvider : IJobConfigProvider
     _path = serviceProvider.GetRequiredService<IPathAbstraction>();
     _file = serviceProvider.GetRequiredService<IFileAbstraction>();
     _jsonHelper = serviceProvider.GetRequiredService<IJsonHelper>();
+    _jobStepHelper = serviceProvider.GetRequiredService<IJobStepHelper>();
     _config = serviceProvider.GetRequiredService<IConfigProvider>().GetConfig();
 
     _jobNames = DiscoverJobs();
   }
-
 
   public JobConfig? Resolve(string jobName)
   {
@@ -74,18 +76,7 @@ public class JobConfigProvider : IJobConfigProvider
     }
 
     // Process resolved job steps generating additional required configuration
-    var currentStepNumber = 1;
-
-    foreach (var jobStep in jobConfig.Steps)
-    {
-      jobStep.JobName = jobConfig.Name;
-      jobStep.StepNumber = currentStepNumber++;
-
-      if (!string.IsNullOrWhiteSpace(jobStep.StepId))
-        continue;
-
-      jobStep.StepId = "step_" + jobStep.StepNumber.ToString("D").PadLeft(2, '0');
-    }
+    _jobStepHelper.InitializeSteps(jobConfig);
 
     _logger.LogInformation("Loaded config for {name} ({path})",
       jobConfig.Name,
@@ -93,7 +84,6 @@ public class JobConfigProvider : IJobConfigProvider
 
     return jobConfig;
   }
-
 
   private void EnsureDirectoryExists(string path)
   {

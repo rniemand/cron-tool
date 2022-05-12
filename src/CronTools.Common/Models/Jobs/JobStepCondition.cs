@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using CronTools.Common.Enums;
 using Newtonsoft.Json;
 
@@ -11,4 +12,7 @@ public class JobStepCondition
 
   [JsonProperty("expressions")]
   public string[] RawExpressions { get; set; } = Array.Empty<string>();
+
+  [JsonIgnore]
+  public List<ConditionExpression> Expressions { get; set; } = new();
 }
