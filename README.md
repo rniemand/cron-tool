@@ -39,6 +39,7 @@ More to come...
 - [DeleteFolder](/docs/job-actions/DeleteFolder.md)
 - [DeleteFile](/docs/job-actions/DeleteFile.md)
 - [DeleteFiles](/docs/job-actions/DeleteFiles.md)
+- [GetFileSize](/docs/job-actions/GetFileSize.md)
 - [WriteTextFile](/docs/job-actions/WriteTextFile.md)
 - [ZipFolder](/docs/job-actions/ZipFolder.md)
 

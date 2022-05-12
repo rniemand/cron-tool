@@ -38,6 +38,7 @@ public static class ServiceCollectionExtensions
       .AddSingleton<IJobAction, DeleteFileAction>()
       .AddSingleton<IJobAction, WriteTextFileAction>()
       .AddSingleton<IJobAction, DeleteFilesAction>()
+      .AddSingleton<IJobAction, GetFileSizeAction>()
 
       // Arg Formatters
       .AddSingleton<IJobActionArgFormatter, DateTimeFormatter>()
