@@ -45,12 +45,13 @@ public class GetFileSizeAction : IJobAction
     // TODO: [GetFileSizeAction.ExecuteAsync] (TESTS) Add tests
     var outcome = new JobStepOutcome();
 
+    // Set expected defaults
+    jobContext.PublishStepState(stepContext, "fileExists", false);
+    jobContext.PublishStepState(stepContext, "fileSize", 0);
+
     var path = argResolver.ResolveFile(jobContext, stepContext, Args["Path"]);
     if (!_file.Exists(path))
-    {
-      jobContext.PublishStepState(stepContext, "fileExists", false);
       return outcome.WithFailed();
-    }
 
     var fileInfo = _fileInfoFactory.GetFileInfo(path);
     jobContext.PublishStepState(stepContext, "fileSize", fileInfo.Length);
