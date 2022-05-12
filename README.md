@@ -50,6 +50,7 @@ More to come...
 - [appsettings.json](/docs/configuration/appsettings.md)
 - [JobConfig](/docs/configuration/JobConfig.md)
 - [JobStepConfig](/docs/configuration/JobStepConfig.md)
+- [JobStepCondition](/docs/configuration/JobStepCondition.md)
 
 ## Formatters
 More to come...
