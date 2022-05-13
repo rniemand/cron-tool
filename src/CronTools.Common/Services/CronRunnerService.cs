@@ -78,7 +78,14 @@ public class CronRunnerService : ICronRunnerService
           break;
         }
 
+        // Handle step conditions, quit if we need to
         var canRunJobStep = _conditionHelper.CanRunJobStep(jobContext, stepContext);
+        var stopOnFailure = step.Condition?.StopOnFailure ?? false;
+        if (!canRunJobStep && stopOnFailure)
+        {
+          _logger.LogWarning("Job '{job}' step '{step}' conditions failed, stopping job.", jobName, step.StepId);
+          break;
+        }
 
         // Handle a successful step
         var outcome = await resolvedAction.ExecuteAsync(jobContext, stepContext, argumentResolver);
