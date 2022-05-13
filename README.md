@@ -29,9 +29,10 @@ Collection of developer related documentation can be found below.
 ## Enums
 More to come...
 
-- [ArgType](/docs/enums/ArgType.md) - documents the type of arguments exposed by the various [job actions](/docs/job-actions/README.md).
-- [JobStepAction](/docs/enums/JobStepAction.md) - list of all supported [job actions](/docs/job-actions/README.md).
-- [ConditionType](/docs/enums/ConditionType.md) - list of supported condition types.
+- [Zipping the contents of a folder](/docs/examples/BackupNasLandingPage.md) - this example covers using the [ZipFolder](/docs/job-actions/ZipFolder.md) job action.
+- [Writing variable to a text file](/docs/examples/WriteVariableToTextFile.md) - this example showcases using `variables` and the [WriteTextFile](/docs/job-actions/WriteTextFile.md) job action.
+- [Simple state example](/docs/examples/SimpleStateExample.md) - creates and copies a file using state to store the paths, once created the files are deleted from state.
+- [Simple conditions example](/docs/examples/SimpleConditions.md) - covers the basic usage of `conditions`.
 
 ## Job Actions
 More to come...
@@ -64,6 +65,10 @@ General documentation for the project.
 
 - [Job argument processing](/docs/general/ArgProcessing.md) - documents the order of precedence used when processing job arguments.
 - [Configuring mail](/docs/general/ConfiguringMail.md) - covers the basics of configuring mail.
+- [Job State](/docs/general/JobState.md) - explains the concept of `job state`
+- [Variables](/docs/general/Variables.md) - explains the concept of `job variables`
+- [Global variables](/docs/general/GlobalVariables.md) - explains the concept of `global variables`
+- [Job conditions](/docs/general/JobConditions.md) - explains how `job conditions` work
 
 <!--(Rn.BuildScriptHelper){
 	"version": "1.0.106",
