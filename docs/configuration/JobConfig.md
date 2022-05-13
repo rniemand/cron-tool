@@ -5,6 +5,7 @@ Main cron-job configuration file.
 
 ```json
 {
+  "id": "",
   "enabled": true,
   "name": "My awesome job",
   "steps": [],
@@ -17,6 +18,7 @@ Details on each option is listed below.
 
 | Property | Type | Required | Default | Notes |
 | --- | --- | ---- | ---- | --- |
+| `id` | `string` | required | - | Unique ID for the current job, used for scheduling. |
 | `enabled` | `bool` | required | `true` | Enables the current job. |
 | `name` | `string` | required | - | The name of the current job. |
 | `steps` | [JobStepConfig](/docs/models/JobStepConfig.md)[] | required | `[]` | Array of [JobStepConfig](/docs/models/JobStepConfig.md) entries that make up this job. |

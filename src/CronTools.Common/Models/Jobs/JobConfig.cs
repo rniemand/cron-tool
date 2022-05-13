@@ -20,4 +20,7 @@ public class JobConfig
 
   [JsonProperty("schedule")]
   public JobSchedule? Schedule { get; set; }
+
+  [JsonProperty("id")]
+  public string JobId { get; set; } = string.Empty;
 }

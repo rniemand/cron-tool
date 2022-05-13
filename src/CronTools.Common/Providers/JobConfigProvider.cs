@@ -16,6 +16,7 @@ namespace CronTools.Common.Providers;
 public interface IJobConfigProvider
 {
   JobConfig? Resolve(string jobName);
+  List<JobConfig> ResolveAllEnabled();
 }
 
 public class JobConfigProvider : IJobConfigProvider
@@ -68,6 +69,13 @@ public class JobConfigProvider : IJobConfigProvider
     var rawJson = _file.ReadAllText(jobFilePath);
     var jobConfig = _jsonHelper.DeserializeObject<JobConfig>(rawJson);
 
+    // Ensure that the Job has an ID defined
+    if (string.IsNullOrWhiteSpace(jobConfig.JobId))
+    {
+      _logger.LogError("Job file '{file}' missing 'id'", jobFilePath);
+      throw new Exception($"Job ID missing from: {jobFilePath}");
+    }
+
     // Handle disabled jobs
     if (!jobConfig.Enabled)
     {
@@ -83,6 +91,28 @@ public class JobConfigProvider : IJobConfigProvider
       jobFilePath);
 
     return jobConfig;
+  }
+
+  public List<JobConfig> ResolveAllEnabled()
+  {
+    // TODO: [JobConfigProvider.ResolveAllEnabled] (TESTS) Add tests
+    var enabledJobs = new List<JobConfig>();
+
+    foreach (var jobFile in DiscoverJobs())
+    {
+      var resolvedJob = Resolve(jobFile);
+
+      if(resolvedJob is null)
+        continue;
+
+      if(!resolvedJob.Enabled)
+        continue;
+
+      enabledJobs.Add(resolvedJob);
+    }
+
+
+    return enabledJobs;
   }
 
   private void EnsureDirectoryExists(string path)
@@ -105,6 +135,7 @@ public class JobConfigProvider : IJobConfigProvider
     
     return jsonFiles
       .Select(jsonFile => _path.GetFileNameWithoutExtension(jsonFile))
+      .Where(x => !x.IgnoreCaseEquals("globals"))
       .ToList();
   }
 

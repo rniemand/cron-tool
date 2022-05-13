@@ -13,6 +13,7 @@ The complete job configuration is listed below:
 ```json
 {
   "name": "EMail if file is missing",
+  "id": "90064671-08C0-4CFA-B3C7-5508CA3FC59B",
   "variables": {
     "BackupFilePath": "\\\\192.168.0.60\\Backups\\db-mariadb\\ghost\\{date:yyyy\\\\MM\\\\yyyy-MM-dd}-ghost.zip"
   },

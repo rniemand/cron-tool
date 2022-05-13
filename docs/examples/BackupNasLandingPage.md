@@ -6,6 +6,7 @@ The example below will backup the `\\192.168.0.60\appdata\nas-landing-page` dire
 ```json
 {
   "name": "Backup 'nas-landing-page' data (time-stamped)",
+  "id": "3B5F5A62-DEA4-4C2A-B900-868DBD1C0E51",
   "steps": [
     {
       "name": "Zip Satisfactory game saves",
