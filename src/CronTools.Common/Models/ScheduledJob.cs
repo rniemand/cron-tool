@@ -9,10 +9,10 @@ public class ScheduledJob
   public string JobId { get; set; } = string.Empty;
 
   [JsonProperty("nextRun")]
-  public DateTimeOffset NextRun { get; set; } = DateTimeOffset.MinValue;
+  public DateTime NextRun { get; set; } = DateTime.MinValue;
 
   [JsonProperty("lastRun")]
-  public DateTimeOffset LastRun { get; set; } = DateTimeOffset.MinValue;
+  public DateTime LastRun { get; set; } = DateTime.MinValue;
 
   [JsonProperty("name")]
   public string JobName { get; set; } = string.Empty;

@@ -72,12 +72,10 @@ public class CronToolRunnerService : ICronToolRunnerService
       }
 
       await _jobRunnerService.RunJobAsync(resolvedJob);
-      RescheduleJob(jobId, resolvedJob);
+      _scheduledJobs[jobId] = _schedulerService.ScheduleNextRun(resolvedJob);
     }
 
-
-    Console.WriteLine();
-    Console.WriteLine();
+    _scheduleProvider.SaveSchedule(_scheduledJobs);
   }
 
   // Working with scheduled jobs
@@ -190,17 +188,5 @@ public class CronToolRunnerService : ICronToolRunnerService
 
     _logger.LogDebug("Removing missing job key: {jobId}", resolvedJobKey);
     _scheduledJobs.Remove(resolvedJobKey);
-  }
-
-  private void RescheduleJob(string jobId, JobConfig jobConfig)
-  {
-    // TODO: [CronToolRunnerService.RescheduleJob] (TESTS) Add tests
-
-    _schedulerService.ScheduleNextRun(jobConfig);
-
-
-
-    Console.WriteLine();
-    Console.WriteLine();
   }
 }
