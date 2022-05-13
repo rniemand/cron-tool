@@ -1,0 +1,32 @@
+name: PackTool
+on:
+  push:
+    branches:
+      - master
+      - dev/tooling
+
+env:
+  PROJECT_NAME: "DevConsole"
+
+jobs:
+  build:
+    name: Build and Publish
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v2
+        name: Install .net 6.x
+        with:
+          dotnet-version: 6.0.x
+      
+      - name: Build
+        run: dotnet build -c Release -o . src/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj
+
+      - name: Package
+        run: dotnet pack -c Release -o . src/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj
+
+      - name: Publish
+        run: dotnet nuget push *.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
