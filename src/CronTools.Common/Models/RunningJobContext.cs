@@ -7,7 +7,7 @@ namespace CronTools.Common.Models;
 public class RunningJobContext
 {
   public Dictionary<string, object> Variables { get; private set; }
-  public Dictionary<string, object> Globals { get; private set; }
+  public Dictionary<string, string> Globals { get; private set; }
   public Dictionary<string, object> State { get; }
   public Dictionary<string, Dictionary<string, object>> StepState { get; set; }
   public string Name { get; }
@@ -17,7 +17,7 @@ public class RunningJobContext
     // TODO: [RunningJobContext] (TESTS) Add tests
     Name = job.Name;
     Variables = new Dictionary<string, object>();
-    Globals = new Dictionary<string, object>();
+    Globals = new Dictionary<string, string>();
     State = new Dictionary<string, object>();
     StepState = new Dictionary<string, Dictionary<string, object>>();
   }
@@ -29,7 +29,7 @@ public class RunningJobContext
     return this;
   }
 
-  public RunningJobContext SetGlobals(Dictionary<string, object> globals)
+  public RunningJobContext SetGlobals(Dictionary<string, string> globals)
   {
     // TODO: [RunningJobContext.SetGlobals] (TESTS) Add tests
     Globals = globals;

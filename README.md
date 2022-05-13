@@ -58,6 +58,11 @@ More to come...
 
 - [DateTimeFormatter](/docs/formatters/DateTimeFormatter.md)
 
+## General
+General documentation for the project.
+
+- [Job argument processing](/docs/general/ArgProcessing.md) - documents the order of precedence used when processing job arguments.
+
 <!--(Rn.BuildScriptHelper){
 	"version": "1.0.106",
 	"replace": false
