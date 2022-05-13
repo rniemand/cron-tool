@@ -9,22 +9,22 @@ using Rn.NetCore.Common.Logging;
 
 namespace CronTools.Common.Services;
 
-public interface ICronRunnerService
+public interface IOldCronRunnerService
 {
   Task RunJobsAsync(string[] args);
 }
 
-public class CronRunnerService : ICronRunnerService
+public class OldCronRunnerService : IOldCronRunnerService
 {
-  private readonly ILoggerAdapter<CronRunnerService> _logger;
+  private readonly ILoggerAdapter<OldCronRunnerService> _logger;
   private readonly IJobConfigProvider _jobConfigProvider;
   private readonly IJobActionResolver _actionResolver;
   private readonly IJobFactory _jobFactory;
   private readonly IJobUtils _jobUtils;
   private readonly IConditionHelper _conditionHelper;
 
-  public CronRunnerService(
-    ILoggerAdapter<CronRunnerService> logger,
+  public OldCronRunnerService(
+    ILoggerAdapter<OldCronRunnerService> logger,
     IJobConfigProvider jobConfigProvider,
     IJobActionResolver actionResolver,
     IJobFactory jobFactory,

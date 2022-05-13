@@ -62,7 +62,7 @@ public static class DotNetCronTool
     GenerateAppSettings(rootDir);
     
     await CronToolDIContainer.ServiceProvider
-      .GetRequiredService<ICronRunnerService>()
+      .GetRequiredService<IOldCronRunnerService>()
       .RunJobsAsync(new[] { jobName });
   }
 }
