@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CronTools.Common.Models;
@@ -70,6 +71,7 @@ public class CronToolRunnerService : ICronToolRunnerService
       EnsureJobScheduled(jobConfig);
     }
 
+    RunJobIntegrityCheck();
     _scheduleProvider.SaveSchedule(_scheduledJobs);
   }
 
@@ -88,5 +90,29 @@ public class CronToolRunnerService : ICronToolRunnerService
       LastRun = DateTimeOffset.MinValue,
       NextRun = DateTimeOffset.MinValue
     };
+  }
+
+  private void RunJobIntegrityCheck()
+  {
+    // TODO: [CronToolRunnerService.RunJobIntegrityCheck] (TESTS) Add tests
+    var staleScheduleKeys = new List<string>();
+
+    foreach (var scheduledJob in _scheduledJobs)
+    {
+      var scheduledJobKey = scheduledJob.Key;
+      if(_enabledJobs.Any(x => x.JobId.IgnoreCaseEquals(scheduledJobKey)))
+        continue;
+
+      staleScheduleKeys.Add(scheduledJobKey);
+    }
+
+    if (staleScheduleKeys.Count == 0)
+      return;
+
+    _logger.LogInformation("Removing {count} stale schedule entries", staleScheduleKeys.Count);
+    foreach (var scheduleKey in staleScheduleKeys)
+    {
+      _scheduledJobs.Remove(scheduleKey);
+    }
   }
 }
