@@ -82,6 +82,7 @@ General documentation for the project.
 - [Variables](/docs/general/Variables.md) - explains the concept of `job variables`
 - [Global variables](/docs/general/GlobalVariables.md) - explains the concept of `global variables`
 - [Job conditions](/docs/general/JobConditions.md) - explains how `job conditions` work
+- [Job Scheduling](/docs/general/JobScheduling.md) - details how job scheduling works.
 
 <!--(Rn.BuildScriptHelper){
 	"version": "1.0.106",

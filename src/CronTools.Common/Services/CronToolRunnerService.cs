@@ -95,9 +95,16 @@ public class CronToolRunnerService : ICronToolRunnerService
     _nextJobRefresh = _dateTime.Now.AddMinutes(10);
     _logger.LogDebug("Refreshing jobs");
 
-    _enabledJobs = _jobConfigProvider.ResolveAllEnabled();
+    _enabledJobs = _jobConfigProvider
+      .ResolveAllEnabled()
+      .Where(x => x.Schedule is not null)
+      .ToList();
+
     if (_enabledJobs.Count == 0)
+    {
+      RunJobIntegrityCheck();
       return;
+    }
 
     _logger.LogDebug("Discovered {count} enabled jobs", _enabledJobs.Count);
     foreach (var jobConfig in _enabledJobs)
@@ -106,7 +113,6 @@ public class CronToolRunnerService : ICronToolRunnerService
     }
 
     RunJobIntegrityCheck();
-    _scheduleProvider.SaveSchedule(_scheduledJobs);
   }
 
   private void EnsureJobScheduled(JobConfig jobConfig)
@@ -152,6 +158,8 @@ public class CronToolRunnerService : ICronToolRunnerService
     {
       _scheduledJobs.Remove(scheduleKey);
     }
+
+    _scheduleProvider.SaveSchedule(_scheduledJobs);
   }
 
   private List<string> GetRunnableJobIds()
