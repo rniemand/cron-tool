@@ -60,7 +60,6 @@ public static class ServiceCollectionExtensions
       // Factories
       .AddSingleton<IDirectoryInfoFactory, DirectoryInfoFactory>()
       .AddSingleton<IFileInfoFactory, FileInfoFactory>()
-      .AddSingleton<ISmtpClientFactory, SmtpClientFactory>()
 
       // Services
       .AddSingleton<ICronRunnerService, CronRunnerService>()
