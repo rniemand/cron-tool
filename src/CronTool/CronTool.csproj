@@ -7,7 +7,7 @@
 	  <CodeAnalysisRuleSet>..\.sonarlint\cron-toolcsharp.ruleset</CodeAnalysisRuleSet>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>cron-tool</ToolCommandName>
-    <PackageOutputPath>./../../nupkg</PackageOutputPath>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
     <Company>Richard Niemand</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>Richard Niemand</Authors>
