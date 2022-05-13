@@ -63,6 +63,7 @@ More to come...
 General documentation for the project.
 
 - [Job argument processing](/docs/general/ArgProcessing.md) - documents the order of precedence used when processing job arguments.
+- [Configuring mail](/docs/general/ConfiguringMail.md) - covers the basics of configuring mail.
 
 <!--(Rn.BuildScriptHelper){
 	"version": "1.0.106",

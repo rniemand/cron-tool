@@ -90,16 +90,7 @@ public class SendEmailAction : IJobAction
     mailMessage.BodyEncoding = Encoding.UTF8;
 
     await smtpClient.SendMailAsync(mailMessage);
-
-    /*
-     * The Google-generated app password is generated as @stoyan-dimov suggests in his answer above, using the following URL:
-
-https://security.google.com/settings/security/apppasswords
-
-Choose to generate a 'Mail' password, and set the device as 'Custom' (I called mine "ARQ".)
-
-Caveat: You must have two-factor authentication enabled on your Google account to get to the above URL.
-     */
+    
 
     return outcome.WithSuccess();
   }

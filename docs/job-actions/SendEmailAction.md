@@ -38,3 +38,5 @@ The following global arguments are required for this job step to work.
 | `mail.password` | `string` | required | - | Password for your mail client. |
 | `mail.fromAddress` | `EMail` | required | - | The from address to use when sending an email. |
 | `mail.fromName` | `string` | required | - | From name to use when sending emails. |
+
+Please refer to [this page](/docs/general/ConfiguringMail.md) for information on setting up GMail.
