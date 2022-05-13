@@ -20,10 +20,6 @@
     <PackageTags>cron</PackageTags>
   </PropertyGroup>
 
-  <!--<ItemGroup>
-    <Content Include="..\.sonarlint\cron-tool\CSharp\SonarLint.xml" Link="SonarLint.xml" />
-  </ItemGroup>-->
-
   <ItemGroup>
     <None Include="..\..\README.md">
       <Pack>True</Pack>
