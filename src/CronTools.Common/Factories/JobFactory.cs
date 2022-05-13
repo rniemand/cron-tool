@@ -1,5 +1,6 @@
 using CronTools.Common.Helpers;
 using CronTools.Common.Models;
+using CronTools.Common.Providers;
 using CronTools.Common.Resolvers;
 
 namespace CronTools.Common.Factories;
@@ -15,13 +16,16 @@ public class JobFactory : IJobFactory
 {
   private readonly IJobArgumentResolver _jobArgumentResolver;
   private readonly IJobActionArgHelper _jobActionArgHelper;
+  private readonly IGlobalConfigProvider _globalConfigProvider;
 
   public JobFactory(
     IJobArgumentResolver jobArgumentResolver,
-    IJobActionArgHelper jobActionArgHelper)
+    IJobActionArgHelper jobActionArgHelper,
+    IGlobalConfigProvider globalConfigProvider)
   {
     _jobArgumentResolver = jobArgumentResolver;
     _jobActionArgHelper = jobActionArgHelper;
+    _globalConfigProvider = globalConfigProvider;
   }
 
   public RunningStepContext CreateRunningStepContext(JobStepConfig jobStep, int stepNumber) =>
@@ -30,7 +34,9 @@ public class JobFactory : IJobFactory
 
   public RunningJobContext CreateRunningJobContext(JobConfig job) =>
     // TODO: [JobFactory.CreateRunningJobContext] (TESTS) Add tests
-    new(job, _jobActionArgHelper);
+    new RunningJobContext(job)
+      .SetVariables(_jobActionArgHelper.ProcessVariables(job.Variables))
+      .SetGlobals(_globalConfigProvider.GetGlobalConfig());
 
   public IJobArgumentResolver GetJobArgumentResolver() =>
     // TODO: [JobFactory.GetJobArgumentResolver] (TESTS) Add tests
