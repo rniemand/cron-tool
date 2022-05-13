@@ -16,6 +16,7 @@ public class ZipFolderAction : IJobAction
   public JobStepAction Action { get; }
   public string Name { get; }
   public Dictionary<string, JobActionArg> Args { get; }
+  public string[] RequiredGlobals { get; }
 
   private readonly ILoggerAdapter<ZipFolderAction> _logger;
   private readonly IFileAbstraction _file;
@@ -36,6 +37,7 @@ public class ZipFolderAction : IJobAction
 
     Action = JobStepAction.ZipFolder;
     Name = JobStepAction.ZipFolder.ToString("G");
+    RequiredGlobals = Array.Empty<string>();
 
     Args = new Dictionary<string, JobActionArg>
     {

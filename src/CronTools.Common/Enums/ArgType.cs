@@ -8,4 +8,5 @@ public enum ArgType
   Directory = 3,
   File = 4,
   Files = 5,
+  Email = 6
 }

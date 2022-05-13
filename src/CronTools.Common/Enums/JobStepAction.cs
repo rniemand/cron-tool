@@ -10,5 +10,6 @@ public enum JobStepAction
   ZipFolder = 5,
   WriteTextFile = 6,
   DeleteFiles = 7,
-  GetFileSize = 8
+  GetFileSize = 8,
+  SendEmail = 9
 }

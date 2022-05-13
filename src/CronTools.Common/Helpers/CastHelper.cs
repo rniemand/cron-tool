@@ -71,4 +71,16 @@ public static class CastHelper
 
     return long.TryParse(input, out var parsed) ? parsed : fallback;
   }
+
+  public static int AsInt(string input, int fallback = 0)
+  {
+    // TODO: [CastHelper.AsInt] (TESTS) Add tests
+    if (string.IsNullOrWhiteSpace(input))
+      return fallback;
+
+    if (int.TryParse(input, out var parsed))
+      return parsed;
+
+    return fallback;
+  }
 }

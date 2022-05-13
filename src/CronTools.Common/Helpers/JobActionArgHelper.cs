@@ -132,6 +132,7 @@ public class JobActionArgHelper : IJobActionArgHelper
   private static string ProcessPlaceholders(RunningJobContext jobContext, string input)
   {
     // TODO: [JobActionArgHelper.ProcessPlaceholders] (TESTS) Add tests
+    input = HandleGlobals(jobContext, input);
     input = HandleVariables(jobContext, input);
     input = HandleState(jobContext, input);
 
@@ -183,6 +184,30 @@ public class JobActionArgHelper : IJobActionArgHelper
         .Value;
       
       input = input.Replace(match.Groups[1].Value, CastHelper.ObjectToString(resolved));
+    }
+
+    return input;
+  }
+
+  private static string HandleGlobals(RunningJobContext jobContext, string input)
+  {
+    // TODO: [JobActionArgHelper.HandleGlobals] (TESTS) Add tests
+    // (\${global:([^}]+)})
+    const string rxPattern = "(\\${global:([^}]+)})";
+    if (!input.MatchesRegex(rxPattern))
+      return input;
+
+    foreach (Match match in input.GetRegexMatches(rxPattern))
+    {
+      var varKey = match.Groups[2].Value;
+      if (!jobContext.Globals.Any(x => x.Key.IgnoreCaseEquals(varKey)))
+        continue;
+
+      var resolved = jobContext.Globals
+        .First(x => x.Key.IgnoreCaseEquals(varKey))
+        .Value;
+
+      input = input.Replace(match.Groups[1].Value, resolved);
     }
 
     return input;

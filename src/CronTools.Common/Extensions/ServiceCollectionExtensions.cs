@@ -41,6 +41,7 @@ public static class ServiceCollectionExtensions
       .AddSingleton<IJobAction, WriteTextFileAction>()
       .AddSingleton<IJobAction, DeleteFilesAction>()
       .AddSingleton<IJobAction, GetFileSizeAction>()
+      .AddSingleton<IJobAction, SendEmailAction>()
 
       // Arg Formatters
       .AddSingleton<IJobActionArgFormatter, DateTimeFormatter>()
@@ -51,6 +52,7 @@ public static class ServiceCollectionExtensions
       // Providers
       .AddSingleton<IConfigProvider, ConfigProvider>()
       .AddSingleton<IJobConfigProvider, JobConfigProvider>()
+      .AddSingleton<IGlobalConfigProvider, GlobalConfigProvider>()
 
       // Helpers
       .AddSingleton<IJobActionArgHelper, JobActionArgHelper>()
