@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using CronTools.Common.JobActions;
 using CronTools.Common.Models;
@@ -28,13 +27,11 @@ public class JobUtils : IJobUtils
     if (!CheckRequiredStepArgs(action, context))
       return false;
 
+    // ReSharper disable once ConvertIfStatementToReturnStatement
     if (action.RequiredGlobals.Length == 0)
       return true;
 
-
-
-    Console.WriteLine();
-    return true;
+    return CheckRequiredGlobalArgs(action, context);
   }
 
 
@@ -63,6 +60,22 @@ public class JobUtils : IJobUtils
         action.Name);
 
       return false;
+    }
+
+    return true;
+  }
+
+  private bool CheckRequiredGlobalArgs(IJobAction action, RunningStepContext context)
+  {
+    // TODO: [JobUtils.CheckRequiredGlobalArgs] (TESTS) Add tests
+
+    foreach (var globalKey in action.RequiredGlobals)
+    {
+      if (!context.Globals.Any(x => x.Key.IgnoreCaseEquals(globalKey)))
+      {
+        _logger.LogError("Required global variable '{key}' is missing", globalKey);
+        return false;
+      }
     }
 
     return true;

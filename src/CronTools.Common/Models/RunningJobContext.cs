@@ -65,4 +65,13 @@ public class RunningJobContext
     // TODO: [RunningJobContext.GetStateValue] (TESTS) Add tests
     return State.First(x => x.Key.IgnoreCaseEquals(key)).Value;
   }
+
+  public string GetGlobal(string key, string fallback)
+  {
+    // TODO: [RunningJobContext.GetGlobal] (TESTS) Add tests
+    if (!Globals.Any(x => x.Key.IgnoreCaseEquals(key)))
+      return fallback;
+
+    return Globals.First(x => x.Key.IgnoreCaseEquals(key)).Value;
+  }
 }
