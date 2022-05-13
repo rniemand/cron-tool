@@ -53,6 +53,7 @@ public static class ServiceCollectionExtensions
       .AddSingleton<IConfigProvider, ConfigProvider>()
       .AddSingleton<IJobConfigProvider, JobConfigProvider>()
       .AddSingleton<IGlobalConfigProvider, GlobalConfigProvider>()
+      .AddSingleton<IJobScheduleProvider, JobScheduleProvider>()
 
       // Helpers
       .AddSingleton<IJobActionArgHelper, JobActionArgHelper>()
@@ -62,8 +63,11 @@ public static class ServiceCollectionExtensions
       .AddSingleton<IFileInfoFactory, FileInfoFactory>()
 
       // Services
-      .AddSingleton<ICronRunnerService, CronRunnerService>()
+      .AddSingleton<IOldCronRunnerService, OldCronRunnerService>()
       .AddSingleton<IMetricService, MetricService>()
+      .AddSingleton<ICronToolRunnerService, CronToolRunnerService>()
+      .AddSingleton<IJobRunnerService, JobRunnerService>()
+      .AddSingleton<IJobSchedulerService, JobSchedulerService>()
 
       // Resolvers
       .AddSingleton<IJobActionResolver, JobActionResolver>()

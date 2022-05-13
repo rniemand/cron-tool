@@ -1,8 +1,12 @@
-using CronTools.Common.Services;
-using CronTools.Common.Utils;
-using Microsoft.Extensions.DependencyInjection;
+using CronTools.Common.Extensions;
+using DockerCronTool;
 
-var cronRunnerService = CronToolDIContainer.ServiceProvider.GetRequiredService<ICronRunnerService>();
+IHost host = Host.CreateDefaultBuilder(args)
+    .ConfigureServices(services =>
+    {
+      services.AddCronTool();
+      services.AddHostedService<Worker>();
+    })
+    .Build();
 
-
-Console.WriteLine();
+await host.RunAsync();

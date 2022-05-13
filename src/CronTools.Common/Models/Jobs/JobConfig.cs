@@ -17,4 +17,10 @@ public class JobConfig
 
   [JsonProperty("variables")]
   public Dictionary<string, object> Variables { get; set; } = new();
+
+  [JsonProperty("schedule")]
+  public JobSchedule? Schedule { get; set; }
+
+  [JsonProperty("id")]
+  public string JobId { get; set; } = string.Empty;
 }

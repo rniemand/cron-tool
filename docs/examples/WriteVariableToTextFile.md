@@ -12,6 +12,7 @@ The complete job configuration is listed below:
 ```json
 {
   "name": "DevJob",
+  "id": "C3865AE6-910C-435F-BBE4-4C51BE1A0C79",
   "variables": {
     "SampleText": "This value came from a variable @ {date:yyyyMMdd}!"
   },

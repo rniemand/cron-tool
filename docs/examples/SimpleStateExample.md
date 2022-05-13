@@ -6,6 +6,7 @@ The below example makes use of the ability to push and pull state from the `runn
 ```json
 {
   "name": "JobState",
+  "id": "6065D76C-2298-434D-8FA9-A9806BAC57EB",
   "variables": {
     "SampleText": "This value came from a variable @ {date:yyyy-MM-dd HH:mm:ss}!"
   },

@@ -8,3 +8,4 @@ Documentation for the various configuration options used with **CronTool**.
 - [JobStepConfig](/docs/configuration/JobStepConfig.md)
 - [JobStepCondition](/docs/configuration/JobStepCondition.md)
 - [Globals](/docs/configuration/globals.md)
+- [JobSchedule](/docs/configuration/JobSchedule.md)

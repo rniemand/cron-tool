@@ -25,6 +25,7 @@ The configuration for this job is pretty simple once you understand the basics:
 ```json
 {
   "name": "Conditions Example",
+  "id": "B1C278BF-32A1-4D87-B262-53D881983F55",
   "variables": {
     "BackupFilePath": "\\\\192.168.0.60\\Backups\\db-mariadb\\ghost\\{date:yyyy\\\\MM\\\\yyyy-MM-dd}-ghost.zip",
     "ThresholdBackupSize": 30000
