@@ -30,6 +30,8 @@ public static class ServiceCollectionExtensions
 
       // Helpers
       .AddSingleton<IJsonHelper, JsonHelper>()
+      .AddSingleton<IJobStepHelper, JobStepHelper>()
+      .AddSingleton<IConditionHelper, ConditionHelper>()
 
       // Job Actions
       .AddSingleton<IJobAction, DeleteFolderAction>()
@@ -38,6 +40,7 @@ public static class ServiceCollectionExtensions
       .AddSingleton<IJobAction, DeleteFileAction>()
       .AddSingleton<IJobAction, WriteTextFileAction>()
       .AddSingleton<IJobAction, DeleteFilesAction>()
+      .AddSingleton<IJobAction, GetFileSizeAction>()
 
       // Arg Formatters
       .AddSingleton<IJobActionArgFormatter, DateTimeFormatter>()
@@ -54,6 +57,7 @@ public static class ServiceCollectionExtensions
 
       // Factories
       .AddSingleton<IDirectoryInfoFactory, DirectoryInfoFactory>()
+      .AddSingleton<IFileInfoFactory, FileInfoFactory>()
 
       // Services
       .AddSingleton<ICronRunnerService, CronRunnerService>()

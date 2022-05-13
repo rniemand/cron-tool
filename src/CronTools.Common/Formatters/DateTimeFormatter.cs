@@ -18,7 +18,9 @@ public class DateTimeFormatter : IJobActionArgFormatter
 
     SupportedTypes = new List<ArgType>
     {
-      ArgType.File
+      ArgType.File,
+      ArgType.Directory,
+      ArgType.String
     };
   }
 

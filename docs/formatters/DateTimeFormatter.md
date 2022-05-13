@@ -11,6 +11,8 @@ Replaces matching tags with a formatted `DateTime` value, supported tags need to
 The following [ArgTypes](/docs/enums/ArgType.md) are supported:
 
 - `ArgType.File` - file paths
+- `ArgType.Directory` - directory paths
+- `ArgType.String` - general strings
 
 ## References
 Additional reading on datetime formatting in `C#`.

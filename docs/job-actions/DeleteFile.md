@@ -14,6 +14,7 @@ Provided by the `DeleteFileAction` class.
 }
 ```
 
+## Supported Arguments
 Below is a breakdown of each argument, please refer to the [ArgType](/docs/enums/ArgType.md) documentation for a list of all supported argument types.
 
 | Property | Type | Required | Default | Notes |

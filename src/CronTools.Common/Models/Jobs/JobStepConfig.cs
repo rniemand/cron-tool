@@ -25,6 +25,12 @@ public class JobStepConfig
   [JsonProperty("id")]
   public string StepId { get; set; } = string.Empty;
 
+  [JsonProperty("condition")]
+  public JobStepCondition? Condition { get; set; }
+
+  [JsonProperty("quitOnFailure")]
+  public bool QuitOnFailure { get; set; } = true;
+
   [JsonIgnore]
   public int StepNumber { get; set; } = 0;
 }

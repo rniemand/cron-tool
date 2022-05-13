@@ -31,6 +31,7 @@ More to come...
 
 - [ArgType](/docs/enums/ArgType.md) - documents the type of arguments exposed by the various [job actions](/docs/job-actions/README.md).
 - [JobStepAction](/docs/enums/JobStepAction.md) - list of all supported [job actions](/docs/job-actions/README.md).
+- [ConditionType](/docs/enums/ConditionType.md) - list of supported condition types.
 
 ## Job Actions
 More to come...
@@ -39,6 +40,7 @@ More to come...
 - [DeleteFolder](/docs/job-actions/DeleteFolder.md)
 - [DeleteFile](/docs/job-actions/DeleteFile.md)
 - [DeleteFiles](/docs/job-actions/DeleteFiles.md)
+- [GetFileSize](/docs/job-actions/GetFileSize.md)
 - [WriteTextFile](/docs/job-actions/WriteTextFile.md)
 - [ZipFolder](/docs/job-actions/ZipFolder.md)
 
@@ -48,6 +50,7 @@ More to come...
 - [appsettings.json](/docs/configuration/appsettings.md)
 - [JobConfig](/docs/configuration/JobConfig.md)
 - [JobStepConfig](/docs/configuration/JobStepConfig.md)
+- [JobStepCondition](/docs/configuration/JobStepCondition.md)
 
 ## Formatters
 More to come...

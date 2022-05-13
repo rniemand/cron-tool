@@ -25,6 +25,13 @@ public class JobStepOutcome
     return this;
   }
 
+  public JobStepOutcome WithFailed()
+  {
+    // TODO: [JobStepOutcome.WithFailed] (TESTS) Add tests
+    Succeeded = false;
+    return this;
+  }
+
   public JobStepOutcome WithSuccess()
   {
     // TODO: [TESTS] (JobStepOutcome.WithSuccess) Add tests
