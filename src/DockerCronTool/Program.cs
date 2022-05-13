@@ -5,5 +5,4 @@ using Microsoft.Extensions.DependencyInjection;
 var cronRunnerService = CronToolDIContainer.ServiceProvider.GetRequiredService<ICronRunnerService>();
 
 
-
 Console.WriteLine();
