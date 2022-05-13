@@ -66,6 +66,7 @@ public static class ServiceCollectionExtensions
       .AddSingleton<IOldCronRunnerService, OldCronRunnerService>()
       .AddSingleton<IMetricService, MetricService>()
       .AddSingleton<ICronToolRunnerService, CronToolRunnerService>()
+      .AddSingleton<IJobRunnerService, JobRunnerService>()
 
       // Resolvers
       .AddSingleton<IJobActionResolver, JobActionResolver>()
