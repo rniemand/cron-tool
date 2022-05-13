@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using CronTools.Common.JobActions;
 using CronTools.Common.Models;
@@ -21,9 +22,20 @@ public class JobUtils : IJobUtils
   }
 
 
-  public bool ValidateStepArgs(IJobAction action, RunningStepContext context) =>
+  public bool ValidateStepArgs(IJobAction action, RunningStepContext context)
+  {
     // TODO: [JobUtils.ValidateStepArgs] (TESTS) Add tests
-    CheckRequiredStepArgs(action, context);
+    if (!CheckRequiredStepArgs(action, context))
+      return false;
+
+    if (action.RequiredGlobals.Length == 0)
+      return true;
+
+
+
+    Console.WriteLine();
+    return true;
+  }
 
 
   private bool CheckRequiredStepArgs(IJobAction action, RunningStepContext context)

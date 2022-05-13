@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
@@ -15,6 +16,7 @@ public class DeleteFolderAction : IJobAction
   public JobStepAction Action { get; }
   public string Name { get; }
   public Dictionary<string, JobActionArg> Args { get; }
+  public string[] RequiredGlobals { get; }
 
   private readonly ILoggerAdapter<DeleteFolderAction> _logger;
   private readonly IDirectoryAbstraction _directory;
@@ -35,6 +37,7 @@ public class DeleteFolderAction : IJobAction
 
     Action = JobStepAction.DeleteFolder;
     Name = JobStepAction.DeleteFolder.ToString("G");
+    RequiredGlobals = Array.Empty<string>();
 
     Args = new Dictionary<string, JobActionArg>
     {

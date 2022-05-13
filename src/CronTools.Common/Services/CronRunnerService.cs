@@ -69,7 +69,7 @@ public class CronRunnerService : ICronRunnerService
           throw new Exception("Unable to continue");
 
         // Ensure that the current job step arguments are valid
-        var stepContext = _jobFactory.CreateRunningStepContext(step, stepNumber++);
+        var stepContext = _jobFactory.CreateRunningStepContext(jobContext, step, stepNumber++);
         var stepArgsValid = _jobUtils.ValidateStepArgs(resolvedAction, stepContext);
         if (!stepArgsValid)
         {

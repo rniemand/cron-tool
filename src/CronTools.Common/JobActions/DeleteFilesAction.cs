@@ -1,10 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
 using CronTools.Common.Models;
 using CronTools.Common.Resolvers;
 using Rn.NetCore.Common.Abstractions;
-using Rn.NetCore.Common.Logging;
 
 namespace CronTools.Common.JobActions;
 
@@ -13,20 +13,18 @@ public class DeleteFilesAction : IJobAction
   public JobStepAction Action { get; }
   public string Name { get; }
   public Dictionary<string, JobActionArg> Args { get; }
-
-  private readonly ILoggerAdapter<DeleteFilesAction> _logger;
+  public string[] RequiredGlobals { get; }
+  
   private readonly IFileAbstraction _file;
 
-  public DeleteFilesAction(
-    ILoggerAdapter<DeleteFilesAction> logger,
-    IFileAbstraction file)
+  public DeleteFilesAction(IFileAbstraction file)
   {
     // TODO: [DeleteFilesAction] (TESTS) Add tests
-    _logger = logger;
     _file = file;
 
     Action = JobStepAction.DeleteFiles;
     Name = JobStepAction.DeleteFiles.ToString("G");
+    RequiredGlobals = Array.Empty<string>();
 
     Args = new Dictionary<string, JobActionArg>
     {

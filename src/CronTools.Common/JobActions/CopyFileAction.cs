@@ -15,6 +15,7 @@ public class CopyFileAction : IJobAction
   public JobStepAction Action { get; }
   public string Name { get; }
   public Dictionary<string, JobActionArg> Args { get; }
+  public string[] RequiredGlobals { get; }
 
   private readonly ILoggerAdapter<CopyFileAction> _logger;
   private readonly IFileAbstraction _file;
@@ -35,6 +36,7 @@ public class CopyFileAction : IJobAction
 
     Action = JobStepAction.CopyFile;
     Name = JobStepAction.CopyFile.ToString("G");
+    RequiredGlobals = Array.Empty<string>();
 
     Args = new Dictionary<string, JobActionArg>
     {

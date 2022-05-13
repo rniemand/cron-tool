@@ -15,6 +15,7 @@ public class DeleteFileAction : IJobAction
   public JobStepAction Action { get; }
   public string Name { get; }
   public Dictionary<string, JobActionArg> Args { get; }
+  public string[] RequiredGlobals { get; }
 
   private readonly ILoggerAdapter<DeleteFileAction> _logger;
   private readonly IFileAbstraction _file;
@@ -29,6 +30,7 @@ public class DeleteFileAction : IJobAction
 
     Action = JobStepAction.DeleteFile;
     Name = JobStepAction.DeleteFile.ToString("G");
+    RequiredGlobals = Array.Empty<string>();
 
     Args = new Dictionary<string, JobActionArg>
     {

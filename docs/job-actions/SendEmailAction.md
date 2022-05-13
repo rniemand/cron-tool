@@ -9,7 +9,10 @@ Provided by the `SendEmailAction` class, enables the sending of emails from your
   "name": "Send an email",
   "action": "SendEmail",
   "args": {
-    "Path": "..."
+    "ToAddress": "email@address.com",
+    "ToName": "Recipient Name",
+    "Subject": "Mail Title",
+    "Body": "This is the body of your email"
   }
 }
 ```
@@ -19,6 +22,10 @@ Below is a breakdown of each argument, please refer to the [ArgType](/docs/enums
 
 | Property | Type | Required | Default | Notes |
 | --- | --- | --- | --- | --- |
+| `ToAddress` | `Email` | required | - | The email address to send the message to. |
+| `ToName` | `string` | optional | - | The recipients name - if not supplied will default to the `ToAddress`. |
+| `Subject` | `string` | required | - | The subject field for the sent mail. |
+| `Body` | `string` | required | - | The body of the email. |
 
 ## Required Global Arguments
 The following global arguments are required for this job step to work.

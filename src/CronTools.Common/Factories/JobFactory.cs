@@ -7,7 +7,7 @@ namespace CronTools.Common.Factories;
 
 public interface IJobFactory
 {
-  RunningStepContext CreateRunningStepContext(JobStepConfig jobStep, int stepNumber);
+  RunningStepContext CreateRunningStepContext(RunningJobContext jobContext, JobStepConfig jobStep, int stepNumber);
   RunningJobContext CreateRunningJobContext(JobConfig job);
   IJobArgumentResolver GetJobArgumentResolver();
 }
@@ -28,9 +28,10 @@ public class JobFactory : IJobFactory
     _globalConfigProvider = globalConfigProvider;
   }
 
-  public RunningStepContext CreateRunningStepContext(JobStepConfig jobStep, int stepNumber) =>
+  public RunningStepContext CreateRunningStepContext(RunningJobContext jobContext, JobStepConfig jobStep, int stepNumber) =>
     // TODO: [JobFactory.CreateRunningStepContext] (TESTS) Add tests
-    new(jobStep, stepNumber);
+    new RunningStepContext(jobStep, stepNumber)
+      .SetGlobals(jobContext.Globals);
 
   public RunningJobContext CreateRunningJobContext(JobConfig job) =>
     // TODO: [JobFactory.CreateRunningJobContext] (TESTS) Add tests

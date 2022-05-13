@@ -10,3 +10,4 @@ Enumeration of the supported argument types for a given [job action](/docs/job-a
 | `Directory` | 3 | Represents a path to a directory |
 | `File` | 4 | Represents a path to a file |
 | `Files` | 5 | Represents an array of Paths |
+| `Email` | 6 | Represents an EMail address |
