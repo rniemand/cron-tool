@@ -23,4 +23,4 @@ This guide is intended to assist users who have `MFA` (Multi  Factor Authenticat
 }
 ```
 
-That should cover the basic configuration needed to use the [SendEmail](/docs/job-actions/SendEmailAction.md) job action.
+That should cover the basic configuration needed to use the [SendEmail](/docs/job-actions/SendEmail.md) job action.

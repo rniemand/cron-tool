@@ -13,4 +13,4 @@ Enumeration of the supported job types for a given [job action](/docs/job-action
 | `WriteTextFile` | 6 | Indicates the usage of the [WriteTextFileAction](/docs/job-actions/WriteTextFile.md) action. |
 | `DeleteFiles` | 7 | Indicates the usage of the [DeleteFiles](/docs/job-actions/DeleteFiles.md) action. |
 | `GetFileSize` | 8 | Indicates the usage of the [GetFileSize](/docs/job-actions/GetFileSize.md) action. |
-| `SendEmail` | 9 | Indicates the usage of the [SendEmail](/docs/job-actions/SendEmailAction.md) action. |
+| `SendEmail` | 9 | Indicates the usage of the [SendEmail](/docs/job-actions/SendEmail.md) action. |
