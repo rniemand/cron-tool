@@ -2,7 +2,7 @@
   "profiles": {
     "CronTool": {
       "commandName": "Project",
-      "commandLineArgs": "-r \"\\\\192.168.0.60\\appdata\\cron-tool\" -j BackupNasLandingPage"
+      "commandLineArgs": "-r \"\\\\192.168.0.60\\appdata\\cron-tool\" -j Conditionals"
     }
   }
 }

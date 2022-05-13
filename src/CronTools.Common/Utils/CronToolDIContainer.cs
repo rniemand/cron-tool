@@ -1,14 +1,18 @@
+using System;
+using System.IO;
 using CronTools.Common.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 
-public static class DIContainer
+namespace CronTools.Common.Utils;
+
+public class CronToolDIContainer
 {
   public static IServiceProvider ServiceProvider { get; }
 
-  static DIContainer()
+  static CronToolDIContainer()
   {
     ServiceProvider = Configure();
   }

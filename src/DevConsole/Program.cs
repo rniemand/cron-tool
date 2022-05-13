@@ -1,6 +1,7 @@
 using CronTools.Common.Services;
+using CronTools.Common.Utils;
 using Microsoft.Extensions.DependencyInjection;
 
-var cronRunnerService = DIContainer.ServiceProvider.GetRequiredService<ICronRunnerService>();
-
-await cronRunnerService.RunAsync(new[] { "SendMail" });
+await CronToolDIContainer.ServiceProvider
+  .GetRequiredService<ICronRunnerService>()
+  .RunAsync(new[] { "SendMail" });
