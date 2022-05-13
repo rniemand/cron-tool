@@ -72,10 +72,15 @@ public class ConditionHelper : IConditionHelper
     if (condition.Type == ConditionType.And)
       return EvaluateAndCondition(jobContext, validExpressions);
 
+    if (condition.Type == ConditionType.Or)
+      return EvaluateOrCondition(jobContext, validExpressions);
+
     _logger.LogError("Add support for {type} condition tree", condition.Type.ToString("G"));
     return false;
   }
 
+
+  // Condition Types
   private bool EvaluateAndCondition(RunningJobContext jobContext, List<ConditionExpression> expressions)
   {
     // TODO: [ConditionHelper.EvaluateAndCondition] (TESTS) Add tests
@@ -90,6 +95,14 @@ public class ConditionHelper : IConditionHelper
     return true;
   }
 
+  private bool EvaluateOrCondition(RunningJobContext jobContext, IEnumerable<ConditionExpression> expressions)
+  {
+    // TODO: [ConditionHelper.EvaluateOrCondition] (TESTS) Add tests
+    return expressions.Any(expression => RunExpression(jobContext, expression));
+  }
+
+
+  // Expression evaluation
   private bool RunExpression(RunningJobContext jobContext, ConditionExpression expression)
   {
     // TODO: [ConditionHelper.RunExpression] (TESTS) Add tests

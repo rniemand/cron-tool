@@ -5,4 +5,5 @@ Represents a supported joiner condition type when defining [JobStepConfig](/docs
 
 | Name | Int Value | Notes |
 | --- | --- | --- |
-| `And` | 1 | Represents a raw string value |
+| `And` | 1 | All conditions need to pass. |
+| `Or` | 2 | Any of the provided conditions need to pass. |

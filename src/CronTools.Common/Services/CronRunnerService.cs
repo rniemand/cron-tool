@@ -83,7 +83,7 @@ public class CronRunnerService : ICronRunnerService
         var stopOnFailure = step.Condition?.StopOnFailure ?? false;
         if (!canRunJobStep && stopOnFailure)
         {
-          _logger.LogWarning("Job '{job}' step '{step}' conditions failed, stopping job.", jobName, step.StepId);
+          _logger.LogInformation("Job '{job}' step '{step}' conditions failed, stopping job.", jobName, step.StepId);
           break;
         }
 
