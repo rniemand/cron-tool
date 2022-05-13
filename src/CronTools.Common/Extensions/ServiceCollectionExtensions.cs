@@ -53,6 +53,7 @@ public static class ServiceCollectionExtensions
       .AddSingleton<IConfigProvider, ConfigProvider>()
       .AddSingleton<IJobConfigProvider, JobConfigProvider>()
       .AddSingleton<IGlobalConfigProvider, GlobalConfigProvider>()
+      .AddSingleton<IJobScheduleProvider, JobScheduleProvider>()
 
       // Helpers
       .AddSingleton<IJobActionArgHelper, JobActionArgHelper>()

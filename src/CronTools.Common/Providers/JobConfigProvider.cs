@@ -136,6 +136,7 @@ public class JobConfigProvider : IJobConfigProvider
     return jsonFiles
       .Select(jsonFile => _path.GetFileNameWithoutExtension(jsonFile))
       .Where(x => !x.IgnoreCaseEquals("globals"))
+      .Where(x => !x.IgnoreCaseEquals("_schedules"))
       .ToList();
   }
 
