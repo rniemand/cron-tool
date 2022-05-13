@@ -116,6 +116,12 @@ public class ConditionHelper : IConditionHelper
       case Comparator.GreaterThan:
         return CompareViaGreaterThan(sourceValue, targetValue);
 
+      case Comparator.GreaterThanOrEqual:
+        return CompareViaGreaterThanOrEqual(sourceValue, targetValue);
+
+      case Comparator.LessThan:
+        return CompareViaLessThan(sourceValue, targetValue);
+
       default:
         _logger.LogError("Add support for {type} comparator", expression.Comparator.ToString("G"));
         return false;
@@ -141,6 +147,30 @@ public class ConditionHelper : IConditionHelper
 
     if (sourceValue is long longValue)
       return longValue > CastHelper.StringToLong(targetValue);
+
+    _logger.LogError("Add support for {type}", sourceValue.GetType().Name);
+    return false;
+  }
+
+  private bool CompareViaGreaterThanOrEqual(object sourceValue, string targetValue)
+  {
+    // TODO: [ConditionHelper.CompareViaGreaterThan] (TESTS) Add tests
+    _logger.LogDebug("Running condition: '{source}' >= '{target}'", sourceValue, targetValue);
+
+    if (sourceValue is long longValue)
+      return longValue >= CastHelper.StringToLong(targetValue);
+
+    _logger.LogError("Add support for {type}", sourceValue.GetType().Name);
+    return false;
+  }
+
+  private bool CompareViaLessThan(object sourceValue, string targetValue)
+  {
+    // TODO: [ConditionHelper.CompareViaLessThan] (TESTS) Add tests
+    _logger.LogDebug("Running condition: '{source}' < '{target}'", sourceValue, targetValue);
+
+    if (sourceValue is long longValue)
+      return longValue < CastHelper.StringToLong(targetValue);
 
     _logger.LogError("Add support for {type}", sourceValue.GetType().Name);
     return false;
