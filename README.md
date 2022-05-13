@@ -51,6 +51,7 @@ More to come...
 - [JobConfig](/docs/configuration/JobConfig.md)
 - [JobStepConfig](/docs/configuration/JobStepConfig.md)
 - [JobStepCondition](/docs/configuration/JobStepCondition.md)
+- [Globals](/docs/configuration/globals.md)
 
 ## Formatters
 More to come...
