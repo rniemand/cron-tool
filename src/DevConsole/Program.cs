@@ -4,4 +4,4 @@ using Microsoft.Extensions.DependencyInjection;
 
 await CronToolDIContainer.ServiceProvider
   .GetRequiredService<IOldCronRunnerService>()
-  .RunJobsAsync(new[] { "SendMail" });
+  .RunJobsAsync(new[] { "ScheduledJob" });
