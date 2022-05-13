@@ -78,7 +78,7 @@ public class CronRunnerService : ICronRunnerService
           break;
         }
 
-        _conditionHelper.CanRunJobStep(jobContext, stepContext);
+        var canRunJobStep = _conditionHelper.CanRunJobStep(jobContext, stepContext);
 
         // Handle a successful step
         var outcome = await resolvedAction.ExecuteAsync(jobContext, stepContext, argumentResolver);

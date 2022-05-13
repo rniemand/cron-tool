@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using CronTools.Common.Enums;
 using CronTools.Common.Models;
@@ -30,11 +30,10 @@ public class ConditionHelper : IConditionHelper
     if (!ContainsConditions(stepContext))
       return true;
 
-    if (!EvaluateCondition(jobContext, stepContext))
+    // ReSharper disable once ConvertIfStatementToReturnStatement
+    if (!EvaluateStepCondition(jobContext, stepContext))
       return false;
 
-
-    Console.WriteLine();
     return true;
   }
 
@@ -49,14 +48,17 @@ public class ConditionHelper : IConditionHelper
     return true;
   }
 
-  private bool EvaluateCondition(RunningJobContext jobContext, RunningStepContext stepContext)
+  private bool EvaluateStepCondition(RunningJobContext jobContext, RunningStepContext stepContext)
   {
-    // TODO: [ConditionHelper.EvaluateCondition] (TESTS) Add tests
+    // TODO: [ConditionHelper.EvaluateStepCondition] (TESTS) Add tests
     var condition = stepContext.JobStep.Condition;
 
-    if (condition is null)
-      return true;
+    return condition is null || EvaluateCondition(jobContext, condition);
+  }
 
+  private bool EvaluateCondition(RunningJobContext jobContext, JobStepCondition condition)
+  {
+    // TODO: [ConditionHelper.EvaluateCondition] (TESTS) Add tests
     if (condition.Expressions.Count == 0)
       return true;
 
@@ -67,8 +69,20 @@ public class ConditionHelper : IConditionHelper
     if (validExpressions.Count == 0)
       return true;
 
-    foreach (var expression in validExpressions)
+    if (condition.Type == ConditionType.And)
+      return EvaluateAndCondition(jobContext, validExpressions);
+
+    _logger.LogError("Add support for {type} condition tree", condition.Type.ToString("G"));
+    return false;
+  }
+
+  private bool EvaluateAndCondition(RunningJobContext jobContext, List<ConditionExpression> expressions)
+  {
+    // TODO: [ConditionHelper.EvaluateAndCondition] (TESTS) Add tests
+    // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
+    foreach (var expression in expressions)
     {
+      // All expressions need to be TRUE to pass
       if (!RunExpression(jobContext, expression))
         return false;
     }
@@ -94,28 +108,24 @@ public class ConditionHelper : IConditionHelper
     var sourceValue = jobContext.GetStateValue(expression.Property);
     var targetValue = _actionArgHelper.ProcessExpressionValue(jobContext, expression.Value);
 
-    if (expression.Comparator == Comparator.Equals)
-      return CompareViaEquals(sourceValue, targetValue);
+    switch (expression.Comparator)
+    {
+      case Comparator.Equals:
+        return CompareViaEquals(sourceValue, targetValue);
 
-    if (expression.Comparator == Comparator.GreaterThan)
-      return CompareViaGreaterThan(sourceValue, targetValue);
+      case Comparator.GreaterThan:
+        return CompareViaGreaterThan(sourceValue, targetValue);
 
-    /*
-  LessThan = 3,
-  LessThanOrEqual = 4,
-  GreaterThanOrEqual = 6,
-  DoesNotEqual = 7
-     */
-
-
-
-    Console.WriteLine();
-    return true;
+      default:
+        _logger.LogError("Add support for {type} comparator", expression.Comparator.ToString("G"));
+        return false;
+    }
   }
 
   private bool CompareViaEquals(object sourceValue, string targetValue)
   {
     // TODO: [ConditionHelper.CompareViaEquals] (TESTS) Add tests
+    _logger.LogDebug("Running condition: '{source}' = '{target}'", sourceValue, targetValue);
 
     if (sourceValue is bool boolValue)
       return CastHelper.StringToBool(targetValue) == boolValue;
@@ -127,6 +137,8 @@ public class ConditionHelper : IConditionHelper
   private bool CompareViaGreaterThan(object sourceValue, string targetValue)
   {
     // TODO: [ConditionHelper.CompareViaGreaterThan] (TESTS) Add tests
+    _logger.LogDebug("Running condition: '{source}' > '{target}'", sourceValue, targetValue);
+
     if (sourceValue is long longValue)
       return longValue > CastHelper.StringToLong(targetValue);
 
