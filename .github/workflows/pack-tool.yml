@@ -1,0 +1,26 @@
+name: PackTool
+on:
+  push:
+    branches:
+      - master
+
+env:
+  PROJECT_NAME: "CronTool"
+
+jobs:
+  build:
+    name: Build and Publish
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Build
+        run: dotnet build -c Release src/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj
+
+      - name: Package
+        run: dotnet pack -c Release -o . src/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj
+
+      - name: Publish
+        run: dotnet nuget push *.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate

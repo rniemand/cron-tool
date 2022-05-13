@@ -2,47 +2,32 @@
   You are amazing! Thanks for contributing to our project!
   Please ensure that the title for your PR requests matches the following convention:
 
-  - feat: (💡) add basic feature...
-  - fix: (🐛) addressing BUG x...
-  - docs: (📄) updated feature documentation...
-  - refactor: (🔁) revised feature x...
-  - test: (🧪) added tests for feature y...
-  - build: (👷) updated build template...
-  - merge: (🔗) merged feature A and B...
-  - breaking: (🛑) .Net version bump...
+  feat: (💡) add basic feature...
+  fix: (🐛) addressing BUG x...
+  docs: (📄) updated feature documentation...
+  refactor: (🔁) revised feature x...
+  test: (🧪) added tests for feature y...
+  build: (👷) updated build template...
+  breaking: (🛑) .Net version bump...
+
+  You can remove this (and all other) comments as you progress
 -->
 
-## Proposed change
-<!-- 
-  Describe the big picture of your changes here to communicate to the
-  maintainers why we should accept this pull request.
--->
-
+# PR: Information
 _replace this with your change information here_
 
-## Type of change
-<!--
-  What type of change does your pull request introduce to this project. DELETE all options except for your change type
--->
+## PR Checklist
+I have preformed the following actions for this commit:
 
-  - 💡 (feat) Added a new feature to this project
-  - 🐛 (fix) Fixing an existing BUG
-  - 📄 (docs) Updated documenation
-  - 🔁 (refactor) Refactored complicated flow \ code
-  - 🧪 (test) Added tests to this project
-  - 👷 (build) Modified the build in some way
-  - 🔗 (merge) Merging 2 or more branches together
-  - 🛑 (breaking) This is a breaking change
-
-## Additional information
-<!--
-  Details are important, and help maintainers processing your PR.
-  Please be sure to fill out additional details, if applicable.
--->
-
-- This PR fixes or closes issue: fixes #
-- Link to relevant existing code or pull request: 
+- [ ] Updated version for `src/CronTool/CronTool.csproj`
+- [ ] Added in **documentation** for this feature
+- [ ] I have performed a self-review of my own code
+- [ ] I have commented my changes in hard-to-understand areas
+- [ ] My changes generate no new warnings
+- [ ] The project is building locally
+- [ ] Supporting tests have been added for my change
 
 <!--(Rn.BuildScriptHelper){
-	"version": "1.0.106"
+	"version": "1.0.106",
+  "replace": false
 }(END)-->
