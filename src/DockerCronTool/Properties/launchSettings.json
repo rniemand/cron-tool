@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DockerCronTool": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
