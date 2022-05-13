@@ -4,4 +4,4 @@ using Microsoft.Extensions.DependencyInjection;
 
 await CronToolDIContainer.ServiceProvider
   .GetRequiredService<ICronRunnerService>()
-  .RunAsync(new[] { "SendMail" });
+  .RunJobsAsync(new[] { "SendMail" });

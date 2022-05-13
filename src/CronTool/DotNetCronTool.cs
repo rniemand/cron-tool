@@ -63,7 +63,7 @@ public static class DotNetCronTool
     
     await CronToolDIContainer.ServiceProvider
       .GetRequiredService<ICronRunnerService>()
-      .RunAsync(new[] { jobName });
+      .RunJobsAsync(new[] { jobName });
   }
 }
 

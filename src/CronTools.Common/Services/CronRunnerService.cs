@@ -11,7 +11,7 @@ namespace CronTools.Common.Services;
 
 public interface ICronRunnerService
 {
-  Task RunAsync(string[] args);
+  Task RunJobsAsync(string[] args);
 }
 
 public class CronRunnerService : ICronRunnerService
@@ -39,9 +39,9 @@ public class CronRunnerService : ICronRunnerService
     _conditionHelper = conditionHelper;
   }
 
-  public async Task RunAsync(string[] args)
+  public async Task RunJobsAsync(string[] args)
   {
-    // TODO: [TESTS] (CronRunnerService.RunAsync) Add tests
+    // TODO: [TESTS] (CronRunnerService.RunJobsAsync) Add tests
     if (args.Length == 0)
     {
       _logger.LogWarning("No jobs to run");
