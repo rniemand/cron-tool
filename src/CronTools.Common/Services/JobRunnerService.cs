@@ -14,6 +14,7 @@ public interface IJobRunnerService
 {
   Task RunJobAsync(JobConfig jobConfig);
   Task RunJobAsync(string jobFileName);
+  Task RunJobsAsync(string[] jobFileNames);
 }
 
 public class JobRunnerService : IJobRunnerService
@@ -106,5 +107,20 @@ public class JobRunnerService : IJobRunnerService
     }
 
     await RunJobAsync(jobConfig);
+  }
+
+  public async Task RunJobsAsync(string[] jobFileNames)
+  {
+    // TODO: [JobRunnerService.RunJobsAsync] (TESTS) Add tests
+    if (jobFileNames.Length == 0)
+    {
+      _logger.LogWarning("No jobs to run");
+      return;
+    }
+
+    foreach (var jobName in jobFileNames)
+    {
+      await RunJobAsync(jobName);
+    }
   }
 }

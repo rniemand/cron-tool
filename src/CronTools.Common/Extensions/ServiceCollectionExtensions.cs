@@ -63,7 +63,6 @@ public static class ServiceCollectionExtensions
       .AddSingleton<IFileInfoFactory, FileInfoFactory>()
 
       // Services
-      .AddSingleton<IOldCronRunnerService, OldCronRunnerService>()
       .AddSingleton<IMetricService, MetricService>()
       .AddSingleton<ICronToolRunnerService, CronToolRunnerService>()
       .AddSingleton<IJobRunnerService, JobRunnerService>()

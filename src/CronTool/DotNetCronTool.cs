@@ -60,10 +60,10 @@ public static class DotNetCronTool
   public static async Task RunTool(string jobName, string rootDir)
   {
     GenerateAppSettings(rootDir);
-    
+
     await CronToolDIContainer.ServiceProvider
-      .GetRequiredService<IOldCronRunnerService>()
-      .RunJobsAsync(new[] { jobName });
+      .GetRequiredService<IJobRunnerService>()
+      .RunJobAsync(jobName);
   }
 }
 
