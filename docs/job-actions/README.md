@@ -8,5 +8,6 @@ Below is a complete list of all supported `JobAction` types.
 - [DeleteFile](/docs/job-actions/DeleteFile.md)
 - [DeleteFiles](/docs/job-actions/DeleteFiles.md)
 - [GetFileSize](/docs/job-actions/GetFileSize.md)
+- [SendEmailAction](/docs/job-actions/SendEmailAction.md)
 - [WriteTextFile](/docs/job-actions/WriteTextFile.md)
 - [ZipFolder](/docs/job-actions/ZipFolder.md)
