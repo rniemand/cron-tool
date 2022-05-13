@@ -8,7 +8,8 @@ Main cron-job configuration file.
   "enabled": true,
   "name": "My awesome job",
   "steps": [],
-  "variables": {}
+  "variables": {},
+  "schedule": {}
 }
 ```
 
@@ -20,6 +21,7 @@ Details on each option is listed below.
 | `name` | `string` | required | - | The name of the current job. |
 | `steps` | [JobStepConfig](/docs/models/JobStepConfig.md)[] | required | `[]` | Array of [JobStepConfig](/docs/models/JobStepConfig.md) entries that make up this job. |
 | `variables` | `Dictionary<string, object>` | optional | `{}` | Dictionary of variables accessable to all steps in this job. |
+| `schedule` | [JobSchedule](/docs/configuration/JobSchedule.md) | optional | - | Defines the schedule (if any) to use when running the job. |
 
 ## Variables
 Variables can be accessed by using the `${var:<name>}` syntax in any supported [Job Action](/docs/job-actions/README.md) property, these are case-sensitive.

@@ -32,6 +32,8 @@ More to come...
 - [Zipping the contents of a folder](/docs/examples/BackupNasLandingPage.md) - this example covers using the [ZipFolder](/docs/job-actions/ZipFolder.md) job action.
 - [Writing variable to a text file](/docs/examples/WriteVariableToTextFile.md) - this example showcases using `variables` and the [WriteTextFile](/docs/job-actions/WriteTextFile.md) job action.
 - [Simple state example](/docs/examples/SimpleStateExample.md) - creates and copies a file using state to store the paths, once created the files are deleted from state.
+- [Simple conditions example](/docs/examples/SimpleConditions.md) - covers the basic usage of `conditions`.
+- [Send Email if file is missing](/docs/examples/EmailOnMissingFile.md) - this example demonstrates sending an email if a specific file was not found.
 
 # Development Section
 Collection of developer related documentation can be found below.
@@ -39,11 +41,10 @@ Collection of developer related documentation can be found below.
 ## Enums
 More to come...
 
-- [Zipping the contents of a folder](/docs/examples/BackupNasLandingPage.md) - this example covers using the [ZipFolder](/docs/job-actions/ZipFolder.md) job action.
-- [Writing variable to a text file](/docs/examples/WriteVariableToTextFile.md) - this example showcases using `variables` and the [WriteTextFile](/docs/job-actions/WriteTextFile.md) job action.
-- [Simple state example](/docs/examples/SimpleStateExample.md) - creates and copies a file using state to store the paths, once created the files are deleted from state.
-- [Simple conditions example](/docs/examples/SimpleConditions.md) - covers the basic usage of `conditions`.
-- [Send Email if file is missing](/docs/examples/EmailOnMissingFile.md) - this example demonstrates sending an email if a specific file was not found.
+- [ArgType](/docs/enums/ArgType.md) - documents the type of arguments exposed by the various [job actions](/docs/job-actions/README.md).
+- [JobStepAction](/docs/enums/JobStepAction.md) - list of all supported [job actions](/docs/job-actions/README.md).
+- [ConditionType](/docs/enums/ConditionType.md) - list of supported condition types.
+- [ScheduleFrequency](/docs/enums/ScheduleFrequency.md) - schedule frequency used with [job configuration](/docs/configuration/JobConfig.md).
 
 ## Job Actions
 More to come...
@@ -65,6 +66,7 @@ More to come...
 - [JobStepConfig](/docs/configuration/JobStepConfig.md)
 - [JobStepCondition](/docs/configuration/JobStepCondition.md)
 - [Globals](/docs/configuration/globals.md)
+- [JobSchedule](/docs/configuration/JobSchedule.md)
 
 ## Formatters
 More to come...
