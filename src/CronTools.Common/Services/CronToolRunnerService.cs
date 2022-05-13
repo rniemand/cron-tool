@@ -24,6 +24,7 @@ public class CronToolRunnerService : ICronToolRunnerService
   private readonly IJobScheduleProvider _scheduleProvider;
   private readonly Dictionary<string, ScheduledJob> _scheduledJobs;
   private readonly IJobRunnerService _jobRunnerService;
+  private readonly IJobSchedulerService _schedulerService;
   private List<JobConfig> _enabledJobs;
   private DateTime _nextJobRefresh;
 
@@ -32,13 +33,15 @@ public class CronToolRunnerService : ICronToolRunnerService
     IJobConfigProvider jobConfigProvider,
     IDateTimeAbstraction dateTime,
     IJobScheduleProvider scheduleProvider,
-    IJobRunnerService jobRunnerService)
+    IJobRunnerService jobRunnerService,
+    IJobSchedulerService schedulerService)
   {
     _logger = logger;
     _jobConfigProvider = jobConfigProvider;
     _dateTime = dateTime;
     _scheduleProvider = scheduleProvider;
     _jobRunnerService = jobRunnerService;
+    _schedulerService = schedulerService;
 
     _enabledJobs = new List<JobConfig>();
     _scheduledJobs = _scheduleProvider.LoadSchedule();
@@ -115,23 +118,11 @@ public class CronToolRunnerService : ICronToolRunnerService
 
     if (_scheduledJobs.ContainsKey(jobKey))
     {
-      _scheduledJobs[jobKey].JobName = jobConfig.Name;
-
-      // Handle jobs that are set to run on start
-      if (jobConfig.Schedule!.RunOnStart)
-        _scheduledJobs[jobKey].NextRun = DateTimeOffset.MinValue;
-
+      _schedulerService.SyncJobConfig(jobConfig, _scheduledJobs[jobKey]);
       return;
     }
 
-    _logger.LogInformation("Creating new schedule for '{job}' ({id})", jobConfig.Name, jobConfig.JobId);
-    _scheduledJobs[jobKey] = new ScheduledJob
-    {
-      JobId = jobConfig.JobId,
-      LastRun = DateTimeOffset.MinValue,
-      NextRun = DateTimeOffset.MinValue,
-      JobName = jobConfig.Name
-    };
+    _scheduledJobs[jobKey] = _schedulerService.CreateInitialSchedule(jobConfig);
   }
 
   private void RunJobIntegrityCheck()
@@ -204,6 +195,9 @@ public class CronToolRunnerService : ICronToolRunnerService
   private void RescheduleJob(string jobId, JobConfig jobConfig)
   {
     // TODO: [CronToolRunnerService.RescheduleJob] (TESTS) Add tests
+
+    _schedulerService.ScheduleNextRun(jobConfig);
+
 
 
     Console.WriteLine();
