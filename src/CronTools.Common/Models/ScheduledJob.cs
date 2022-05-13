@@ -13,4 +13,7 @@ public class ScheduledJob
 
   [JsonProperty("lastRun")]
   public DateTimeOffset LastRun { get; set; } = DateTimeOffset.MinValue;
+
+  [JsonProperty("name")]
+  public string JobName { get; set; } = string.Empty;
 }
