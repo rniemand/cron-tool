@@ -4,4 +4,4 @@ using Microsoft.Extensions.DependencyInjection;
 
 await CronToolDIContainer.ServiceProvider
   .GetRequiredService<IJobRunnerService>()
-  .RunJobAsync("ScheduledJob");
+  .RunJobAsync("Conditionals");

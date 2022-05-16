@@ -1,6 +1,7 @@
 using CronTools.Common.Factories;
 using CronTools.Common.Formatters;
 using CronTools.Common.Helpers;
+using CronTools.Common.Helpers.Comparators;
 using CronTools.Common.JobActions;
 using CronTools.Common.Providers;
 using CronTools.Common.Resolvers;
@@ -61,6 +62,14 @@ public static class ServiceCollectionExtensions
       // Factories
       .AddSingleton<IDirectoryInfoFactory, DirectoryInfoFactory>()
       .AddSingleton<IFileInfoFactory, FileInfoFactory>()
+
+      // Comparators
+      .AddSingleton<IComparator, EqualsComparator>()
+      .AddSingleton<IComparator, GreaterThanComparator>()
+      .AddSingleton<IComparator, GreaterThanOrEqualComparator>()
+      .AddSingleton<IComparator, LessThanComparator>()
+      .AddSingleton<IComparator, LessThanOrEqualComparator>()
+      .AddSingleton<IComparator, DoesNotEqualComparator>()
 
       // Services
       .AddSingleton<IMetricService, MetricService>()

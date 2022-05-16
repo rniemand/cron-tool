@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CronTools.Common.Enums;
+using CronTools.Common.Helpers.Comparators;
 using CronTools.Common.Models;
 using Rn.NetCore.Common.Logging;
 
@@ -15,13 +16,16 @@ public class ConditionHelper : IConditionHelper
 {
   private readonly ILoggerAdapter<ConditionHelper> _logger;
   private readonly IJobActionArgHelper _actionArgHelper;
+  private readonly List<IComparator> _comparators;
 
   public ConditionHelper(
     ILoggerAdapter<ConditionHelper> logger,
-    IJobActionArgHelper actionArgHelper)
+    IJobActionArgHelper actionArgHelper,
+    IEnumerable<IComparator> comparators)
   {
     _logger = logger;
     _actionArgHelper = actionArgHelper;
+    _comparators = comparators.ToList();
   }
 
   public bool CanRunJobStep(RunningJobContext jobContext, RunningStepContext stepContext)
@@ -118,104 +122,17 @@ public class ConditionHelper : IConditionHelper
       return false;
     }
 
+    if (_comparators.All(x => x.Comparator != expression.Comparator))
+    {
+      _logger.LogError("Unable to resolve comparitor for: {type}", expression.Comparator.ToString("G"));
+      return false;
+    }
+
     var sourceValue = jobContext.GetStateValue(expression.Property);
     var targetValue = _actionArgHelper.ProcessExpressionValue(jobContext, expression.Value);
 
-    switch (expression.Comparator)
-    {
-      case Comparator.Equals:
-        return CompareViaEquals(sourceValue, targetValue);
-
-      case Comparator.GreaterThan:
-        return CompareViaGreaterThan(sourceValue, targetValue);
-
-      case Comparator.GreaterThanOrEqual:
-        return CompareViaGreaterThanOrEqual(sourceValue, targetValue);
-
-      case Comparator.LessThan:
-        return CompareViaLessThan(sourceValue, targetValue);
-
-      case Comparator.LessThanOrEqual:
-        return CompareViaLessThanOrEqual(sourceValue, targetValue);
-
-      case Comparator.DoesNotEqual:
-        return CompareViaDoesNotEqual(sourceValue, targetValue);
-
-      default:
-        _logger.LogError("Add support for {type} comparator", expression.Comparator.ToString("G"));
-        return false;
-    }
-  }
-
-  private bool CompareViaEquals(object sourceValue, string targetValue)
-  {
-    // TODO: [ConditionHelper.CompareViaEquals] (TESTS) Add tests
-    _logger.LogDebug("Running condition: '{source}' = '{target}'", sourceValue, targetValue);
-
-    if (sourceValue is bool boolValue)
-      return CastHelper.StringToBool(targetValue) == boolValue;
-
-    _logger.LogError("Add support for {type}", sourceValue.GetType().Name);
-    return false;
-  }
-
-  private bool CompareViaGreaterThan(object sourceValue, string targetValue)
-  {
-    // TODO: [ConditionHelper.CompareViaGreaterThan] (TESTS) Add tests
-    _logger.LogDebug("Running condition: '{source}' > '{target}'", sourceValue, targetValue);
-
-    if (sourceValue is long longValue)
-      return longValue > CastHelper.StringToLong(targetValue);
-
-    _logger.LogError("Add support for {type}", sourceValue.GetType().Name);
-    return false;
-  }
-
-  private bool CompareViaGreaterThanOrEqual(object sourceValue, string targetValue)
-  {
-    // TODO: [ConditionHelper.CompareViaGreaterThan] (TESTS) Add tests
-    _logger.LogDebug("Running condition: '{source}' >= '{target}'", sourceValue, targetValue);
-
-    if (sourceValue is long longValue)
-      return longValue >= CastHelper.StringToLong(targetValue);
-
-    _logger.LogError("Add support for {type}", sourceValue.GetType().Name);
-    return false;
-  }
-
-  private bool CompareViaLessThan(object sourceValue, string targetValue)
-  {
-    // TODO: [ConditionHelper.CompareViaLessThan] (TESTS) Add tests
-    _logger.LogDebug("Running condition: '{source}' < '{target}'", sourceValue, targetValue);
-
-    if (sourceValue is long longValue)
-      return longValue < CastHelper.StringToLong(targetValue);
-
-    _logger.LogError("Add support for {type}", sourceValue.GetType().Name);
-    return false;
-  }
-
-  private bool CompareViaLessThanOrEqual(object sourceValue, string targetValue)
-  {
-    // TODO: [ConditionHelper.CompareViaLessThanOrEqual] (TESTS) Add tests
-    _logger.LogDebug("Running condition: '{source}' < '{target}'", sourceValue, targetValue);
-
-    if (sourceValue is long longValue)
-      return longValue <= CastHelper.StringToLong(targetValue);
-
-    _logger.LogError("Add support for {type}", sourceValue.GetType().Name);
-    return false;
-  }
-
-  private bool CompareViaDoesNotEqual(object sourceValue, string targetValue)
-  {
-    // TODO: [ConditionHelper.CompareViaDoesNotEqual] (TESTS) Add tests
-    _logger.LogDebug("Running condition: '{source}' != '{target}'", sourceValue, targetValue);
-
-    if (sourceValue is long longValue)
-      return longValue != CastHelper.StringToLong(targetValue);
-
-    _logger.LogError("Add support for {type}", sourceValue.GetType().Name);
-    return false;
+    return _comparators
+      .First(x => x.Comparator == expression.Comparator)
+      .Compare(sourceValue, targetValue);
   }
 }
