@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CronTools.Common.Factories;
 using CronTools.Common.Helpers;
 using CronTools.Common.Models;
+using CronTools.Common.Providers;
 using CronTools.Common.Resolvers;
 using CronTools.Common.Utils;
 using Rn.NetCore.Common.Logging;
@@ -12,6 +13,8 @@ namespace CronTools.Common.Services;
 public interface IJobRunnerService
 {
   Task RunJobAsync(JobConfig jobConfig);
+  Task RunJobAsync(string jobFileName);
+  Task RunJobsAsync(string[] jobFileNames);
 }
 
 public class JobRunnerService : IJobRunnerService
@@ -21,19 +24,22 @@ public class JobRunnerService : IJobRunnerService
   private readonly IJobActionResolver _actionResolver;
   private readonly IJobUtils _jobUtils;
   private readonly IConditionHelper _conditionHelper;
+  private readonly IJobConfigProvider _jobConfigProvider;
 
   public JobRunnerService(
     ILoggerAdapter<JobRunnerService> logger,
     IJobFactory jobFactory,
     IJobActionResolver actionResolver,
     IJobUtils jobUtils,
-    IConditionHelper conditionHelper)
+    IConditionHelper conditionHelper,
+    IJobConfigProvider jobConfigProvider)
   {
     _logger = logger;
     _jobFactory = jobFactory;
     _actionResolver = actionResolver;
     _jobUtils = jobUtils;
     _conditionHelper = conditionHelper;
+    _jobConfigProvider = jobConfigProvider;
   }
 
   public async Task RunJobAsync(JobConfig jobConfig)
@@ -87,5 +93,34 @@ public class JobRunnerService : IJobRunnerService
     }
 
     _logger.LogInformation("Job '{name}' ({id}) executed", jobName, jobConfig.JobId);
+  }
+
+  public async Task RunJobAsync(string jobFileName)
+  {
+    // TODO: [JobRunnerService.RunJobAsync] (TESTS) Add tests
+    var jobConfig = _jobConfigProvider.Resolve(jobFileName);
+
+    if (jobConfig is null)
+    {
+      _logger.LogError("No job config found for file name: {name}", jobFileName);
+      return;
+    }
+
+    await RunJobAsync(jobConfig);
+  }
+
+  public async Task RunJobsAsync(string[] jobFileNames)
+  {
+    // TODO: [JobRunnerService.RunJobsAsync] (TESTS) Add tests
+    if (jobFileNames.Length == 0)
+    {
+      _logger.LogWarning("No jobs to run");
+      return;
+    }
+
+    foreach (var jobName in jobFileNames)
+    {
+      await RunJobAsync(jobName);
+    }
   }
 }
