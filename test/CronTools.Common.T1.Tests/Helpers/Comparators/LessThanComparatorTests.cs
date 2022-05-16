@@ -47,8 +47,6 @@ public class LessThanComparatorTests
     Assert.That(result, Is.True);
   }
 
-  private static LessThanComparator GetComparator(ILoggerAdapter<LessThanComparator> logger = null)
-  {
-    return new LessThanComparator(logger ?? Substitute.For<ILoggerAdapter<LessThanComparator>>());
-  }
+  private static LessThanComparator GetComparator(ILoggerAdapter<LessThanComparator> logger = null) =>
+    new(logger ?? Substitute.For<ILoggerAdapter<LessThanComparator>>());
 }
