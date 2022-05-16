@@ -16,8 +16,7 @@ public class LessThanComparator : IComparator
 
   public bool Compare(object source, string target)
   {
-    // TODO: [LessThanComparator.Compare] (TESTS) Add tests
-    _logger.LogDebug("Running condition: '{source}' < '{target}'", source, target);
+    _logger.LogDebug("Comparing: {source} < {target}", source, target);
 
     if (source is long longValue)
       return longValue < CastHelper.StringToLong(target);

@@ -1,4 +1,4 @@
-﻿using CronTools.Common.Enums;
+using CronTools.Common.Enums;
 using Rn.NetCore.Common.Logging;
 
 namespace CronTools.Common.Helpers.Comparators;
@@ -16,8 +16,7 @@ public class GreaterThanComparator : IComparator
 
   public bool Compare(object source, string target)
   {
-    // TODO: [GreaterThanComparator.Compare] (TESTS) Add tests
-    _logger.LogDebug("Running condition: '{source}' > '{target}'", source, target);
+    _logger.LogDebug("Comparing: {source} > {target}", source, target);
 
     if (source is long longValue)
       return longValue > CastHelper.StringToLong(target);
