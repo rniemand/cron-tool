@@ -16,8 +16,7 @@ public class DoesNotEqualComparator : IComparator
 
   public bool Compare(object source, string target)
   {
-    // TODO: [DoesNotEqualComparator.Compare] (TESTS) Add tests
-    _logger.LogDebug("Running condition: '{source}' != '{target}'", source, target);
+    _logger.LogDebug("Comparing: '{source}' != '{target}'", source, target);
 
     if (source is long longValue)
       return longValue != CastHelper.StringToLong(target);
