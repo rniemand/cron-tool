@@ -21,7 +21,7 @@ public class LessThanComparatorTests
     comparator.Compare((long)1025, "1024");
 
     // assert
-    logger.Received(1).LogDebug("Comparing: '{source}' < '{target}'", (long) 1025, "1024");
+    logger.Received(1).LogDebug("Comparing: {source} < {target}", (long)1025, "1024");
   }
 
   [Test]

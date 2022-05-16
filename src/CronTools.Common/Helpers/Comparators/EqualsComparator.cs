@@ -16,7 +16,7 @@ public class EqualsComparator : IComparator
 
   public bool Compare(object source, string target)
   {
-    _logger.LogDebug("Comparing: '{source}' = '{target}'", source, target);
+    _logger.LogDebug("Comparing: {source} = {target}", source, target);
 
     if (source is bool boolValue)
       return CastHelper.StringToBool(target) == boolValue;
