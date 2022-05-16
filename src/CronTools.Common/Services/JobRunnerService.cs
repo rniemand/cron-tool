@@ -71,11 +71,17 @@ public class JobRunnerService : IJobRunnerService
       }
 
       // Handle step conditions, quit if we need to
-      var canRunJobStep = _conditionHelper.CanRunJobStep(jobContext, stepContext);
-      var stopOnFailure = step.Condition?.StopOnFailure ?? false;
-      if (!canRunJobStep && stopOnFailure)
+      if (!_conditionHelper.CanRunJobStep(jobContext, stepContext))
       {
-        _logger.LogInformation("Job '{job}' step '{step}' conditions failed, stopping job.", jobName, step.StepId);
+        // Can we continue?
+        if (!(step.Condition?.StopOnFailure ?? false))
+        {
+          _logger.LogInformation("Skipping job step: {name}", step.Name);
+          continue;
+        }
+
+        // We can't continue, stop this job.
+        _logger.LogWarning("Job '{job}' step '{step}' conditions failed, stopping job.", jobName, step.StepId);
         break;
       }
 
