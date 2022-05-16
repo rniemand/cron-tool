@@ -28,6 +28,7 @@ public class ConditionHelper : IConditionHelper
     _comparators = comparators.ToList();
   }
 
+  // Public methods
   public bool CanRunJobStep(RunningJobContext jobContext, RunningStepContext stepContext)
   {
     // TODO: [ConditionHelper.CanRunJobStep] (TESTS) Add tests
@@ -41,6 +42,7 @@ public class ConditionHelper : IConditionHelper
     return true;
   }
 
+  // Internal methods
   private static bool ContainsConditions(RunningStepContext stepContext)
   {
     // TODO: [ConditionHelper.ContainsConditions] (TESTS) Add tests
@@ -83,8 +85,7 @@ public class ConditionHelper : IConditionHelper
     return false;
   }
 
-
-  // Condition Types
+  // Condition execution logic
   private bool EvaluateAndCondition(RunningJobContext jobContext, List<ConditionExpression> expressions)
   {
     // TODO: [ConditionHelper.EvaluateAndCondition] (TESTS) Add tests
@@ -104,9 +105,7 @@ public class ConditionHelper : IConditionHelper
     // TODO: [ConditionHelper.EvaluateOrCondition] (TESTS) Add tests
     return expressions.Any(expression => RunExpression(jobContext, expression));
   }
-
-
-  // Expression evaluation
+  
   private bool RunExpression(RunningJobContext jobContext, ConditionExpression expression)
   {
     // TODO: [ConditionHelper.RunExpression] (TESTS) Add tests
@@ -124,7 +123,7 @@ public class ConditionHelper : IConditionHelper
 
     if (_comparators.All(x => x.Comparator != expression.Comparator))
     {
-      _logger.LogError("Unable to resolve comparitor for: {type}", expression.Comparator.ToString("G"));
+      _logger.LogError("Unable to resolve comparator for: {type}", expression.Comparator.ToString("G"));
       return false;
     }
 
