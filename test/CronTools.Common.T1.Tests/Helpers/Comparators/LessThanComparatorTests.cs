@@ -15,10 +15,10 @@ public class LessThanComparatorTests
   {
     // arrange
     var logger = Substitute.For<ILoggerAdapter<LessThanComparator>>();
-    var lessThan = GetComparator(logger);
+    var comparator = GetComparator(logger);
 
     // act
-    lessThan.Compare((long)1025, "1024");
+    comparator.Compare((long)1025, "1024");
 
     // assert
     logger.Received(1).LogDebug("Comparing: '{source}' < '{target}'", (long) 1025, "1024");
@@ -29,10 +29,10 @@ public class LessThanComparatorTests
   {
     // arrange
     var logger = Substitute.For<ILoggerAdapter<LessThanComparator>>();
-    var lessThan = GetComparator(logger);
+    var comparator = GetComparator(logger);
 
     // act
-    lessThan.Compare(Array.Empty<string>(), "1024");
+    comparator.Compare(Array.Empty<string>(), "1024");
 
     // assert
     logger.Received(1).LogError("Add support for {type}", "String[]");
@@ -42,10 +42,10 @@ public class LessThanComparatorTests
   public void Compare_GivenUnsupportedType_ShouldReturn_False()
   {
     // arrange
-    var lessThan = GetComparator();
+    var comparator = GetComparator();
 
     // act
-    var result = lessThan.Compare(Array.Empty<string>(), "1024");
+    var result = comparator.Compare(Array.Empty<string>(), "1024");
 
     // assert
     Assert.That(result, Is.False);
@@ -54,6 +54,7 @@ public class LessThanComparatorTests
   [Test]
   public void Compare_GivenConstructed_ShouldReturn_Comparator() =>
     Assert.That(GetComparator().Comparator, Is.EqualTo(Comparator.LessThan));
+
 
   [Test(Description = "Sample Expression: 1025 < 1024")]
   public void Compare_Long_GivenBiggerSourceValue_ShouldReturn_False()
