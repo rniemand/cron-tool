@@ -129,9 +129,11 @@ public class ConditionHelper : IConditionHelper
 
     var sourceValue = jobContext.GetStateValue(expression.Property);
     var targetValue = _actionArgHelper.ProcessExpressionValue(jobContext, expression.Value);
-
-    return _comparators
+    var outcome = _comparators
       .First(x => x.Comparator == expression.Comparator)
       .Compare(sourceValue, targetValue);
+
+    _logger.LogDebug("Expression: ({expression}) evaluated to {outcome}", expression.RawExpression, outcome);
+    return outcome;
   }
 }
