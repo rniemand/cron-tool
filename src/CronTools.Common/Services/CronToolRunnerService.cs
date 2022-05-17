@@ -27,6 +27,7 @@ public class CronToolRunnerService : ICronToolRunnerService
   private readonly IJobSchedulerService _schedulerService;
   private List<JobConfig> _enabledJobs;
   private DateTime _nextJobRefresh;
+  private bool _firstTick = true;
 
   public CronToolRunnerService(
     ILoggerAdapter<CronToolRunnerService> logger,
@@ -51,6 +52,21 @@ public class CronToolRunnerService : ICronToolRunnerService
   public async Task TickAsync(CancellationToken stoppingToken)
   {
     // TODO: [CronToolRunnerService.TickAsync] (TESTS) Add tests
+    // Ignore the first tick to allow the service to start up when running as a service
+    // as there may bo jobs queued that take a while to execute
+    if (_firstTick)
+    {
+      _firstTick = false;
+      return;
+    }
+
+    await DiscoverAndRunJobsAsync(stoppingToken);
+  }
+
+  // Working with scheduled jobs
+  private async Task DiscoverAndRunJobsAsync(CancellationToken stoppingToken)
+  {
+    // TODO: [CronToolRunnerService.DiscoverAndRunJobsAsync] (TESTS) Add tests
     RefreshJobs();
 
     // Check to see if there are any jobs that need to run now
@@ -78,7 +94,6 @@ public class CronToolRunnerService : ICronToolRunnerService
     _scheduleProvider.SaveSchedule(_scheduledJobs);
   }
 
-  // Working with scheduled jobs
   private void RefreshJobs()
   {
     // TODO: [CronToolRunnerService.RefreshJobs] (TESTS) Add tests
