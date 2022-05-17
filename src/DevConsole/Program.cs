@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 //  .GetRequiredService<IJobRunnerService>()
 //  .RunJobAsync("ScheduledJob");
 
-await CronToolDIContainer.ServiceProvider
-  .GetRequiredService<ICronToolRunnerService>()
-  .TickAsync(CancellationToken.None);
+var service = CronToolDIContainer.ServiceProvider
+  .GetRequiredService<ICronToolRunnerService>();
+
+await service.TickAsync(CancellationToken.None); // Sets "_firstTick" to FALSE
+await service.TickAsync(CancellationToken.None); // Runs scheduled jobs
