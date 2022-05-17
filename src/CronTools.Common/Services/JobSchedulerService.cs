@@ -1,7 +1,9 @@
 using System;
 using CronTools.Common.Enums;
+using CronTools.Common.Helpers;
 using CronTools.Common.Models;
 using Rn.NetCore.Common.Abstractions;
+using Rn.NetCore.Common.Extensions;
 using Rn.NetCore.Common.Logging;
 
 namespace CronTools.Common.Services;
@@ -79,6 +81,9 @@ public class JobSchedulerService : IJobSchedulerService
     // TODO: [JobSchedulerService.GetNextRunTime] (TESTS) Add tests
     switch (schedule.Frequency)
     {
+      case ScheduleFrequency.TimeOfDay:
+        return TimeOfDayNextRunTime(schedule);
+
       case ScheduleFrequency.Minute:
         return _dateTime.Now.AddMinutes(schedule.IntValue);
 
@@ -92,5 +97,20 @@ public class JobSchedulerService : IJobSchedulerService
         var freqName = schedule.Frequency.ToString("G");
         throw new Exception($"Add support for: {freqName}");
     }
+  }
+
+  private DateTime TimeOfDayNextRunTime(JobSchedule schedule)
+  {
+    if (string.IsNullOrWhiteSpace(schedule.TimeOfDay))
+      throw new ArgumentException("No TimeOfDay value specified", nameof(schedule));
+
+    if(!schedule.TimeOfDay.MatchesRegex("(\\d{2}):(\\d{2})"))
+      throw new ArgumentException("Invalid TimeOfDay value specified", nameof(schedule));
+
+    var todParts = schedule.TimeOfDay.Split(':');
+    var hours = CastHelper.StringToInt(todParts[0]);
+    var minuets = CastHelper.StringToInt(todParts[1]);
+    var baseDate = _dateTime.Now.AddDays(1);
+    return new DateTime(baseDate.Year, baseDate.Month, baseDate.Day, hours, minuets, 0);
   }
 }

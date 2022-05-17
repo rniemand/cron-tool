@@ -14,4 +14,7 @@ public class JobSchedule
 
   [JsonProperty("runOnStart")]
   public bool RunOnStart { get; set; } = false;
+
+  [JsonProperty("timeOfDay")]
+  public string TimeOfDay { get; set; } = string.Empty;
 }
