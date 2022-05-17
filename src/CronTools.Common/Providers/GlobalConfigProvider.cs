@@ -36,7 +36,7 @@ public class GlobalConfigProvider : IGlobalConfigProvider
   public Dictionary<string, string> GetGlobalConfig()
   {
     // TODO: [GlobalConfigProvider.GetGlobalConfig] (TESTS) Add tests
-    var filePath = _path.Join(_config.JobsDirectory, "globals.json");
+    var filePath = _path.Join(_config.JobsDirectory, "_globals.json");
     if (!_file.Exists(filePath))
       return new Dictionary<string, string>();
 
