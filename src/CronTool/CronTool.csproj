@@ -16,7 +16,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/rniemand/cron-tool</RepositoryUrl>
     <AssemblyName>Rn.CronTool</AssemblyName>
-    <Version>1.0.5.101</Version>
+    <Version>1.0.5.102</Version>
     <PackageTags>cron</PackageTags>
   </PropertyGroup>
 
