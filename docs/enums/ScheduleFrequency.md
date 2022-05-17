@@ -8,3 +8,4 @@ Enumeration of the supported scheduling frequencies to use for your [job](/docs/
 | `Minute` | 1 | - |
 | `Hour` | 2 | - |
 | `Day` | 3 | - |
+| `TimeOfDay` | 4 | - |
