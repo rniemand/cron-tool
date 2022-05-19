@@ -10,6 +10,7 @@ using CronTools.Common.Models;
 using CronTools.Common.Resolvers;
 using Rn.NetCore.Common.Logging;
 using Rn.NetCore.MailUtils.Factories;
+using Rn.NetCore.MailUtils.Helpers;
 
 namespace CronTools.Common.JobActions;
 
@@ -23,11 +24,13 @@ public class SendEmailAction : IJobAction
   private readonly ILoggerAdapter<SendEmailAction> _logger;
   private readonly ISmtpClientFactory _smtpClientFactory;
   private readonly IMailMessageBuilderFactory _messageBuilderFactory;
+  private readonly IMailTemplateHelper _mailTemplateHelper;
 
   public SendEmailAction(
     ILoggerAdapter<SendEmailAction> logger,
     ISmtpClientFactory smtpClientFactory,
-    IMailMessageBuilderFactory messageBuilderFactory)
+    IMailMessageBuilderFactory messageBuilderFactory,
+    IMailTemplateHelper mailTemplateHelper)
   {
     // TODO: [SendEmailAction] (TESTS) Add tests
     Action = JobStepAction.SendEmail;
@@ -52,12 +55,19 @@ public class SendEmailAction : IJobAction
     _logger = logger;
     _smtpClientFactory = smtpClientFactory;
     _messageBuilderFactory = messageBuilderFactory;
+    _mailTemplateHelper = mailTemplateHelper;
   }
 
   public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
   {
     // TODO: [SendEmailAction.ExecuteAsync] (TESTS) Add tests
     var outcome = new JobStepOutcome();
+
+    var templateName = argResolver.ResolveString(jobContext, stepContext, Args["Template"]);
+    var templateBuilder = _mailTemplateHelper.GetTemplateBuilder(templateName);
+
+    Console.WriteLine();
+    Console.WriteLine();
 
     try
     {
