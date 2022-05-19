@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using CronTools.Common.Enums;
+using CronTools.Common.Extensions;
 using CronTools.Common.Formatters;
 using CronTools.Common.Models;
 using Rn.NetCore.Common.Extensions;
@@ -203,7 +204,7 @@ public class JobActionArgHelper : IJobActionArgHelper
       if (!jobContext.Globals.Any(x => x.Key.IgnoreCaseEquals(varKey)))
         continue;
 
-      var resolved = ConfigHelper.GetString(jobContext.Globals, varKey, string.Empty);
+      var resolved = ConfigExtensions.GetStringValue(jobContext.Globals, varKey, string.Empty);
       input = input.Replace(match.Groups[1].Value, resolved);
     }
 

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using CronTools.Common.Helpers;
+using CronTools.Common.Extensions;
 using Rn.NetCore.Common.Extensions;
 
 namespace CronTools.Common.Models;
@@ -70,6 +70,6 @@ public class RunningJobContext
   public string GetGlobal(string key, string fallback)
   {
     // TODO: [RunningJobContext.GetGlobal] (TESTS) Add tests
-    return ConfigHelper.GetString(Globals, key, fallback);
+    return ConfigExtensions.GetStringValue(Globals, key, fallback);
   }
 }

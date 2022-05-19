@@ -1,4 +1,4 @@
-using CronTools.Common.Helpers;
+using CronTools.Common.Extensions;
 using Rn.NetCore.Common.Logging;
 using Rn.NetCore.MailUtils.Config;
 using Rn.NetCore.MailUtils.Providers;
@@ -31,14 +31,14 @@ public class CronToolMailConfigProvider : IRnMailConfigProvider
     // mail.encoding | encoding | UTF8
 
 
-    rnMailConfig.Host = ConfigHelper.GetString(config, "mail.host", "smtp.gmail.com");
-    rnMailConfig.Port = ConfigHelper.GetInt(config, "mail.port", 587);
-    rnMailConfig.Username = ConfigHelper.GetString(config, "mail.username", string.Empty);
-    rnMailConfig.Password = ConfigHelper.GetString(config, "mail.password", string.Empty);
-    rnMailConfig.FromAddress = ConfigHelper.GetString(config, "mail.fromAddress", string.Empty);
-    rnMailConfig.FromName = ConfigHelper.GetString(config, "mail.fromName", string.Empty);
-    rnMailConfig.Timeout = ConfigHelper.GetInt(config, "mail.timeout", 30000);
-    rnMailConfig.TemplateDir = ConfigHelper.GetString(config, "mail.templateDir", "{root}mail-tpl");
+    rnMailConfig.Host = config.GetStringValue("mail.host", "smtp.gmail.com");
+    rnMailConfig.Port = config.GetIntValue("mail.port", 587);
+    rnMailConfig.Username = config.GetStringValue("mail.username", string.Empty);
+    rnMailConfig.Password = config.GetStringValue("mail.password", string.Empty);
+    rnMailConfig.FromAddress = config.GetStringValue("mail.fromAddress", string.Empty);
+    rnMailConfig.FromName = config.GetStringValue("mail.fromName", string.Empty);
+    rnMailConfig.Timeout = config.GetIntValue("mail.timeout", 30000);
+    rnMailConfig.TemplateDir = config.GetStringValue("mail.templateDir", "{root}mail-tpl");
 
 
     return null;

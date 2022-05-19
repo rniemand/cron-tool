@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
+using CronTools.Common.Helpers;
 using Rn.NetCore.Common.Extensions;
 
-namespace CronTools.Common.Helpers;
+namespace CronTools.Common.Extensions;
 
-public static class ConfigHelper
+public static class ConfigExtensions
 {
-  public static bool ContainsKey(Dictionary<string, object> config, string key) =>
-    // TODO: [ConfigHelper.ContainsKey] (TESTS) Add tests
+  public static bool ContainsKey(this Dictionary<string, object> config, string key) =>
+    // TODO: [ConfigExtensions.ContainsKey] (TESTS) Add tests
     config.Count != 0 && config.Any(x => x.Key.IgnoreCaseEquals(key));
 
-  public static string GetString(Dictionary<string, object> config, string key, string fallback)
+  public static string GetString(this Dictionary<string, object> config, string key, string fallback)
   {
-    // TODO: [ConfigHelper.GetString] (TESTS) Add tests
+    // TODO: [ConfigExtensions.GetString] (TESTS) Add tests
     if (!ContainsKey(config, key))
       return fallback;
 
@@ -24,9 +25,9 @@ public static class ConfigHelper
     return CastHelper.ObjectToString(rawValue);
   }
 
-  public static int GetInt(Dictionary<string, object> config, string key, int fallback)
+  public static int GetInt(this Dictionary<string, object> config, string key, int fallback)
   {
-    // TODO: [ConfigHelper.GetInt] (TESTS) Add tests
+    // TODO: [ConfigExtensions.GetInt] (TESTS) Add tests
     if (!ContainsKey(config, key))
       return fallback;
 
