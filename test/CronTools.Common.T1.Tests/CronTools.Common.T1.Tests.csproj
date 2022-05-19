@@ -1,9 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <IsPackable>false</IsPackable>
-	  <ProjectGuid>B012FFA7-CB52-4764-AAFB-5CC37C2AF9FA</ProjectGuid>
+	  <ProjectGuid>5A47A415-9F02-4FC3-82DE-AA7DEC36ADC4</ProjectGuid>
   </PropertyGroup>
 
   <ItemGroup>
