@@ -1,3 +1,4 @@
+using CronTools.Common.Helpers;
 using Rn.NetCore.Common.Logging;
 using Rn.NetCore.MailUtils.Config;
 using Rn.NetCore.MailUtils.Providers;
@@ -20,7 +21,10 @@ public class CronToolMailConfigProvider : IRnMailConfigProvider
 
   public RnMailConfig GetRnMailConfig()
   {
-    var globalConfig = _globalConfigProvider.GetGlobalConfig();
+    var config = _globalConfigProvider.GetGlobalConfig();
+
+    var rnMailConfig = new RnMailConfig();
+
 
     // mail.host | host | smtp.gmail.com
     // mail.port | port | 587
@@ -34,6 +38,9 @@ public class CronToolMailConfigProvider : IRnMailConfigProvider
     // mail.timeout | timeout | 30000
     // mail.encoding | encoding | UTF8
     // mail.templateDir | templateDir | {root}mail-tpl
+
+    
+    rnMailConfig.Host = ConfigHelper.GetString(config, "mail.host", "smtp.gmail.com");
 
 
     return null;

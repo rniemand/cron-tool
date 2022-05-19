@@ -10,7 +10,7 @@ public class RunningStepContext
   public JobStepConfig JobStep { get; set; }
   public int StepNumber { get; set; }
   public Dictionary<string, object> Args => JobStep.Args;
-  public Dictionary<string, string> Globals { get; private set; }
+  public Dictionary<string, object> Globals { get; private set; }
 
   public RunningStepContext(JobStepConfig jobStep, int stepNumber)
   {
@@ -18,10 +18,10 @@ public class RunningStepContext
     JobName = jobStep.JobName;
     JobStep = jobStep;
     StepNumber = stepNumber;
-    Globals = new Dictionary<string, string>();
+    Globals = new Dictionary<string, object>();
   }
 
-  public RunningStepContext SetGlobals(Dictionary<string, string> globals)
+  public RunningStepContext SetGlobals(Dictionary<string, object> globals)
   {
     // TODO: [RunningStepContext.SetGlobals] (TESTS) Add tests
     Globals = globals;

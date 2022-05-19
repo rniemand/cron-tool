@@ -8,7 +8,7 @@ namespace CronTools.Common.Providers;
 
 public interface IGlobalConfigProvider
 {
-  Dictionary<string, string> GetGlobalConfig();
+  Dictionary<string, object> GetGlobalConfig();
 }
 
 public class GlobalConfigProvider : IGlobalConfigProvider
@@ -33,18 +33,18 @@ public class GlobalConfigProvider : IGlobalConfigProvider
     _config = configProvider.GetConfig();
   }
 
-  public Dictionary<string, string> GetGlobalConfig()
+  public Dictionary<string, object> GetGlobalConfig()
   {
     // TODO: [GlobalConfigProvider.GetGlobalConfig] (TESTS) Add tests
     var filePath = _path.Join(_config.JobsDirectory, "_globals.json");
     if (!_file.Exists(filePath))
-      return new Dictionary<string, string>();
+      return new Dictionary<string, object>();
 
     _logger.LogInformation("Attempting to load globals file: {path}", filePath);
     var rawJson = _file.ReadAllText(filePath);
 
-    if (!_jsonHelper.TryDeserializeObject(rawJson, out Dictionary<string, string> config))
-      return new Dictionary<string, string>();
+    if (!_jsonHelper.TryDeserializeObject(rawJson, out Dictionary<string, object> config))
+      return new Dictionary<string, object>();
     
     _logger.LogInformation("Loaded {count} global variables", config.Count);
     return config;

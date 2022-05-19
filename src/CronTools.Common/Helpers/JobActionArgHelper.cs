@@ -203,10 +203,7 @@ public class JobActionArgHelper : IJobActionArgHelper
       if (!jobContext.Globals.Any(x => x.Key.IgnoreCaseEquals(varKey)))
         continue;
 
-      var resolved = jobContext.Globals
-        .First(x => x.Key.IgnoreCaseEquals(varKey))
-        .Value;
-
+      var resolved = ConfigHelper.GetString(jobContext.Globals, varKey, string.Empty);
       input = input.Replace(match.Groups[1].Value, resolved);
     }
 
