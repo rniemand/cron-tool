@@ -25,22 +25,20 @@ public class CronToolMailConfigProvider : IRnMailConfigProvider
 
     var rnMailConfig = new RnMailConfig();
 
-
-    // mail.host | host | smtp.gmail.com
-    // mail.port | port | 587
-    // mail.username | username
-    // mail.password | password
-    // mail.fromAddress | fromAddress
-    // mail.fromName | fromName
     // mail.deliveryFormat | deliveryFormat | SevenBit
     // mail.deliveryMethod | deliveryMethod | Network
     // mail.enableSsl | enableSsl | true
-    // mail.timeout | timeout | 30000
     // mail.encoding | encoding | UTF8
-    // mail.templateDir | templateDir | {root}mail-tpl
 
-    
+
     rnMailConfig.Host = ConfigHelper.GetString(config, "mail.host", "smtp.gmail.com");
+    rnMailConfig.Port = ConfigHelper.GetInt(config, "mail.port", 587);
+    rnMailConfig.Username = ConfigHelper.GetString(config, "mail.username", string.Empty);
+    rnMailConfig.Password = ConfigHelper.GetString(config, "mail.password", string.Empty);
+    rnMailConfig.FromAddress = ConfigHelper.GetString(config, "mail.fromAddress", string.Empty);
+    rnMailConfig.FromName = ConfigHelper.GetString(config, "mail.fromName", string.Empty);
+    rnMailConfig.Timeout = ConfigHelper.GetInt(config, "mail.timeout", 30000);
+    rnMailConfig.TemplateDir = ConfigHelper.GetString(config, "mail.templateDir", "{root}mail-tpl");
 
 
     return null;
