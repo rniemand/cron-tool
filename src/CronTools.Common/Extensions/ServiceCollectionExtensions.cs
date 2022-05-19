@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using CronTools.Common.Exceptions;
 using CronTools.Common.Factories;
 using CronTools.Common.Formatters;
 using CronTools.Common.Helpers;
@@ -12,6 +15,8 @@ using Rn.NetCore.Common.Abstractions;
 using Rn.NetCore.Common.Factories;
 using Rn.NetCore.Common.Helpers;
 using Rn.NetCore.Common.Logging;
+using Rn.NetCore.MailUtils.Extensions;
+using Rn.NetCore.MailUtils.Providers;
 using Rn.NetCore.Metrics;
 
 namespace CronTools.Common.Extensions;
@@ -21,7 +26,7 @@ public static class ServiceCollectionExtensions
   public static IServiceCollection AddCronTool(this IServiceCollection services)
   {
     // TODO: [ServiceCollectionExtensions.AddCronTool] (TESTS) Add tests
-    return services
+    services
       // Abstractions
       .AddSingleton<IDateTimeAbstraction, DateTimeAbstraction>()
       .AddSingleton<IDirectoryAbstraction, DirectoryAbstraction>()
@@ -86,8 +91,30 @@ public static class ServiceCollectionExtensions
 
       // Utils
       .AddSingleton<IJobUtils, JobUtils>()
-
+      
       // Logging
-      .AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
+      .AddSingleton(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>))
+
+      // Mail vibes
+      .AddRnMailUtils();
+
+    ReplaceRnMailConfigProvider(services);
+
+    return services;
+  }
+
+  private static void ReplaceRnMailConfigProvider(IServiceCollection services)
+  {
+    // Ensure that our service exists
+    var descriptor = services.FirstOrDefault(descriptor => descriptor.ServiceType == typeof(IRnMailConfigProvider));
+    if (descriptor is null)
+      throw new ServiceNotFoundException(typeof(IRnMailConfigProvider));
+
+    // Ensure that we can remove the provider
+    if (!services.Remove(descriptor))
+      throw new GeneralCronToolException("Unable to remove: IRnMailConfigProvider");
+
+    // Replace the default provider with ours
+    services.AddSingleton<IRnMailConfigProvider, CronToolMailConfigProvider>();
   }
 }

@@ -12,7 +12,8 @@ Provided by the `SendEmailAction` class, enables the sending of emails from your
     "ToAddress": "email@address.com",
     "ToName": "Recipient Name",
     "Subject": "Mail Title",
-    "Body": "This is the body of your email"
+    "Body": "This is the body of your email",
+    "Template": "mail-template"
   }
 }
 ```
@@ -26,6 +27,7 @@ Below is a breakdown of each argument, please refer to the [ArgType](/docs/enums
 | `ToName` | `string` | optional | - | The recipients name - if not supplied will default to the `ToAddress`. |
 | `Subject` | `string` | required | - | The subject field for the sent mail. |
 | `Body` | `string` | required | - | The body of the email. |
+| `Template` | `string` | optional | `default` | The name of the mail template to use. |
 
 ## Required Global Arguments
 The following global arguments are required for this job step to work.

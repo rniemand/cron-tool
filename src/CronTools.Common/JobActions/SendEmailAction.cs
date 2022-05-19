@@ -9,6 +9,7 @@ using CronTools.Common.Helpers;
 using CronTools.Common.Models;
 using CronTools.Common.Resolvers;
 using Rn.NetCore.Common.Logging;
+using Rn.NetCore.MailUtils.Factories;
 
 namespace CronTools.Common.JobActions;
 
@@ -20,12 +21,15 @@ public class SendEmailAction : IJobAction
   public string[] RequiredGlobals { get; }
 
   private readonly ILoggerAdapter<SendEmailAction> _logger;
+  private readonly ISmtpClientFactory _smtpClientFactory;
+  private readonly IMailMessageBuilderFactory _messageBuilderFactory;
 
-  public SendEmailAction(ILoggerAdapter<SendEmailAction> logger)
+  public SendEmailAction(
+    ILoggerAdapter<SendEmailAction> logger,
+    ISmtpClientFactory smtpClientFactory,
+    IMailMessageBuilderFactory messageBuilderFactory)
   {
     // TODO: [SendEmailAction] (TESTS) Add tests
-    _logger = logger;
-
     Action = JobStepAction.SendEmail;
     Name = JobStepAction.SendEmail.ToString("G");
     RequiredGlobals = new[]
@@ -41,8 +45,13 @@ public class SendEmailAction : IJobAction
       {"ToAddress", JobActionArg.Email("ToAddress", true)},
       {"ToName", JobActionArg.String("ToName", false)},
       {"Subject", JobActionArg.String("Subject", true)},
-      {"Body", JobActionArg.String("Body", true)}
+      {"Body", JobActionArg.String("Body", true)},
+      {"Template", JobActionArg.String("Template", true, "default")}
     };
+
+    _logger = logger;
+    _smtpClientFactory = smtpClientFactory;
+    _messageBuilderFactory = messageBuilderFactory;
   }
 
   public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
