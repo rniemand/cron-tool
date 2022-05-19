@@ -20,7 +20,6 @@ public class JobUtils : IJobUtils
     _logger = logger;
   }
 
-
   public bool ValidateStepArgs(IJobAction action, RunningStepContext context)
   {
     // TODO: [JobUtils.ValidateStepArgs] (TESTS) Add tests
@@ -33,7 +32,6 @@ public class JobUtils : IJobUtils
 
     return CheckRequiredGlobalArgs(action, context);
   }
-
 
   private bool CheckRequiredStepArgs(IJobAction action, RunningStepContext context)
   {
@@ -68,14 +66,13 @@ public class JobUtils : IJobUtils
   private bool CheckRequiredGlobalArgs(IJobAction action, RunningStepContext context)
   {
     // TODO: [JobUtils.CheckRequiredGlobalArgs] (TESTS) Add tests
-
     foreach (var globalKey in action.RequiredGlobals)
     {
-      if (!context.Globals.Any(x => x.Key.IgnoreCaseEquals(globalKey)))
-      {
-        _logger.LogError("Required global variable '{key}' is missing", globalKey);
-        return false;
-      }
+      if (context.Globals.Any(x => x.Key.IgnoreCaseEquals(globalKey)))
+        continue;
+
+      _logger.LogError("Required global variable '{key}' is missing", globalKey);
+      return false;
     }
 
     return true;
