@@ -44,7 +44,6 @@ The following global arguments are required for this job step to work.
 | `mail.deliveryMethod` | [SmtpDeliveryMethod](https://docs.microsoft.com/en-us/dotnet/api/system.net.mail.smtpdeliverymethod?view=net-6.0) | optional | `Network` | Delivery method to use when sending emails. |
 | `mail.enableSsl` | `bool` | optional | `true` | Enables the usage of SSL. |
 | `mail.timeout` | `int` | optional | `30000` | Timeout to use when sending emails. |
-| `mail.encoding` | [Encoding](https://docs.microsoft.com/en-us/dotnet/api/system.text.encoding?view=net-6.0) | optional | `UTF8` | The encoding to use when sending emails. |
 | `mail.templateDir` | `Path` | optional | `{root}mail-tpl` | Path to mail template directory. |
 
 Please refer to [this page](/docs/general/ConfiguringMail.md) for information on setting up GMail.
