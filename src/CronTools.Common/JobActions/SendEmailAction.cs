@@ -49,7 +49,7 @@ public class SendEmailAction : IJobAction
       {"ToName", JobActionArg.String("ToName", false)},
       {"Subject", JobActionArg.String("Subject", true)},
       {"Body", JobActionArg.String("Body", true)},
-      {"Template", JobActionArg.String("Template", true, "default")}
+      {"Template", JobActionArg.String("Template", false, "default")}
     };
 
     _logger = logger;
@@ -63,8 +63,14 @@ public class SendEmailAction : IJobAction
     // TODO: [SendEmailAction.ExecuteAsync] (TESTS) Add tests
     var outcome = new JobStepOutcome();
 
+    // Ensure that we are able to resolve the requested mail template
     var templateName = argResolver.ResolveString(jobContext, stepContext, Args["Template"]);
     var templateBuilder = _mailTemplateHelper.GetTemplateBuilder(templateName);
+    if (!templateBuilder.TemplateFound)
+    {
+      _logger.LogError("Unable to resolve mail template {name}", templateName);
+      return outcome.WithError($"Unable to resolve mail template {templateName}");
+    }
 
     Console.WriteLine();
     Console.WriteLine();

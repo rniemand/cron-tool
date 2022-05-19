@@ -17,7 +17,6 @@ public class CronToolMailConfigProvider : IRnMailConfigProvider
   private readonly IDirectoryAbstraction _directory;
   private RnMailConfig? _config;
 
-
   public CronToolMailConfigProvider(
     ILoggerAdapter<CronToolMailConfigProvider> logger,
     IGlobalConfigProvider globalConfigProvider,
