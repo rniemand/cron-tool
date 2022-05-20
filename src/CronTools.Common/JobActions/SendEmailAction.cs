@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Mail;
-using System.Text;
 using System.Threading.Tasks;
 using CronTools.Common.Enums;
-using CronTools.Common.Helpers;
 using CronTools.Common.Models;
 using CronTools.Common.Resolvers;
 using Rn.NetCore.Common.Logging;
+using Rn.NetCore.MailUtils.Builders;
+using Rn.NetCore.MailUtils.Factories;
+using Rn.NetCore.MailUtils.Helpers;
 
 namespace CronTools.Common.JobActions;
 
@@ -20,12 +19,17 @@ public class SendEmailAction : IJobAction
   public string[] RequiredGlobals { get; }
 
   private readonly ILoggerAdapter<SendEmailAction> _logger;
+  private readonly ISmtpClientFactory _smtpClientFactory;
+  private readonly IMailMessageBuilderFactory _messageBuilderFactory;
+  private readonly IMailTemplateHelper _mailTemplateHelper;
 
-  public SendEmailAction(ILoggerAdapter<SendEmailAction> logger)
+  public SendEmailAction(
+    ILoggerAdapter<SendEmailAction> logger,
+    ISmtpClientFactory smtpClientFactory,
+    IMailMessageBuilderFactory messageBuilderFactory,
+    IMailTemplateHelper mailTemplateHelper)
   {
     // TODO: [SendEmailAction] (TESTS) Add tests
-    _logger = logger;
-
     Action = JobStepAction.SendEmail;
     Name = JobStepAction.SendEmail.ToString("G");
     RequiredGlobals = new[]
@@ -41,8 +45,13 @@ public class SendEmailAction : IJobAction
       {"ToAddress", JobActionArg.Email("ToAddress", true)},
       {"ToName", JobActionArg.String("ToName", false)},
       {"Subject", JobActionArg.String("Subject", true)},
-      {"Body", JobActionArg.String("Body", true)}
+      {"Template", JobActionArg.String("Template", false, "default")}
     };
+
+    _logger = logger;
+    _smtpClientFactory = smtpClientFactory;
+    _messageBuilderFactory = messageBuilderFactory;
+    _mailTemplateHelper = mailTemplateHelper;
   }
 
   public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
@@ -52,8 +61,24 @@ public class SendEmailAction : IJobAction
 
     try
     {
-      var mailMessage = CreateMessage(jobContext, stepContext, argResolver);
-      await CreateMailClient(jobContext).SendMailAsync(mailMessage);
+      // Ensure that we are able to resolve the requested mail template
+      var templateName = argResolver.ResolveString(jobContext, stepContext, Args["Template"]);
+      var templateBuilder = _mailTemplateHelper.GetTemplateBuilder(templateName);
+      if (!templateBuilder.TemplateFound)
+      {
+        _logger.LogError("Unable to resolve mail template {name}", templateName);
+        return outcome.WithError($"Unable to resolve mail template {templateName}");
+      }
+
+      // Generate the mail to send
+      var message = CreateMailMessageBuilder(jobContext, stepContext, argResolver)
+        .WithSubject(argResolver.ResolveString(jobContext, stepContext, Args["Subject"]))
+        .WithHtmlBody(AppendPlaceholders(templateBuilder, jobContext))
+        .Build();
+
+      // Send the mail and return a success
+      var smtpClient = _smtpClientFactory.Create();
+      await smtpClient.SendMailAsync(message);
       return outcome.WithSuccess();
     }
     catch (Exception ex)
@@ -63,48 +88,39 @@ public class SendEmailAction : IJobAction
     }
   }
 
-  private static SmtpClient CreateMailClient(RunningJobContext jobContext)
+  private MailMessageBuilder CreateMailMessageBuilder(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
   {
-    var mailHost = jobContext.GetGlobal("mail.host", "smtp.gmail.com");
-    var mailPort = CastHelper.AsInt(jobContext.GetGlobal("mail.port", "587"), 587);
-    var mailUsername = jobContext.GetGlobal("mail.username", string.Empty);
-    var mailPassword = jobContext.GetGlobal("mail.password", string.Empty);
-
-    var smtpClient = new SmtpClient(mailHost, mailPort)
-    {
-      DeliveryFormat = SmtpDeliveryFormat.SevenBit,
-      DeliveryMethod = SmtpDeliveryMethod.Network,
-      EnableSsl = true,
-      PickupDirectoryLocation = null,
-      TargetName = null,
-      Timeout = 30000,
-      UseDefaultCredentials = false
-    };
-
-    smtpClient.Credentials = new NetworkCredential(mailUsername, mailPassword);
-
-    return smtpClient;
-  }
-
-  private MailMessage CreateMessage(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
-  {
-    var fromAddress = jobContext.GetGlobal("mail.fromAddress", string.Empty);
-    var fromName = jobContext.GetGlobal("mail.fromName", string.Empty);
+    // TODO: [SendEmailAction.CreateMailMessageBuilder] (TESTS) Add tests
+    var builder = _messageBuilderFactory.Create();
 
     var toAddress = argResolver.ResolveString(jobContext, stepContext, Args["ToAddress"]);
     var toName = argResolver.ResolveString(jobContext, stepContext, Args["ToName"]);
-    var subject = argResolver.ResolveString(jobContext, stepContext, Args["Subject"]);
-    var body = argResolver.ResolveString(jobContext, stepContext, Args["Body"]);
 
-    var mailMessage = new MailMessage();
-    mailMessage.From = new MailAddress(fromAddress, fromName, Encoding.UTF8);
-    mailMessage.To.Add(new MailAddress(toAddress, toName, Encoding.UTF8));
-    mailMessage.Subject = subject;
-    mailMessage.SubjectEncoding = Encoding.UTF8;
-    mailMessage.Body = body;
-    mailMessage.IsBodyHtml = true;
-    mailMessage.BodyEncoding = Encoding.UTF8;
+    if (string.IsNullOrWhiteSpace(toName))
+      toName = toAddress;
 
-    return mailMessage;
+    builder.WithTo(toAddress, toName);
+    return builder;
+  }
+
+  private static MailTemplateBuilder AppendPlaceholders(MailTemplateBuilder builder, RunningJobContext jobContext)
+  {
+    // TODO: [SendEmailAction.AppendPlaceholders] (TESTS) Add tests
+    foreach (var state in jobContext.State)
+    {
+      builder.AddPlaceHolder($"state.{state.Key}", state.Value);
+    }
+
+    foreach (var variable in jobContext.Variables)
+    {
+      builder.AddPlaceHolder($"var.{variable.Key}", variable.Value);
+    }
+
+    foreach (var global in jobContext.Globals)
+    {
+      builder.AddPlaceHolder($"global.{global.Key}", global.Value);
+    }
+
+    return builder;
   }
 }

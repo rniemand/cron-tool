@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>dotnet-DockerCronTool-A90A00E2-CF83-42AA-82BB-0425B0E07740</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <ProjectGuid>5A72B367-F7AC-4D48-A537-3969CF6DB0EF</ProjectGuid>
+    <ProjectGuid>377A38BD-63A0-4B58-8D31-538240BB47DE</ProjectGuid>
   </PropertyGroup>
 
   <ItemGroup>

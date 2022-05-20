@@ -12,7 +12,8 @@ Provided by the `SendEmailAction` class, enables the sending of emails from your
     "ToAddress": "email@address.com",
     "ToName": "Recipient Name",
     "Subject": "Mail Title",
-    "Body": "This is the body of your email"
+    "Body": "This is the body of your email",
+    "Template": "mail-template"
   }
 }
 ```
@@ -25,7 +26,7 @@ Below is a breakdown of each argument, please refer to the [ArgType](/docs/enums
 | `ToAddress` | `Email` | required | - | The email address to send the message to. |
 | `ToName` | `string` | optional | - | The recipients name - if not supplied will default to the `ToAddress`. |
 | `Subject` | `string` | required | - | The subject field for the sent mail. |
-| `Body` | `string` | required | - | The body of the email. |
+| `Template` | `string` | optional | `default` | The name of the mail template to use. |
 
 ## Required Global Arguments
 The following global arguments are required for this job step to work.
@@ -38,5 +39,11 @@ The following global arguments are required for this job step to work.
 | `mail.password` | `string` | required | - | Password for your mail client. |
 | `mail.fromAddress` | `EMail` | required | - | The from address to use when sending an email. |
 | `mail.fromName` | `string` | required | - | From name to use when sending emails. |
+| `mail.deliveryFormat` | [SmtpDeliveryFormat](https://docs.microsoft.com/en-us/dotnet/api/system.net.mail.smtpdeliveryformat?view=net-6.0) | optional | `SevenBit` | Delivery format to use. |
+| `mail.deliveryMethod` | [SmtpDeliveryMethod](https://docs.microsoft.com/en-us/dotnet/api/system.net.mail.smtpdeliverymethod?view=net-6.0) | optional | `Network` | Delivery method to use when sending emails. |
+| `mail.enableSsl` | `bool` | optional | `true` | Enables the usage of SSL. |
+| `mail.timeout` | `int` | optional | `30000` | Timeout to use when sending emails. |
+| `mail.templateDir` | `Path` | optional | `{root}mail-tpl` | Path to mail template directory. |
+| `mail.placeholders` | `Dictionary` | optional | `{}` | Global mail placeholders available to all mail templates. |
 
 Please refer to [this page](/docs/general/ConfiguringMail.md) for information on setting up GMail.

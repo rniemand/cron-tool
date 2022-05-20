@@ -13,8 +13,7 @@ public class ConfigProvider : IConfigProvider
 {
   private readonly IConfiguration _configuration;
   private readonly IEnvironmentAbstraction _environment;
-
-  private CronToolConfig _config;
+  private CronToolConfig? _config;
 
   public ConfigProvider(
     IConfiguration configuration,

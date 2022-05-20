@@ -1,5 +1,5 @@
-using System;
 using System.Threading.Tasks;
+using CronTools.Common.Exceptions;
 using CronTools.Common.Factories;
 using CronTools.Common.Helpers;
 using CronTools.Common.Models;
@@ -58,14 +58,15 @@ public class JobRunnerService : IJobRunnerService
 
       var resolvedAction = _actionResolver.Resolve(step);
       if (resolvedAction is null)
-        throw new Exception("Unable to continue");
+        throw new MissingActionException(step.Action);
 
       // Ensure that the current job step arguments are valid
       var stepContext = _jobFactory.CreateRunningStepContext(jobContext, step, stepNumber++);
-      var stepArgsValid = _jobUtils.ValidateStepArgs(resolvedAction, stepContext);
-      if (!stepArgsValid)
+      if (!_jobUtils.ValidateStepArgs(resolvedAction, stepContext))
       {
-        if (!step.QuitOnFailure) continue;
+        if (!step.QuitOnFailure)
+          continue;
+
         _logger.LogError("Job '{job}' step '{step}' has invalid arguments, stopping", jobName, step.StepId);
         break;
       }

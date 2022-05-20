@@ -92,4 +92,60 @@ public static class CastHelper
 
     return fallback;
   }
+
+  public static int ObjectToInt(object value, int fallback = 0)
+  {
+    // TODO: [CastHelper.ObjectToInt] (TESTS) Add tests
+    if (value is int intValue)
+      return intValue;
+
+    if (value is string stringValue)
+    {
+      if (string.IsNullOrWhiteSpace(stringValue))
+        return fallback;
+
+      if(int.TryParse(stringValue, out var parsedInt))
+        return parsedInt;
+
+      return fallback;
+    }
+
+    if (value is long longValue)
+    {
+      if (longValue < int.MaxValue)
+        return (int) longValue;
+
+      throw new InvalidCastException($"Value {longValue} is bigger than int.MaxValue");
+    }
+
+    var source = value.GetType().Name;
+    throw new InvalidCastException($"Unable to cast {source} to int");
+  }
+
+  public static bool ObjectToBool(object value, bool fallback)
+  {
+    // TODO: [CastHelper.ObjectToBool] (TESTS) Add tests
+    if (value is bool boolValue)
+      return boolValue;
+
+    if (value is int intValue)
+      return intValue == 1;
+
+    if (value is string stringValue)
+    {
+      if (string.IsNullOrWhiteSpace(stringValue))
+        return fallback;
+
+      if (bool.TryParse(stringValue, out var parsedBool))
+        return parsedBool;
+
+      return fallback;
+    }
+
+    if (value is long longValue)
+      return longValue == 1;
+
+    var source = value.GetType().Name;
+    throw new InvalidCastException($"Unable to cast {source} to bool");
+  }
 }

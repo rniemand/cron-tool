@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-	  <ProjectGuid>24DC64E1-DAAE-452C-8B0E-2384A7F3856C</ProjectGuid>
+    <ProjectGuid>DCFD8454-103C-4247-9498-4013E984AB0C</ProjectGuid>
 	  <CodeAnalysisRuleSet>..\.sonarlint\cron-toolcsharp.ruleset</CodeAnalysisRuleSet>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>cron-tool</ToolCommandName>
@@ -16,7 +16,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/rniemand/cron-tool</RepositoryUrl>
     <AssemblyName>Rn.CronTool</AssemblyName>
-    <Version>1.0.5.103</Version>
+    <Version>1.0.5.104</Version>
     <PackageTags>cron</PackageTags>
   </PropertyGroup>
 

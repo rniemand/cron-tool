@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-	  <ProjectGuid>9E82EE7F-0C5F-4690-902A-C3C71C640FDF</ProjectGuid>
+	  <ProjectGuid>27A62430-C635-43F2-8F2F-B3374FFC0202</ProjectGuid>
 	  <Nullable>enable</Nullable>
   </PropertyGroup>
 
@@ -10,9 +10,10 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="NLog" Version="5.0.0" />
-    <PackageReference Include="NLog.Extensions.Hosting" Version="1.7.4" />
-    <PackageReference Include="NLog.Extensions.Logging" Version="1.7.4" />
+    <PackageReference Include="NLog.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.0.0" />
     <PackageReference Include="Rn.NetCore.Common" Version="6.0.1.101" />
+    <PackageReference Include="Rn.NetCore.MailUtils" Version="6.0.1.104" />
     <PackageReference Include="Rn.NetCore.Metrics" Version="6.0.1.100" />
   </ItemGroup>
 
