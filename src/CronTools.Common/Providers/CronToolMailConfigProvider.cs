@@ -1,7 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mail;
 using CronTools.Common.Exceptions;
 using CronTools.Common.Extensions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Rn.NetCore.Common.Abstractions;
+using Rn.NetCore.Common.Extensions;
 using Rn.NetCore.Common.Logging;
 using Rn.NetCore.MailUtils.Config;
 using Rn.NetCore.MailUtils.Providers;
@@ -63,6 +69,7 @@ public class CronToolMailConfigProvider : IRnMailConfigProvider
     mailConfig.EnableSsl = config.GetBoolValue("mail.enableSsl", true);
     mailConfig.DeliveryFormat = config.GetEnumValue("mail.deliveryFormat", SmtpDeliveryFormat.SevenBit);
     mailConfig.DeliveryMethod = config.GetEnumValue("mail.deliveryMethod", SmtpDeliveryMethod.Network);
+    mailConfig.TemplatePlaceholders = ResolvePlaceholders(config);
 
     // Handle path formatting
     var cronToolConfig = _configProvider.GetConfig();
@@ -83,5 +90,41 @@ public class CronToolMailConfigProvider : IRnMailConfigProvider
 
     _logger.LogInformation("Created new instance of RnMailConfig!");
     _config = mailConfig;
+  }
+
+  private Dictionary<string, object> ResolvePlaceholders(IReadOnlyDictionary<string, object> config)
+  {
+    // TODO: [CronToolMailConfigProvider.ResolvePlaceholders] (TESTS) Add tests
+    if (!config.ContainsKey("mail.placeholders"))
+      return new Dictionary<string, object>();
+
+    var configValue = config
+      .First(x => x.Key.IgnoreCaseEquals("mail.placeholders"))
+      .Value;
+
+    if (configValue is Dictionary<string, object> castConfig)
+      return castConfig;
+
+    if (configValue is not JObject jObjectConfig)
+      return new Dictionary<string, object>();
+
+    if (jObjectConfig.Type != JTokenType.Object)
+      return new Dictionary<string, object>();
+    
+    try
+    {
+      var dictionary = jObjectConfig.ToObject<Dictionary<string, object>>(new JsonSerializer
+      {
+        NullValueHandling = NullValueHandling.Ignore,
+        MissingMemberHandling = MissingMemberHandling.Ignore
+      });
+
+      return dictionary ?? new Dictionary<string, object>();
+    }
+    catch (Exception ex)
+    {
+      _logger.LogError(ex, "Unable to cast to dictionary");
+      return new Dictionary<string, object>();
+    }
   }
 }

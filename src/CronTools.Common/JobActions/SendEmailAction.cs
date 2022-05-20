@@ -9,6 +9,7 @@ using CronTools.Common.Helpers;
 using CronTools.Common.Models;
 using CronTools.Common.Resolvers;
 using Rn.NetCore.Common.Logging;
+using Rn.NetCore.MailUtils.Builders;
 using Rn.NetCore.MailUtils.Factories;
 using Rn.NetCore.MailUtils.Helpers;
 
@@ -48,7 +49,6 @@ public class SendEmailAction : IJobAction
       {"ToAddress", JobActionArg.Email("ToAddress", true)},
       {"ToName", JobActionArg.String("ToName", false)},
       {"Subject", JobActionArg.String("Subject", true)},
-      {"Body", JobActionArg.String("Body", true)},
       {"Template", JobActionArg.String("Template", false, "default")}
     };
 
@@ -72,11 +72,20 @@ public class SendEmailAction : IJobAction
       return outcome.WithError($"Unable to resolve mail template {templateName}");
     }
 
-    Console.WriteLine();
-    Console.WriteLine();
-
     try
     {
+      var message = CreateMailMessageBuilder(jobContext, stepContext, argResolver)
+        .WithSubject(argResolver.ResolveString(jobContext, stepContext, Args["Subject"]))
+        .WithHtmlBody(AppendPlaceholders(templateBuilder, jobContext))
+        .Build();
+
+      var messageBody = message.Body;
+
+      var smtpClient = _smtpClientFactory.Create();
+
+
+      Console.WriteLine();
+      Console.WriteLine();
       var mailMessage = CreateMessage(jobContext, stepContext, argResolver);
       await CreateMailClient(jobContext).SendMailAsync(mailMessage);
       return outcome.WithSuccess();
@@ -87,6 +96,46 @@ public class SendEmailAction : IJobAction
       return outcome.WithFailed();
     }
   }
+
+  private MailMessageBuilder CreateMailMessageBuilder(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
+  {
+    // TODO: [SendEmailAction.CreateMailMessageBuilder] (TESTS) Add tests
+    var builder = _messageBuilderFactory.Create();
+
+    var toAddress = argResolver.ResolveString(jobContext, stepContext, Args["ToAddress"]);
+    var toName = argResolver.ResolveString(jobContext, stepContext, Args["ToName"]);
+
+    if (string.IsNullOrWhiteSpace(toName))
+      toName = toAddress;
+
+    builder.WithTo(toAddress, toName);
+    return builder;
+  }
+
+  private static MailTemplateBuilder AppendPlaceholders(MailTemplateBuilder builder, RunningJobContext jobContext)
+  {
+    // TODO: [SendEmailAction.AppendPlaceholders] (TESTS) Add tests
+    foreach (var state in jobContext.State)
+    {
+      builder.AddPlaceHolder($"state.{state.Key}", state.Value);
+    }
+
+    foreach (var variable in jobContext.Variables)
+    {
+      builder.AddPlaceHolder($"var.{variable.Key}", variable.Value);
+    }
+
+    foreach (var global in jobContext.Globals)
+    {
+      builder.AddPlaceHolder($"global.{global.Key}", global.Value);
+    }
+
+    return builder;
+  }
+
+
+
+
 
   private static SmtpClient CreateMailClient(RunningJobContext jobContext)
   {
