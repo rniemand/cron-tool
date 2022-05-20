@@ -1,9 +1,11 @@
 [Home](/README.md) / Docs
 
-# CronTool
-Nothing to see here.
+# Documentation
+Starter documentation for `cron-tool`.
+
+More to come...
 
 <!--(Rn.BuildScriptHelper){
-	"version": "1.0.106",
-	"replace": false
+	"version": "1.0.107",
+	"replace": true
 }(END)-->
