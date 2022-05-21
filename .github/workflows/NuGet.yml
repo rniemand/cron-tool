@@ -1,4 +1,4 @@
-name: PackTool
+name: NuGet
 on:
   push:
     branches:
