@@ -29,17 +29,14 @@ public class JobFactory : IJobFactory
   }
 
   public RunningStepContext CreateRunningStepContext(RunningJobContext jobContext, JobStepConfig jobStep, int stepNumber) =>
-    // TODO: [JobFactory.CreateRunningStepContext] (TESTS) Add tests
     new RunningStepContext(jobStep, stepNumber)
       .SetGlobals(jobContext.Globals);
 
   public RunningJobContext CreateRunningJobContext(JobConfig job) =>
-    // TODO: [JobFactory.CreateRunningJobContext] (TESTS) Add tests
     new RunningJobContext(job)
       .SetVariables(_jobActionArgHelper.ProcessVariables(job.Variables))
       .SetGlobals(_globalConfigProvider.GetGlobalConfig());
 
   public IJobArgumentResolver GetJobArgumentResolver() =>
-    // TODO: [JobFactory.GetJobArgumentResolver] (TESTS) Add tests
     _jobArgumentResolver;
 }

@@ -13,7 +13,6 @@ public class JobStepHelper : IJobStepHelper
 {
   public void InitializeSteps(JobConfig jobConfig)
   {
-    // TODO: [JobStepHelper.InitializeSteps] (TESTS) Add tests
     var currentStepNumber = 1;
 
     foreach (var jobStep in jobConfig.Steps)
@@ -26,7 +25,6 @@ public class JobStepHelper : IJobStepHelper
 
   private static void SetStepId(JobStepConfig jobStep, int stepNumber)
   {
-    // TODO: [JobStepHelper.SetStepId] (TESTS) Add tests
     jobStep.StepNumber = stepNumber;
 
     if (!string.IsNullOrWhiteSpace(jobStep.StepId))
@@ -37,7 +35,6 @@ public class JobStepHelper : IJobStepHelper
 
   private static void ProcessStepCondition(JobStepConfig jobStep)
   {
-    // TODO: [JobStepHelper.ProcessStepCondition] (TESTS) Add tests
     var condition = jobStep.Condition;
 
     if(condition is null)
@@ -54,7 +51,6 @@ public class JobStepHelper : IJobStepHelper
 
   private static ConditionExpression ParseCondition(string rawCondition)
   {
-    // TODO: [JobStepHelper.ParseCondition] (TESTS) Add tests
     var parsed = new ConditionExpression
     {
       RawExpression = rawCondition,

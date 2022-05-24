@@ -19,7 +19,6 @@ public class DeleteFilesAction : IJobAction
 
   public DeleteFilesAction(IFileAbstraction file)
   {
-    // TODO: [DeleteFilesAction] (TESTS) Add tests
     _file = file;
 
     Action = JobStepAction.DeleteFiles;
@@ -34,7 +33,6 @@ public class DeleteFilesAction : IJobAction
 
   public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
   {
-    // TODO: [DeleteFilesAction.ExecuteAsync] (TESTS) Add tests
     var outcome = new JobStepOutcome();
 
     var paths = argResolver.ResolveFiles(jobContext, stepContext, Args["Paths"]);

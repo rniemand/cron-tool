@@ -13,13 +13,11 @@ public class JobStepOutcome
   public JobStepOutcome(bool succeeded)
     : this()
   {
-    // TODO: [TESTS] (JobStepOutcome) Add tests
     Succeeded = succeeded;
   }
 
   public JobStepOutcome WithError(string error)
   {
-    // TODO: [TESTS] (JobStepOutcome.WithError) Add tests
     Succeeded = false;
     Error = error;
     return this;
@@ -27,21 +25,18 @@ public class JobStepOutcome
 
   public JobStepOutcome WithFailed()
   {
-    // TODO: [JobStepOutcome.WithFailed] (TESTS) Add tests
     Succeeded = false;
     return this;
   }
 
   public JobStepOutcome WithSuccess()
   {
-    // TODO: [TESTS] (JobStepOutcome.WithSuccess) Add tests
     Succeeded = true;
     return this;
   }
 
   public JobStepOutcome WithSuccess(string message)
   {
-    // TODO: [TESTS] (JobStepOutcome.WithSuccess) Add tests
     Succeeded = true;
     Messages.Add(message);
     return this;

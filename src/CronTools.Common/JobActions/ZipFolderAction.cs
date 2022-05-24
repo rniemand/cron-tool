@@ -29,7 +29,6 @@ public class ZipFolderAction : IJobAction
     IPathAbstraction path,
     IDirectoryAbstraction directory)
   {
-    // TODO: [TESTS] (ZipFolderAction) Add tests
     _logger = logger;
     _file = file;
     _path = path;
@@ -51,7 +50,6 @@ public class ZipFolderAction : IJobAction
 
   public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
   {
-    // TODO: [TESTS] (ZipFolderAction.ExecuteAsync) Add tests
     var sourceDir = argResolver.ResolveDirectory(jobContext, stepContext, Args["Src"]);
     var zipFile = argResolver.ResolveFile(jobContext, stepContext, Args["Zip"]);
     var quick = argResolver.ResolveBool(jobContext, stepContext, Args["Quick"]);
@@ -85,7 +83,6 @@ public class ZipFolderAction : IJobAction
 
   private bool EnsureDirectoryExists(string path)
   {
-    // TODO: [TESTS] (ZipFolderAction.EnsureDirectoryExists) Add tests
     if (_directory.Exists(path))
       return true;
 
@@ -103,14 +100,12 @@ public class ZipFolderAction : IJobAction
 
   private JobStepOutcome HandleDeleteZipDisabled(string zipFile)
   {
-    // TODO: [TESTS] (ZipFolderAction.HandleDeleteZipDisabled) Add tests
     _logger.LogWarning("ZIP file already exists: {path}", zipFile);
     return new JobStepOutcome(true);
   }
 
   private void DeleteExistingZipFile(string zipFile)
   {
-    // TODO: [TESTS] (ZipFolderAction.DeleteExistingZipFile) Add tests
     _logger.LogInformation("Removing existing zip file: {path}", zipFile);
     _file.Delete(zipFile);
   }

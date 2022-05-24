@@ -44,7 +44,6 @@ public class JobRunnerService : IJobRunnerService
 
   public async Task RunJobAsync(JobConfig jobConfig)
   {
-    // TODO: [JobRunnerService.RunJobAsync] (TESTS) Add tests
     var continueRunningSteps = true;
     var stepNumber = 1;
     var jobContext = _jobFactory.CreateRunningJobContext(jobConfig);
@@ -104,7 +103,6 @@ public class JobRunnerService : IJobRunnerService
 
   public async Task RunJobAsync(string jobFileName)
   {
-    // TODO: [JobRunnerService.RunJobAsync] (TESTS) Add tests
     var jobConfig = _jobConfigProvider.Resolve(jobFileName);
 
     if (jobConfig is null)
@@ -118,7 +116,6 @@ public class JobRunnerService : IJobRunnerService
 
   public async Task RunJobsAsync(string[] jobFileNames)
   {
-    // TODO: [JobRunnerService.RunJobsAsync] (TESTS) Add tests
     if (jobFileNames.Length == 0)
     {
       _logger.LogWarning("No jobs to run");

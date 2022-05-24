@@ -15,7 +15,6 @@ public class RunningJobContext
 
   public RunningJobContext(JobConfig job)
   {
-    // TODO: [RunningJobContext] (TESTS) Add tests
     Name = job.Name;
     Variables = new Dictionary<string, object>();
     Globals = new Dictionary<string, object>();
@@ -25,27 +24,23 @@ public class RunningJobContext
 
   public RunningJobContext SetVariables(Dictionary<string, object> variables)
   {
-    // TODO: [RunningJobContext.SetVariables] (TESTS) Add tests
     Variables = variables;
     return this;
   }
 
   public RunningJobContext SetGlobals(Dictionary<string, object> globals)
   {
-    // TODO: [RunningJobContext.SetGlobals] (TESTS) Add tests
     Globals = globals;
     return this;
   }
 
   public void PublishState(string key, object value)
   {
-    // TODO: [RunningJobContext.PublishState] (TESTS) Add tests
     State[key] = value;
   }
 
   public void PublishStepState(RunningStepContext stepContext, string key, object value)
   {
-    // TODO: [RunningJobContext.PublishStepState] (TESTS) Add tests
     var stepId = stepContext.JobStep.StepId;
 
     if (!StepState.ContainsKey(stepId))
@@ -55,21 +50,12 @@ public class RunningJobContext
     State[$"{stepId}.{key}"] = value;
   }
 
-  public bool StateValueExists(string key)
-  {
-    // TODO: [RunningJobContext.StateValueExists] (TESTS) Add tests
-    return State.Any(x => x.Key.IgnoreCaseEquals(key));
-  }
+  public bool StateValueExists(string key) =>
+    State.Any(x => x.Key.IgnoreCaseEquals(key));
 
-  public object GetStateValue(string key)
-  {
-    // TODO: [RunningJobContext.GetStateValue] (TESTS) Add tests
-    return State.First(x => x.Key.IgnoreCaseEquals(key)).Value;
-  }
+  public object GetStateValue(string key) =>
+    State.First(x => x.Key.IgnoreCaseEquals(key)).Value;
 
-  public string GetGlobal(string key, string fallback)
-  {
-    // TODO: [RunningJobContext.GetGlobal] (TESTS) Add tests
-    return ConfigExtensions.GetStringValue(Globals, key, fallback);
-  }
+  public string GetGlobal(string key, string fallback) =>
+    Globals.GetStringValue(key, fallback);
 }

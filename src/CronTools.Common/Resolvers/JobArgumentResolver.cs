@@ -28,7 +28,6 @@ public class JobArgumentResolver : IJobArgumentResolver
 
   public string ResolveString(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
   {
-    // TODO: [JobArgumentResolver.ResolveString] (TESTS) Add tests
     if (!HasArgument(stepContext, arg))
       return _actionArgHelper.ExecuteStringFormatters(jobContext, (string)arg.Default);
 
@@ -42,7 +41,6 @@ public class JobArgumentResolver : IJobArgumentResolver
 
   public string ResolveDirectory(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
   {
-    // TODO: [JobArgumentResolver.ResolveDirectory] (TESTS) Add tests
     if (!HasArgument(stepContext, arg))
       return _actionArgHelper.ExecuteDirectoryFormatters(jobContext, (string)arg.Default);
 
@@ -56,7 +54,6 @@ public class JobArgumentResolver : IJobArgumentResolver
 
   public string ResolveFile(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
   {
-    // TODO: [JobArgumentResolver.ResolveFile] (TESTS) Add tests
     if (!HasArgument(stepContext, arg))
       return _actionArgHelper.ExecuteFileFormatters(jobContext, (string)arg.Default);
 
@@ -70,7 +67,6 @@ public class JobArgumentResolver : IJobArgumentResolver
 
   public List<string> ResolveFiles(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
   {
-    // TODO: [JobArgumentResolver.ResolveFiles] (TESTS) Add tests
     var filePaths = new List<string>();
 
     if (!HasArgument(stepContext, arg))
@@ -101,7 +97,6 @@ public class JobArgumentResolver : IJobArgumentResolver
 
   public bool ResolveBool(RunningJobContext jobContext, RunningStepContext stepContext, JobActionArg arg)
   {
-    // TODO: [JobArgumentResolver.ResolveBool] (TESTS) Add tests
     if (!HasArgument(stepContext, arg))
       return (bool)arg.Default;
 
@@ -130,7 +125,6 @@ public class JobArgumentResolver : IJobArgumentResolver
 
   private static bool HasArgument(RunningStepContext stepContext, JobActionArg arg)
   {
-    // TODO: [JobArgumentResolver.HasArgument] (TESTS) Add tests
     // ReSharper disable once ConvertIfStatementToReturnStatement
     if (stepContext.Args.Count == 0)
       return false;

@@ -28,7 +28,6 @@ public class CopyFileAction : IJobAction
     IDirectoryAbstraction directory,
     IPathAbstraction path)
   {
-    // TODO: [CopyFileAction] (TESTS) Add tests
     _logger = logger;
     _file = file;
     _directory = directory;
@@ -49,7 +48,6 @@ public class CopyFileAction : IJobAction
 
   public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
   {
-    // TODO: [TESTS] (CopyFileAction.ExecuteAsync) Add tests
     var outcome = new JobStepOutcome();
 
     // Handle source file missing
@@ -96,7 +94,6 @@ public class CopyFileAction : IJobAction
 
   private bool EnsureDirectoryExists(string path)
   {
-    // TODO: [TESTS] (CopyFileAction.EnsureDirectoryExists) Add tests
     if (_directory.Exists(path))
       return true;
 
@@ -114,7 +111,6 @@ public class CopyFileAction : IJobAction
 
   private bool RemoveFile(string path)
   {
-    // TODO: [TESTS] (CopyFileAction.RemoveFile) Add tests
     if (!_file.Exists(path))
       return true;
 
@@ -132,7 +128,6 @@ public class CopyFileAction : IJobAction
 
   private bool CopyFile(string source, string destination)
   {
-    // TODO: [TESTS] (CopyFileAction.CopyFile) Add tests
     try
     {
       _file.Copy(source, destination);

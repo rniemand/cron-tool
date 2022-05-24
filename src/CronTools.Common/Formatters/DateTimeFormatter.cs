@@ -13,7 +13,6 @@ public class DateTimeFormatter : IJobActionArgFormatter
 
   public DateTimeFormatter(IDateTimeAbstraction dateTime)
   {
-    // TODO: [TESTS] (DateTimeFormatter) Add tests
     _dateTime = dateTime;
 
     SupportedTypes = new List<ArgType>
@@ -26,7 +25,6 @@ public class DateTimeFormatter : IJobActionArgFormatter
 
   public string Format(string input)
   {
-    // TODO: [TESTS] (DateTimeFormatter.Format) Add tests
     // https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
     const string regex = @"{date:([^}]+)}";
     if (!input.MatchesRegex(regex))

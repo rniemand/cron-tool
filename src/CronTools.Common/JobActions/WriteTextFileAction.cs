@@ -24,7 +24,6 @@ public class WriteTextFileAction : IJobAction
     ILoggerAdapter<WriteTextFileAction> logger,
     IFileAbstraction file)
   {
-    // TODO: [WriteTextFileAction.WriteTextFileAction] (TESTS) Add tests
     _logger = logger;
     _file = file;
 
@@ -43,7 +42,6 @@ public class WriteTextFileAction : IJobAction
 
   public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
   {
-    // TODO: [WriteTextFileAction.ExecuteAsync] (TESTS) Add tests
     var outcome = new JobStepOutcome();
     var filePath = argResolver.ResolveFile(jobContext, stepContext, Args["Path"]);
     var replace = argResolver.ResolveBool(jobContext, stepContext, Args["Overwrite"]);

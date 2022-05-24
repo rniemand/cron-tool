@@ -31,7 +31,6 @@ public class ConditionHelper : IConditionHelper
   // Public methods
   public bool CanRunJobStep(RunningJobContext jobContext, RunningStepContext stepContext)
   {
-    // TODO: [ConditionHelper.CanRunJobStep] (TESTS) Add tests
     if (!ContainsConditions(stepContext))
       return true;
 
@@ -45,18 +44,14 @@ public class ConditionHelper : IConditionHelper
   // Internal methods
   private static bool ContainsConditions(RunningStepContext stepContext)
   {
-    // TODO: [ConditionHelper.ContainsConditions] (TESTS) Add tests
     if (stepContext.JobStep.Condition is null)
       return false;
-
-    // TODO: [ConditionHelper.ContainsConditions] (EXPAND) Add support for conditions
 
     return true;
   }
 
   private bool EvaluateStepCondition(RunningJobContext jobContext, RunningStepContext stepContext)
   {
-    // TODO: [ConditionHelper.EvaluateStepCondition] (TESTS) Add tests
     var condition = stepContext.JobStep.Condition;
 
     return condition is null || EvaluateCondition(jobContext, condition);
@@ -64,7 +59,6 @@ public class ConditionHelper : IConditionHelper
 
   private bool EvaluateCondition(RunningJobContext jobContext, JobStepCondition condition)
   {
-    // TODO: [ConditionHelper.EvaluateCondition] (TESTS) Add tests
     if (condition.Expressions.Count == 0)
       return true;
 
@@ -88,7 +82,6 @@ public class ConditionHelper : IConditionHelper
   // Condition execution logic
   private bool EvaluateAndCondition(RunningJobContext jobContext, List<ConditionExpression> expressions)
   {
-    // TODO: [ConditionHelper.EvaluateAndCondition] (TESTS) Add tests
     // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
     foreach (var expression in expressions)
     {
@@ -100,15 +93,11 @@ public class ConditionHelper : IConditionHelper
     return true;
   }
 
-  private bool EvaluateOrCondition(RunningJobContext jobContext, IEnumerable<ConditionExpression> expressions)
-  {
-    // TODO: [ConditionHelper.EvaluateOrCondition] (TESTS) Add tests
-    return expressions.Any(expression => RunExpression(jobContext, expression));
-  }
-  
+  private bool EvaluateOrCondition(RunningJobContext jobContext, IEnumerable<ConditionExpression> expressions) =>
+    expressions.Any(expression => RunExpression(jobContext, expression));
+
   private bool RunExpression(RunningJobContext jobContext, ConditionExpression expression)
   {
-    // TODO: [ConditionHelper.RunExpression] (TESTS) Add tests
     if (!jobContext.StateValueExists(expression.Property))
     {
       _logger.LogError("Unable to resolve state value: {key}", expression.Property);

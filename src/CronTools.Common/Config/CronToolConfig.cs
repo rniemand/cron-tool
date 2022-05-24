@@ -19,7 +19,6 @@ public class CronToolConfig
   
   public CronToolConfig NormalizePaths(string rootDir)
   {
-    // TODO: [TESTS] (CronToolConfig.NormalizePaths) Add tests
     RootDirectory = RootDirectory
       .Replace("./", rootDir.AppendIfMissing(DirectorySeparator))
       .AppendIfMissing(DirectorySeparator);

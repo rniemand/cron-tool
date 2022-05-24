@@ -22,7 +22,6 @@ public class JobUtils : IJobUtils
 
   public bool ValidateStepArgs(IJobAction action, RunningStepContext context)
   {
-    // TODO: [JobUtils.ValidateStepArgs] (TESTS) Add tests
     if (!CheckRequiredStepArgs(action, context))
       return false;
 
@@ -35,7 +34,6 @@ public class JobUtils : IJobUtils
 
   private bool CheckRequiredStepArgs(IJobAction action, RunningStepContext context)
   {
-    // TODO: [JobUtils.CheckRequiredStepArgs] (TESTS) Add tests
     var required = action.Args
       .Where(x => x.Value.Required)
       .ToList();
@@ -65,7 +63,6 @@ public class JobUtils : IJobUtils
 
   private bool CheckRequiredGlobalArgs(IJobAction action, RunningStepContext context)
   {
-    // TODO: [JobUtils.CheckRequiredGlobalArgs] (TESTS) Add tests
     foreach (var globalKey in action.RequiredGlobals)
     {
       if (context.Globals.Any(x => x.Key.IgnoreCaseEquals(globalKey)))

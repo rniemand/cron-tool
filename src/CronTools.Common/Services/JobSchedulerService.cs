@@ -30,7 +30,6 @@ public class JobSchedulerService : IJobSchedulerService
 
   public ScheduledJob ScheduleNextRun(JobConfig jobConfig)
   {
-    // TODO: [JobSchedulerService.ScheduleNextRun] (TESTS) Add tests
     if (jobConfig.Schedule is null)
       throw new Exception("Job has no schedule");
 
@@ -52,7 +51,6 @@ public class JobSchedulerService : IJobSchedulerService
 
   public ScheduledJob CreateInitialSchedule(JobConfig jobConfig)
   {
-    // TODO: [JobSchedulerService.CreateInitialSchedule] (TESTS) Add tests
     _logger.LogInformation("Creating new schedule for '{job}' ({id})",
       jobConfig.Name,
       jobConfig.JobId);
@@ -68,7 +66,6 @@ public class JobSchedulerService : IJobSchedulerService
 
   public void SyncJobConfig(JobConfig job, ScheduledJob schedule)
   {
-    // TODO: [JobSchedulerService.SyncJobConfig] (TESTS) Add tests
     schedule.JobName = job.Name;
 
     // Handle jobs that are set to run on start
@@ -78,7 +75,6 @@ public class JobSchedulerService : IJobSchedulerService
 
   private DateTime GetNextRunTime(JobSchedule schedule)
   {
-    // TODO: [JobSchedulerService.GetNextRunTime] (TESTS) Add tests
     switch (schedule.Frequency)
     {
       case ScheduleFrequency.TimeOfDay:

@@ -26,7 +26,6 @@ public class ConfigProvider : IConfigProvider
 
   public CronToolConfig GetConfig()
   {
-    // TODO: [TESTS] (ConfigProvider.GetConfig) Add tests
     if (_config is not null)
       return _config;
 

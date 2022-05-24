@@ -40,7 +40,6 @@ public class CronToolMailConfigProvider : IRnMailConfigProvider
 
   public RnMailConfig GetRnMailConfig()
   {
-    // TODO: [CronToolMailConfigProvider.GetRnMailConfig] (TESTS) Add tests
     if(_config is null)
       BindConfig();
 
@@ -52,7 +51,6 @@ public class CronToolMailConfigProvider : IRnMailConfigProvider
 
   private void BindConfig()
   {
-    // TODO: [CronToolMailConfigProvider.BindConfig] (TESTS) Add tests
     _logger.LogDebug("Attempting to bind RnMailConfig");
     var config = _globalConfigProvider.GetGlobalConfig();
 
@@ -94,7 +92,6 @@ public class CronToolMailConfigProvider : IRnMailConfigProvider
 
   private Dictionary<string, object> ResolvePlaceholders(IReadOnlyDictionary<string, object> config)
   {
-    // TODO: [CronToolMailConfigProvider.ResolvePlaceholders] (TESTS) Add tests
     if (!config.ContainsKey("mail.placeholders"))
       return new Dictionary<string, object>();
 

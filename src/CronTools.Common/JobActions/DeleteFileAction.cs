@@ -24,7 +24,6 @@ public class DeleteFileAction : IJobAction
     ILoggerAdapter<DeleteFileAction> logger,
     IFileAbstraction file)
   {
-    // TODO: [TESTS] (DeleteFileAction.DeleteFileAction) Add tests
     _logger = logger;
     _file = file;
 
@@ -55,7 +54,6 @@ public class DeleteFileAction : IJobAction
 
   private bool DeleteFile(string path)
   {
-    // TODO: [TESTS] (DeleteFileAction.DeleteFile) Add tests
     try
     {
       _file.Delete(path);

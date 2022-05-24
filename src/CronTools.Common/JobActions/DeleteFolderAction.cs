@@ -29,7 +29,6 @@ public class DeleteFolderAction : IJobAction
     IFileAbstraction file,
     IDirectoryInfoFactory diFactory)
   {
-    // TODO: [TESTS] (DeleteFolderAction) Add tests
     _logger = logger;
     _directory = directory;
     _file = file;
@@ -48,7 +47,6 @@ public class DeleteFolderAction : IJobAction
 
   public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
   {
-    // TODO: [TESTS] (DeleteFolderAction.ExecuteAsync) Add tests
     var path = argResolver.ResolveDirectory(jobContext, stepContext, Args["Path"]);
 
     // Nothing to do
@@ -76,7 +74,6 @@ public class DeleteFolderAction : IJobAction
 
   private void RecurseDelete(string path)
   {
-    // TODO: [TESTS] (DeleteFolderAction.ExecuteAsync) Add tests
     var di = _diFactory.GetDirectoryInfo(path);
 
     foreach (var file in di.GetFiles())

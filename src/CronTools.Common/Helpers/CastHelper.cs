@@ -7,7 +7,6 @@ public static class CastHelper
 {
   public static string ObjectToString(object value)
   {
-    // TODO: [CastHelper.ObjectToString] (TESTS) Add tests
     if (value is long longValue)
       return longValue.ToString("D");
 
@@ -25,7 +24,6 @@ public static class CastHelper
 
   public static Comparator ToComparator(string value)
   {
-    // TODO: [CastHelper.ToComparator] (TESTS) Add tests
     if (string.IsNullOrWhiteSpace(value))
       return Comparator.Unknown;
     
@@ -43,7 +41,6 @@ public static class CastHelper
 
   public static bool StringToBool(string input, bool fallback = false)
   {
-    // TODO: [CastHelper.StringToBool] (TESTS) Add tests
     if (string.IsNullOrWhiteSpace(input))
       return fallback;
 
@@ -65,7 +62,6 @@ public static class CastHelper
 
   public static long StringToLong(string input, long fallback = 0)
   {
-    // TODO: [CastHelper.StringToLong] (TESTS) Add tests
     if (string.IsNullOrWhiteSpace(input))
       return fallback;
 
@@ -74,7 +70,6 @@ public static class CastHelper
 
   public static int StringToInt(string input, int fallback = 0)
   {
-    // TODO: [CastHelper.StringToInt] (TESTS) Add tests
     if (string.IsNullOrWhiteSpace(input))
       return fallback;
 
@@ -83,7 +78,6 @@ public static class CastHelper
 
   public static int AsInt(string input, int fallback = 0)
   {
-    // TODO: [CastHelper.AsInt] (TESTS) Add tests
     if (string.IsNullOrWhiteSpace(input))
       return fallback;
 
@@ -95,7 +89,6 @@ public static class CastHelper
 
   public static int ObjectToInt(object value, int fallback = 0)
   {
-    // TODO: [CastHelper.ObjectToInt] (TESTS) Add tests
     if (value is int intValue)
       return intValue;
 
@@ -124,7 +117,6 @@ public static class CastHelper
 
   public static bool ObjectToBool(object value, bool fallback)
   {
-    // TODO: [CastHelper.ObjectToBool] (TESTS) Add tests
     if (value is bool boolValue)
       return boolValue;
 

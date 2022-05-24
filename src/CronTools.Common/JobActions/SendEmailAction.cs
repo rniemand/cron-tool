@@ -29,7 +29,6 @@ public class SendEmailAction : IJobAction
     IMailMessageBuilderFactory messageBuilderFactory,
     IMailTemplateHelper mailTemplateHelper)
   {
-    // TODO: [SendEmailAction] (TESTS) Add tests
     Action = JobStepAction.SendEmail;
     Name = JobStepAction.SendEmail.ToString("G");
     RequiredGlobals = new[]
@@ -56,7 +55,6 @@ public class SendEmailAction : IJobAction
 
   public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
   {
-    // TODO: [SendEmailAction.ExecuteAsync] (TESTS) Add tests
     var outcome = new JobStepOutcome();
 
     try
@@ -90,7 +88,6 @@ public class SendEmailAction : IJobAction
 
   private MailMessageBuilder CreateMailMessageBuilder(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
   {
-    // TODO: [SendEmailAction.CreateMailMessageBuilder] (TESTS) Add tests
     var builder = _messageBuilderFactory.Create();
 
     var toAddress = argResolver.ResolveString(jobContext, stepContext, Args["ToAddress"]);
@@ -105,7 +102,6 @@ public class SendEmailAction : IJobAction
 
   private static MailTemplateBuilder AppendPlaceholders(MailTemplateBuilder builder, RunningJobContext jobContext)
   {
-    // TODO: [SendEmailAction.AppendPlaceholders] (TESTS) Add tests
     foreach (var state in jobContext.State)
     {
       builder.AddPlaceHolder($"state.{state.Key}", state.Value);

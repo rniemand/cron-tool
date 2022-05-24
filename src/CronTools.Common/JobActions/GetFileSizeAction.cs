@@ -24,7 +24,6 @@ public class GetFileSizeAction : IJobAction
     IFileAbstraction file,
     IFileInfoFactory fileInfoFactory)
   {
-    // TODO: [GetFileSizeAction] (TESTS) Add tests
     _file = file;
     _fileInfoFactory = fileInfoFactory;
 
@@ -40,7 +39,6 @@ public class GetFileSizeAction : IJobAction
 
   public async Task<JobStepOutcome> ExecuteAsync(RunningJobContext jobContext, RunningStepContext stepContext, IJobArgumentResolver argResolver)
   {
-    // TODO: [GetFileSizeAction.ExecuteAsync] (TESTS) Add tests
     var outcome = new JobStepOutcome();
 
     // Set expected defaults

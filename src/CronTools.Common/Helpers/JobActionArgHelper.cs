@@ -30,7 +30,6 @@ public class JobActionArgHelper : IJobActionArgHelper
 
   public Dictionary<string, object> ProcessVariables(Dictionary<string, object> variables)
   {
-    // TODO: [JobActionArgHelper.ProcessVariables] (TESTS) Add tests
     var processed = new Dictionary<string, object>();
 
     foreach (var (key, value) in variables)
@@ -50,7 +49,6 @@ public class JobActionArgHelper : IJobActionArgHelper
 
   public string ExecuteStringFormatters(RunningJobContext jobContext, string input)
   {
-    // TODO: [JobActionArgHelper.ExecuteStringFormatters] (TESTS) Add tests
     if (string.IsNullOrWhiteSpace(input))
       return input;
 
@@ -73,7 +71,6 @@ public class JobActionArgHelper : IJobActionArgHelper
 
   public string ExecuteFileFormatters(RunningJobContext jobContext, string input)
   {
-    // TODO: [JobActionArgHelper.ExecuteFileFormatters] (TESTS) Add tests
     if (string.IsNullOrWhiteSpace(input))
       return input;
 
@@ -96,7 +93,6 @@ public class JobActionArgHelper : IJobActionArgHelper
 
   public string ExecuteDirectoryFormatters(RunningJobContext jobContext, string input)
   {
-    // TODO: [JobActionArgHelper.ExecuteDirectoryFormatters] (TESTS) Add tests
     if (string.IsNullOrWhiteSpace(input))
       return input;
 
@@ -117,22 +113,14 @@ public class JobActionArgHelper : IJobActionArgHelper
     return input;
   }
 
-  public string ProcessExpressionValue(RunningJobContext jobContext, string value)
-  {
-    // TODO: [JobActionArgHelper.ProcessExpressionValue] (TESTS) Add tests
-    return ProcessPlaceholders(jobContext, value);
-  }
-
-
-  private string ProcessArgValue(string value)
-  {
-    // TODO: [JobActionArgHelper.ProcessArgValue] (TESTS) Add tests
-    return _formatters.Aggregate(value, (current, formatter) => formatter.Format(current));
-  }
+  public string ProcessExpressionValue(RunningJobContext jobContext, string value) =>
+    ProcessPlaceholders(jobContext, value);
+  
+  private string ProcessArgValue(string value) =>
+    _formatters.Aggregate(value, (current, formatter) => formatter.Format(current));
 
   private static string ProcessPlaceholders(RunningJobContext jobContext, string input)
   {
-    // TODO: [JobActionArgHelper.ProcessPlaceholders] (TESTS) Add tests
     input = HandleGlobals(jobContext, input);
     input = HandleVariables(jobContext, input);
     input = HandleState(jobContext, input);
@@ -142,8 +130,6 @@ public class JobActionArgHelper : IJobActionArgHelper
 
   private static string HandleVariables(RunningJobContext jobContext, string input)
   {
-    // TODO: [JobActionArgHelper.HandleVariables] (TESTS) Add tests
-
     // (\${var:([^}]+)})
     const string rxPattern = "(\\${var:([^}]+)})";
     if (!input.MatchesRegex(rxPattern))
@@ -167,8 +153,6 @@ public class JobActionArgHelper : IJobActionArgHelper
 
   private static string HandleState(RunningJobContext jobContext, string input)
   {
-    // TODO: [JobActionArgHelper.HandleState] (TESTS) Add tests
-
     // (\${var:([^}]+)})
     const string rxPattern = "(\\${state:([^}]+)})";
     if (!input.MatchesRegex(rxPattern))
@@ -192,7 +176,6 @@ public class JobActionArgHelper : IJobActionArgHelper
 
   private static string HandleGlobals(RunningJobContext jobContext, string input)
   {
-    // TODO: [JobActionArgHelper.HandleGlobals] (TESTS) Add tests
     // (\${global:([^}]+)})
     const string rxPattern = "(\\${global:([^}]+)})";
     if (!input.MatchesRegex(rxPattern))

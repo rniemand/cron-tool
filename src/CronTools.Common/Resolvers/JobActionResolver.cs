@@ -26,7 +26,6 @@ public class JobActionResolver : IJobActionResolver
 
   public IJobAction? Resolve(JobStepConfig jobStep)
   {
-    // TODO: [JobActionResolver.Resolve] (TESTS) Add tests
     var resolved = _jobActions.FirstOrDefault(x => x.Action == jobStep.Action);
 
     if (resolved is not null)

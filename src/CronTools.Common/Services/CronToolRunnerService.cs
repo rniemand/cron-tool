@@ -51,7 +51,6 @@ public class CronToolRunnerService : ICronToolRunnerService
 
   public async Task TickAsync(CancellationToken stoppingToken)
   {
-    // TODO: [CronToolRunnerService.TickAsync] (TESTS) Add tests
     // Ignore the first tick to allow the service to start up when running as a service
     // as there may bo jobs queued that take a while to execute
     if (_firstTick)
@@ -66,7 +65,6 @@ public class CronToolRunnerService : ICronToolRunnerService
   // Working with scheduled jobs
   private async Task DiscoverAndRunJobsAsync(CancellationToken stoppingToken)
   {
-    // TODO: [CronToolRunnerService.DiscoverAndRunJobsAsync] (TESTS) Add tests
     RefreshJobs();
 
     // Check to see if there are any jobs that need to run now
@@ -96,7 +94,6 @@ public class CronToolRunnerService : ICronToolRunnerService
 
   private void RefreshJobs()
   {
-    // TODO: [CronToolRunnerService.RefreshJobs] (TESTS) Add tests
     if (_dateTime.Now < _nextJobRefresh)
       return;
 
@@ -126,7 +123,6 @@ public class CronToolRunnerService : ICronToolRunnerService
 
   private void EnsureJobScheduled(JobConfig jobConfig)
   {
-    // TODO: [CronToolRunnerService.EnsureJobScheduled] (TESTS) Add tests
     var jobKey = jobConfig.JobId.LowerTrim();
 
     if (_scheduledJobs.ContainsKey(jobKey))
@@ -140,7 +136,6 @@ public class CronToolRunnerService : ICronToolRunnerService
 
   private void RunJobIntegrityCheck()
   {
-    // TODO: [CronToolRunnerService.RunJobIntegrityCheck] (TESTS) Add tests
     var staleScheduleKeys = new List<string>();
 
     foreach (var scheduledJob in _scheduledJobs)
@@ -166,7 +161,6 @@ public class CronToolRunnerService : ICronToolRunnerService
 
   private List<string> GetRunnableJobIds()
   {
-    // TODO: [CronToolRunnerService.GetRunnableJobIds] (TESTS) Add tests
     if (_scheduledJobs.Count == 0)
       return new List<string>();
 
@@ -193,7 +187,6 @@ public class CronToolRunnerService : ICronToolRunnerService
 
   private void RemoveMissingJob(string jobId)
   {
-    // TODO: [CronToolRunnerService.RemoveMissingJob] (TESTS) Add tests
     if (!_scheduledJobs.Any(x => x.Key.IgnoreCaseEquals(jobId)))
       return;
 

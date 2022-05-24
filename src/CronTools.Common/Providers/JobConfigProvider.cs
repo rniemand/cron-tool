@@ -45,7 +45,6 @@ public class JobConfigProvider : IJobConfigProvider
 
   public JobConfig? Resolve(string jobName)
   {
-    // TODO: [JobConfigProvider.Resolve] (TESTS) Add tests
     if (string.IsNullOrWhiteSpace(jobName))
       return null;
 
@@ -95,7 +94,6 @@ public class JobConfigProvider : IJobConfigProvider
 
   public List<JobConfig> ResolveAllEnabled()
   {
-    // TODO: [JobConfigProvider.ResolveAllEnabled] (TESTS) Add tests
     var enabledJobs = new List<JobConfig>();
 
     foreach (var jobFile in DiscoverJobs())
@@ -117,7 +115,6 @@ public class JobConfigProvider : IJobConfigProvider
 
   private void EnsureDirectoryExists(string path)
   {
-    // TODO: [JobConfigProvider.EnsureDirectoryExists] (TESTS) Add tests
     if(_directory.Exists(path))
       return;
 
@@ -126,7 +123,6 @@ public class JobConfigProvider : IJobConfigProvider
 
   private List<string> DiscoverJobs()
   {
-    // TODO: [JobConfigProvider.DiscoverJobs] (TESTS) Add tests
     EnsureDirectoryExists(_config.JobsDirectory);
     
     var jsonFiles = _directory.GetFiles(_config.JobsDirectory,
@@ -141,6 +137,5 @@ public class JobConfigProvider : IJobConfigProvider
   }
 
   private bool JobExists(string jobName) =>
-    // TODO: [JobConfigProvider.JobExists] (TESTS) Add tests
     _jobNames.Any(x => x.IgnoreCaseEquals(jobName));
 }

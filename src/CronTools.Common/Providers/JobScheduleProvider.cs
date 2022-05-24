@@ -30,7 +30,6 @@ public class JobScheduleProvider : IJobScheduleProvider
     IFileAbstraction file,
     IDirectoryAbstraction directory)
   {
-    // TODO: [JobScheduleProvider] (TESTS) Add tests
     _logger = logger;
     _jsonHelper = jsonHelper;
     _file = file;
@@ -43,7 +42,6 @@ public class JobScheduleProvider : IJobScheduleProvider
 
   public Dictionary<string, ScheduledJob> LoadSchedule()
   {
-    // TODO: [JobScheduleProvider.LoadSchedule] (TESTS) Add tests
     EnsureScheduleFileExists();
 
     var rawJson = _file.ReadAllText(_scheduleFile);
@@ -52,7 +50,6 @@ public class JobScheduleProvider : IJobScheduleProvider
 
   public void SaveSchedule(Dictionary<string, ScheduledJob> scheduledJobs)
   {
-    // TODO: [JobScheduleProvider.SaveSchedule] (TESTS) Add tests
     BackupSchedule();
 
     var scheduleJson = _jsonHelper.SerializeObject(scheduledJobs, true);
@@ -61,7 +58,6 @@ public class JobScheduleProvider : IJobScheduleProvider
 
   private void EnsureScheduleFileExists()
   {
-    // TODO: [JobScheduleProvider.EnsureScheduleFileExists] (TESTS) Add tests
     var directoryName = _path.GetDirectoryName(_scheduleFile);
     if (string.IsNullOrWhiteSpace(directoryName))
     {
@@ -83,7 +79,6 @@ public class JobScheduleProvider : IJobScheduleProvider
 
   private void BackupSchedule()
   {
-    // TODO: [JobScheduleProvider.BackupSchedule] (TESTS) Add tests
     var backupPath = $"{_scheduleFile}.backup";
     _logger.LogDebug("Backing up schedule to: {path}", backupPath);
 

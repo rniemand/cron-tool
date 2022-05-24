@@ -9,12 +9,10 @@ namespace CronTools.Common.Extensions;
 public static class ConfigExtensions
 {
   public static bool ContainsKey(this Dictionary<string, object> config, string key) =>
-    // TODO: [ConfigExtensions.ContainsKey] (TESTS) Add tests
     config.Count != 0 && config.Any(x => x.Key.IgnoreCaseEquals(key));
 
   public static string GetStringValue(this Dictionary<string, object> config, string key, string fallback)
   {
-    // TODO: [ConfigExtensions.GetStringValue] (TESTS) Add tests
     if (!ContainsKey(config, key))
       return fallback;
 
@@ -28,7 +26,6 @@ public static class ConfigExtensions
 
   public static int GetIntValue(this Dictionary<string, object> config, string key, int fallback)
   {
-    // TODO: [ConfigExtensions.GetIntValue] (TESTS) Add tests
     if (!ContainsKey(config, key))
       return fallback;
 
@@ -38,7 +35,6 @@ public static class ConfigExtensions
 
   public static bool GetBoolValue(this Dictionary<string, object> config, string key, bool fallback)
   {
-    // TODO: [ConfigExtensions.GetBoolValue] (TESTS) Add tests
     if (!ContainsKey(config, key))
       return fallback;
 
@@ -49,7 +45,6 @@ public static class ConfigExtensions
   public static TEnum GetEnumValue<TEnum>(this Dictionary<string, object> config, string key, TEnum fallback)
     where TEnum : struct
   {
-    // TODO: [ConfigExtensions.GetEnumValue] (TESTS) Add tests
     if (!typeof(TEnum).IsEnum)
       throw new ArgumentException($"{typeof(TEnum)} is not an enum");
 

@@ -25,7 +25,6 @@ public static class ServiceCollectionExtensions
 {
   public static IServiceCollection AddCronTool(this IServiceCollection services)
   {
-    // TODO: [ServiceCollectionExtensions.AddCronTool] (TESTS) Add tests
     services
       // Abstractions
       .AddSingleton<IDateTimeAbstraction, DateTimeAbstraction>()
