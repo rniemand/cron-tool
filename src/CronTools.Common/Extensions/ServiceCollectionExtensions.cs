@@ -18,6 +18,9 @@ using Rn.NetCore.Common.Logging;
 using Rn.NetCore.MailUtils.Extensions;
 using Rn.NetCore.MailUtils.Providers;
 using Rn.NetCore.Metrics;
+using Rn.NetCore.Metrics.Outputs;
+using Rn.NetCore.Metrics.Rabbit;
+using Rn.NetCore.Metrics.Rabbit.Interfaces;
 
 namespace CronTools.Common.Extensions;
 
@@ -51,8 +54,12 @@ public static class ServiceCollectionExtensions
       // Arg Formatters
       .AddSingleton<IJobActionArgFormatter, DateTimeFormatter>()
 
-      // Utils
+      // Metrics
       .AddSingleton<IMetricServiceUtils, MetricServiceUtils>()
+      .AddSingleton<IMetricService, MetricService>()
+      .AddSingleton<IRabbitFactory, RabbitFactory>()
+      .AddSingleton<IRabbitConnection, RabbitConnection>()
+      .AddSingleton<IMetricOutput, RabbitMetricOutput>()
 
       // Providers
       .AddSingleton<IConfigProvider, ConfigProvider>()
@@ -76,7 +83,6 @@ public static class ServiceCollectionExtensions
       .AddSingleton<IComparator, DoesNotEqualComparator>()
 
       // Services
-      .AddSingleton<IMetricService, MetricService>()
       .AddSingleton<ICronToolRunnerService, CronToolRunnerService>()
       .AddSingleton<IJobRunnerService, JobRunnerService>()
       .AddSingleton<IJobSchedulerService, JobSchedulerService>()
