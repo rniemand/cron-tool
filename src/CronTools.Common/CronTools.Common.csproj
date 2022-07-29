@@ -18,4 +18,10 @@
     <PackageReference Include="Rn.NetCore.Metrics.Rabbit" Version="6.0.1.100" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="CronTool.Base.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

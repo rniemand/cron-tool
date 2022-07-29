@@ -8,9 +8,16 @@ using NLog.Extensions.Logging;
 
 namespace CronTools.Common.Utils;
 
-public class CronToolDIContainer
+public static class CronToolDIContainer
 {
   public static IServiceProvider ServiceProvider { get; }
+
+  private static readonly string[] BasePaths = {
+    Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+    Environment.CurrentDirectory
+  };
 
   static CronToolDIContainer()
   {
@@ -20,10 +27,18 @@ public class CronToolDIContainer
   private static IServiceProvider Configure()
   {
     var services = new ServiceCollection();
+    var configuration = "Production";
+
+#if DEBUG
+    configuration = "Development";
+#endif
 
     var config = new ConfigurationBuilder()
       .SetBasePath(Directory.GetCurrentDirectory())
-      .AddJsonFile("appsettings.json", true, true)
+      .AddJsonFile("CronTool.Base.json")
+      .AppendConfigLayer("CronTool.json")
+      .AppendConfigLayer($"CronTool.{configuration}.json")
+      .AppendConfigLayer("CronTool.Local.json")
       .Build();
 
     services
@@ -38,5 +53,13 @@ public class CronToolDIContainer
       });
 
     return services.BuildServiceProvider();
+  }
+
+  private static IConfigurationBuilder AppendConfigLayer(this IConfigurationBuilder builder, string file)
+  {
+    foreach (var basePath in BasePaths)
+      builder.AddJsonFile(Path.Join(basePath, file), optional: true);
+
+    return builder;
   }
 }
