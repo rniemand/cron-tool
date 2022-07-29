@@ -1,23 +1,2 @@
 {
-  "CronTool": {
-    "rootDir": "\\\\192.168.0.60\\appdata\\cron-tool",
-    "dirSeparator": "\\"
-  },
-  "Rn.Metrics": {
-    "environment": "development"
-  },
-  "Rn.Metrics.Rabbit": {
-    "enabled": false,
-    "username": "bob",
-    "password": "password",
-    "virtualHost": "/",
-    "host": "192.168.0.60",
-    "port": 5672,
-    "exchange": "amq.topic",
-    "routingKey": "metrics.crontool",
-    "backOffTimeSec": 15,
-    "coolDownTimeSec": 300,
-    "coolDownThreshold": 3,
-    "maxCoolDownRuns": 0
-  }
 }

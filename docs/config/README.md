@@ -6,6 +6,11 @@
 
 Holder.
 
+- CronTool.Base.json
+- CronTool.json
+- CronTool.`{configuration}`.json
+- CronTool.Local.json
+
 ### Configuration Layering
 
 Holder.

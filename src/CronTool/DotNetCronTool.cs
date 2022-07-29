@@ -66,4 +66,3 @@ public static class DotNetCronTool
       .RunJobAsync(jobName);
   }
 }
-

@@ -1,9 +1,2 @@
 {
-  "CronTool": {
-    "rootDir": "\\\\192.168.0.60\\appdata\\cron-tool",
-    "dirSeparator": "\\"
-  },
-  "Rn.Metrics": {
-    "environment": "development"
-  }
 }
