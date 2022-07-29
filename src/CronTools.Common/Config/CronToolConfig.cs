@@ -3,10 +3,9 @@ using Rn.NetCore.Common.Extensions;
 
 namespace CronTools.Common.Config;
 
-// DOCS: docs\models\CronToolConfig.md
 public class CronToolConfig
 {
-  public const string Key = "CronTool";
+  public const string ConfigKey = "CronTool";
 
   [ConfigurationKeyName("rootDir")]
   public string RootDirectory { get; set; } = "./config";

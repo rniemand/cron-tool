@@ -30,7 +30,7 @@ public class ConfigProvider : IConfigProvider
       return _config;
 
     _config = new CronToolConfig();
-    var section = _configuration.GetSection(CronToolConfig.Key);
+    var section = _configuration.GetSection(CronToolConfig.ConfigKey);
 
     if (section.Exists())
       section.Bind(_config);
