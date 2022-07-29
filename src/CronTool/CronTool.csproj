@@ -18,6 +18,7 @@
     <AssemblyName>Rn.CronTool</AssemblyName>
     <Version>1.0.5.104</Version>
     <PackageTags>cron</PackageTags>
+    <Nullable>annotations</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

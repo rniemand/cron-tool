@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
 	  <ProjectGuid>27A62430-C635-43F2-8F2F-B3374FFC0202</ProjectGuid>
-	  <Nullable>enable</Nullable>
+	  <Nullable>annotations</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
